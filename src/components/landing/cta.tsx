@@ -2,7 +2,7 @@
 
 import { BrandField } from "@/components/brand/field";
 import { CurtainLink } from "@/components/brand/curtain";
-import { BrandButtonClasses, BrandButtonInner, Magnetic } from "@/components/brand/magnetic";
+import { BrandRingClasses, BrandRingInner, Magnetic } from "@/components/brand/magnetic";
 import { Reveal, RevealText } from "@/components/brand/reveal";
 
 /** Closing section + footer on the dark brand field. */
@@ -16,14 +16,14 @@ export function FinalCta({ signedIn }: { signedIn: boolean }) {
           className="text-[clamp(3.2rem,10vw,9rem)] font-semibold leading-[0.95] tracking-[-0.055em] text-[#e9e4da]"
         />
         <Reveal delay={0.25}>
-          <p className="mt-8 max-w-[40ch] text-[17px] leading-relaxed text-[#a39d92] sm:text-[19px]">
-            Твой путь к свободному английскому начинается с первого занятия.
+          <p className="mt-8 max-w-[48ch] text-[17px] leading-relaxed text-[#a39d92] sm:text-[19px]">
+            Твой путь к английскому начинается с первого занятия
           </p>
         </Reveal>
         <Reveal delay={0.4} className="mt-12 flex flex-col items-center gap-6">
           <Magnetic strength={0.35}>
-            <CurtainLink href={signedIn ? "/dashboard" : "/login?tab=signup"} className={BrandButtonClasses + " h-16 px-10 text-[17px]"}>
-              <BrandButtonInner>{signedIn ? "Продолжить обучение" : "Начать обучение"}</BrandButtonInner>
+            <CurtainLink href={signedIn ? "/dashboard" : "/login?tab=signup"} className={BrandRingClasses}>
+              <BrandRingInner>{signedIn ? "Продолжить обучение" : "Начать обучение"}</BrandRingInner>
             </CurtainLink>
           </Magnetic>
           {!signedIn && (
@@ -43,6 +43,7 @@ export function FinalCta({ signedIn }: { signedIn: boolean }) {
           <nav aria-label="Навигация в подвале" className="flex flex-wrap gap-x-8 gap-y-3 text-[14px]">
             <a href="#about" className="text-[#a39d92] transition-colors hover:text-[#e9e4da]">О платформе</a>
             <a href="#directions" className="text-[#a39d92] transition-colors hover:text-[#e9e4da]">Направления</a>
+            <a href="#inside" className="text-[#a39d92] transition-colors hover:text-[#e9e4da]">Как это выглядит</a>
             <a href="#why" className="text-[#a39d92] transition-colors hover:text-[#e9e4da]">Преимущества</a>
             <CurtainLink href={signedIn ? "/dashboard" : "/login"} className="text-[#e9e4da] transition-colors hover:text-[#c8b99f]">
               {signedIn ? "Платформа" : "Войти в платформу"}

@@ -41,12 +41,12 @@ export async function POST(request: Request) {
   if (!(await getCurrentUser())) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
 
   const parsed = BodySchema.safeParse(await request.json().catch(() => null));
-  if (!parsed.success) return NextResponse.json({ ok: false, code: "bad_request", error: "Invalid request." }, { status: 400 });
+  if (!parsed.success) return NextResponse.json({ ok: false, code: "bad_request", error: "Некорректный запрос." }, { status: 400 });
 
   const provider = await getProvider();
   if (!provider) {
     return NextResponse.json(
-      { ok: false, code: "not_configured", error: "No AI provider is configured. Set ANTHROPIC_API_KEY to enable the tutor." },
+      { ok: false, code: "not_configured", error: "AI-репетитор пока не подключён." },
       { status: 503 },
     );
   }

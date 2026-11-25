@@ -26,5 +26,5 @@ export const DEFAULT_SETTINGS: Settings = {
     homeworkDue: true,
     weeklyReport: true,
   },
-  samplePreview: true,
+  samplePreview: false,
 };

@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { cn } from "@/lib/utils";
+import { VIRTUAL_POINTER, type VirtualPointerDetail } from "./wordmark";
 
 /**
  * Dark brand surface: coordinate grid + perspective floor + a warm light that follows the pointer,
@@ -85,8 +86,26 @@ export function BrandField({
       tg = 0;
       kick();
     };
-    window.addEventListener("pointermove", onMove, { passive: true });
-    window.addEventListener("pointerdown", onMove, { passive: true });
+    // Touch devices: follow the wordmark's virtual light instead of a cursor.
+    const onVirtual = (e: Event) => {
+      const { x: vx, y: vy, active } = (e as CustomEvent<VirtualPointerDetail>).detail;
+      if (!active) return onLeave();
+      const inside = vx >= rect.left && vx <= rect.right && vy >= rect.top && vy <= rect.bottom;
+      tx = vx - rect.left;
+      ty = vy - rect.top;
+      tg = inside ? 0.85 : 0;
+      if (g < 0.02 && inside) {
+        x = tx;
+        y = ty;
+      }
+      kick();
+    };
+    const touch = window.matchMedia("(hover: none)").matches;
+    if (touch) window.addEventListener(VIRTUAL_POINTER, onVirtual);
+    else {
+      window.addEventListener("pointermove", onMove, { passive: true });
+      window.addEventListener("pointerdown", onMove, { passive: true });
+    }
     document.addEventListener("pointerleave", onLeave);
     window.addEventListener("resize", measure);
     window.addEventListener("scroll", measure, { passive: true });
@@ -95,6 +114,7 @@ export function BrandField({
       cancelAnimationFrame(raf);
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerdown", onMove);
+      window.removeEventListener(VIRTUAL_POINTER, onVirtual);
       document.removeEventListener("pointerleave", onLeave);
       window.removeEventListener("resize", measure);
     };

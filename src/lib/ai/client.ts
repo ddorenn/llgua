@@ -16,6 +16,6 @@ export async function sendTutorMessage(req: ChatRequest): Promise<ChatResult> {
     });
     return (await res.json()) as ChatResult;
   } catch {
-    return { ok: false, code: "provider_error", error: "Network error — check your connection." };
+    return { ok: false, code: "provider_error", error: "Нет связи — проверь интернет." };
   }
 }

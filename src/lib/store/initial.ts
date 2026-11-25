@@ -28,9 +28,17 @@ export function hydrate(persisted: Partial<LinguaState> | null): LinguaState {
   if (!persisted.settings?.updatedAt) settings.interfaceLanguage = "ru";
   if (settings.mainGoal === "Balanced development of all English skills") settings.mainGoal = base.settings.mainGoal;
   if (settings.displayName === "Student") settings.displayName = base.settings.displayName;
+  // v3: Russian interface, real data first (demo analytics off until the learner turns them on).
+  const migrations = [...(persisted.migrations ?? [])];
+  if (!migrations.includes("v3-ru-real-data")) {
+    settings.interfaceLanguage = "ru";
+    settings.samplePreview = false;
+    migrations.push("v3-ru-real-data");
+  }
   return {
     ...base,
     ...persisted,
+    migrations,
     settings: {
       ...settings,
       notifications: { ...base.settings.notifications, ...(persisted.settings?.notifications ?? {}) },

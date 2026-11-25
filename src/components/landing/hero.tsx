@@ -21,7 +21,7 @@ export function Hero({ signedIn }: { signedIn: boolean }) {
       <div ref={ref} className="absolute inset-0" aria-hidden />
       <motion.div style={{ y, opacity, scale }} className="relative flex flex-1 flex-col items-center justify-center px-5 pb-24 pt-28 text-center">
         <h1 className="sr-only">LINGUA — Your English Tutor</h1>
-        <InteractiveWordmark className="text-[clamp(5.2rem,21vw,19rem)] text-[#e9e4da]" delay={0.15} />
+        <InteractiveWordmark className="text-[clamp(5.2rem,24vw,19rem)] text-[#e9e4da]" delay={0.15} />
         <motion.p
           className="mt-4 text-[12px] font-medium tracking-[0.55em] text-[#c8b99f] sm:mt-6 sm:text-[14px]"
           initial={reduce ? false : { opacity: 0, letterSpacing: "0.9em" }}
@@ -40,13 +40,13 @@ export function Hero({ signedIn }: { signedIn: boolean }) {
           отслеживай свой прогресс.
         </motion.p>
         <motion.div
-          className="mt-10 flex flex-col items-center gap-5 sm:flex-row sm:gap-7"
+          className="mt-10 flex w-full flex-col items-center gap-5 sm:w-auto sm:flex-row sm:gap-7"
           initial={reduce ? false : { opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2, duration: 0.8, ease: [0.2, 0.7, 0.2, 1] }}
         >
-          <Magnetic>
-            <CurtainLink href={signedIn ? "/dashboard" : "/login?tab=signup"} className={BrandButtonClasses}>
+          <Magnetic className="w-full max-w-[360px] sm:w-auto">
+            <CurtainLink href={signedIn ? "/dashboard" : "/login?tab=signup"} className={BrandButtonClasses + " w-full justify-center sm:w-auto"}>
               <BrandButtonInner>{signedIn ? "Продолжить обучение" : "Начать обучение"}</BrandButtonInner>
             </CurtainLink>
           </Magnetic>

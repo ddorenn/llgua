@@ -108,6 +108,8 @@ export interface ActivityEvent {
 
 export interface LinguaState {
   schemaVersion: 1;
+  /** One-time migrations already applied to this learner's data. */
+  migrations?: string[];
   settings: Settings;
   dailyPlans: Record<string, DailyPlanDay>;
   lessons: Record<string, LessonProgress>;

@@ -27,20 +27,20 @@ export class AnthropicProvider implements AIProvider {
       });
 
       if (response.stop_reason === "refusal") {
-        return { ok: false, code: "refused", error: "The model declined to answer this request." };
+        return { ok: false, code: "refused", error: "Модель отказалась отвечать на этот запрос." };
       }
       const text = response.content
         .filter((b): b is Anthropic.Beta.BetaTextBlock => b.type === "text")
         .map((b) => b.text)
         .join("\n")
         .trim();
-      return { ok: true, text: text || "(empty response)", model: response.model, provider: this.id };
+      return { ok: true, text: text || "(пустой ответ)", model: response.model, provider: this.id };
     } catch (error) {
-      if (error instanceof Anthropic.RateLimitError) return { ok: false, code: "rate_limited", error: "Rate limited — try again shortly." };
-      if (error instanceof Anthropic.AuthenticationError) return { ok: false, code: "not_configured", error: "The AI API key was rejected." };
-      if (error instanceof Anthropic.BadRequestError) return { ok: false, code: "bad_request", error: error.message };
-      if (error instanceof Anthropic.APIError) return { ok: false, code: "provider_error", error: `Provider error (${error.status ?? "network"}).` };
-      return { ok: false, code: "provider_error", error: "Unexpected error contacting the AI provider." };
+      if (error instanceof Anthropic.RateLimitError) return { ok: false, code: "rate_limited", error: "Слишком много запросов — попробуй через минуту." };
+      if (error instanceof Anthropic.AuthenticationError) return { ok: false, code: "not_configured", error: "Ключ доступа к модели отклонён." };
+      if (error instanceof Anthropic.BadRequestError) return { ok: false, code: "bad_request", error: "Модель не смогла обработать запрос." };
+      if (error instanceof Anthropic.APIError) return { ok: false, code: "provider_error", error: `Ошибка модели (${error.status ?? "сеть"}).` };
+      return { ok: false, code: "provider_error", error: "Не удалось связаться с моделью." };
     }
   }
 }

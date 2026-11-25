@@ -4,6 +4,7 @@ import { LandingHeader } from "@/components/landing/header";
 import { Hero } from "@/components/landing/hero";
 import { SystemSection } from "@/components/landing/system";
 import { DirectionsSection } from "@/components/landing/directions";
+import { InsideSection } from "@/components/landing/inside";
 import { WhySection } from "@/components/landing/why";
 import { FinalCta } from "@/components/landing/cta";
 
@@ -23,6 +24,7 @@ export default async function LandingPage() {
         <Hero signedIn={signedIn} />
         <SystemSection />
         <DirectionsSection />
+        <InsideSection />
         <WhySection />
       </main>
       <FinalCta signedIn={signedIn} />

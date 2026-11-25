@@ -14,12 +14,12 @@ const ICONS: Record<string, string[]> = {
 };
 
 const ITEMS = [
-  { icon: "system", title: "Системное обучение", text: "Последовательная программа вместо случайных уроков: модули идут по уровням, следующий урок открывается после предыдущего." },
-  { icon: "personal", title: "Персональный подход", text: "Уровень, цели и время занятий настраиваются под тебя, а следующий шаг подсказывается по результатам тестов." },
-  { icon: "skills", title: "Все языковые навыки", text: "Грамматика, словарь, чтение, аудирование, разговорная практика и письмо — в одной программе." },
-  { icon: "daily", title: "Ежедневная практика", text: "Понятная структура: час в день, пять блоков и таймер, который ведёт по плану." },
-  { icon: "analytics", title: "Аналитика прогресса", text: "Результаты тестов и практики по навыкам, частые ошибки и сравнение с началом пути." },
-  { icon: "tutor", title: "AI-репетитор", text: "Объясняет правила, разбирает твои предложения и помогает практиковать разговор — в формате диалога." },
+  { icon: "system", title: "Системное обучение", text: "Программа по уровням вместо случайных уроков." },
+  { icon: "personal", title: "Персональный подход", text: "Уровень, цели и темп — под тебя." },
+  { icon: "skills", title: "Все языковые навыки", text: "Шесть направлений в одной программе." },
+  { icon: "daily", title: "Ежедневная практика", text: "Час в день, пять блоков, готовый план." },
+  { icon: "analytics", title: "Аналитика прогресса", text: "Навыки, ошибки и рост — на виду." },
+  { icon: "tutor", title: "AI-репетитор", text: "Объясняет, исправляет, разговаривает." },
 ];
 
 function DrawIcon({ name, delay }: { name: string; delay: number }) {
@@ -48,7 +48,7 @@ export function WhySection() {
         <div className="lg:sticky lg:top-32 lg:self-start">
           <RevealText text="Почему LINGUA?" className="text-[44px] font-semibold leading-[1] tracking-[-0.045em] text-fg sm:text-[64px] lg:text-[72px]" />
           <p className="mt-6 max-w-[34ch] text-[16px] leading-relaxed text-muted">
-            Шесть причин, по которым занятия складываются в результат, а не в набор случайных упражнений.
+            Коротко — о том, что делает занятия результатом.
           </p>
         </div>
         <ul className="grid grid-cols-1 sm:grid-cols-2">
@@ -64,7 +64,7 @@ export function WhySection() {
               <span aria-hidden className="absolute left-0 top-[-1px] h-px w-0 bg-accent transition-[width] duration-700 ease-[cubic-bezier(0.2,0.7,0.2,1)] group-hover:w-full sm:group-[&:nth-child(even)]:left-10" />
               <DrawIcon name={it.icon} delay={(i % 2) * 0.12 + 0.2} />
               <h3 className="mt-6 text-[22px] font-semibold tracking-[-0.025em] text-fg">{it.title}</h3>
-              <p className="mt-3 max-w-[38ch] text-[15px] leading-relaxed text-muted">{it.text}</p>
+              <p className="mt-2 max-w-[30ch] text-[15px] leading-relaxed text-muted">{it.text}</p>
             </motion.li>
           ))}
         </ul>

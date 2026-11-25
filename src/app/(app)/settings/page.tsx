@@ -4,7 +4,6 @@ import * as React from "react";
 import { Bell, Check, Database, Download, Globe2, KeyRound, Palette, Target, Trash2, User } from "lucide-react";
 import { ThemePicker } from "@/components/shared/theme-toggle";
 import { CEFR, SKILLS, type Cefr, type Skill } from "@/lib/content";
-import { LOCALES, type Locale } from "@/lib/i18n";
 import { useStore } from "@/lib/store/store";
 import type { Settings, TargetExam, TeachingLanguage } from "@/lib/store/types";
 import { cn } from "@/lib/utils";
@@ -189,10 +188,8 @@ export default function SettingsPage() {
       </Section>
 
       <Section id="language" icon={Globe2} title="Язык" description="Язык интерфейса и объяснений.">
-        <Row label="Язык интерфейса" hint="Меню и общие подписи" htmlFor="ui-lang">
-          <Select id="ui-lang" value={s.interfaceLanguage} onChange={(e) => set({ interfaceLanguage: e.target.value as Locale })}>
-            {Object.entries(LOCALES).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
-          </Select>
+        <Row label="Язык интерфейса" hint="Учебные материалы остаются на английском">
+          <p className="text-[15px] text-fg">Русский</p>
         </Row>
         <Row label="Язык объяснений" hint="На каком языке объясняет AI-репетитор" htmlFor="teach-lang">
           <Select id="teach-lang" value={s.teachingLanguage} onChange={(e) => set({ teachingLanguage: e.target.value as TeachingLanguage })}>

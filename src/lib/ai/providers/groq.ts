@@ -39,16 +39,16 @@ export class GroqProvider implements AIProvider {
         signal: AbortSignal.timeout(60_000),
       });
     } catch {
-      return { ok: false, code: "provider_error", error: "Could not reach Groq — check the network and try again." };
+      return { ok: false, code: "provider_error", error: "Не удалось связаться с моделью — проверь интернет и попробуй ещё раз." };
     }
 
     const data = (await res.json().catch(() => ({}))) as GroqResponse;
-    if (res.status === 401 || res.status === 403) return { ok: false, code: "not_configured", error: "The Groq API key was rejected." };
-    if (res.status === 429) return { ok: false, code: "rate_limited", error: "Groq rate limit reached — try again in a moment." };
-    if (res.status === 400) return { ok: false, code: "bad_request", error: data.error?.message ?? "Bad request to Groq." };
-    if (!res.ok) return { ok: false, code: "provider_error", error: `Groq error (${res.status}).` };
+    if (res.status === 401 || res.status === 403) return { ok: false, code: "not_configured", error: "Ключ доступа к модели отклонён." };
+    if (res.status === 429) return { ok: false, code: "rate_limited", error: "Слишком много запросов — попробуй через минуту." };
+    if (res.status === 400) return { ok: false, code: "bad_request", error: "Модель не смогла обработать запрос." };
+    if (!res.ok) return { ok: false, code: "provider_error", error: `Ошибка модели (${res.status}).` };
 
     const text = data.choices?.[0]?.message?.content?.trim();
-    return { ok: true, text: text || "(empty response)", model: data.model ?? this.model, provider: this.id };
+    return { ok: true, text: text || "(пустой ответ)", model: data.model ?? this.model, provider: this.id };
   }
 }

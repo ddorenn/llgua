@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 const NAV = [
   { href: "#about", label: "О платформе" },
   { href: "#directions", label: "Направления" },
+  { href: "#inside", label: "Как это выглядит" },
   { href: "#why", label: "Преимущества" },
 ];
 
@@ -19,10 +20,29 @@ export function LandingHeader({ signedIn }: { signedIn: boolean }) {
   const [pastHero, setPastHero] = React.useState(false);
   const [overDark, setOverDark] = React.useState(true);
   const [open, setOpen] = React.useState(false);
+  const [hidden, setHidden] = React.useState(false);
+  const [active, setActive] = React.useState<string | null>(null);
 
   React.useEffect(() => {
+    let lastY = window.scrollY;
     const onScroll = () => {
-      setPastHero(window.scrollY > window.innerHeight - 72);
+      const y = window.scrollY;
+      setPastHero(y > window.innerHeight - 72);
+      // Step aside while reading downwards, come back on the first scroll up.
+      if (Math.abs(y - lastY) > 6) {
+        setHidden(y > lastY && y > window.innerHeight * 0.9);
+        lastY = y;
+      }
+      // Scroll-spy: the section that holds the upper third of the viewport.
+      const probe = window.innerHeight * 0.35;
+      let current: string | null = null;
+      NAV.forEach((n) => {
+        const el = document.querySelector<HTMLElement>(n.href);
+        if (!el) return;
+        const r = el.getBoundingClientRect();
+        if (r.top <= probe && r.bottom > probe) current = n.href;
+      });
+      setActive(current);
       // Is the band under the header one of the dark brand surfaces?
       const fields = document.querySelectorAll<HTMLElement>(".brand-field");
       let dark = false;
@@ -54,7 +74,8 @@ export function LandingHeader({ signedIn }: { signedIn: boolean }) {
     <header
       data-theme={dark ? "dark" : undefined}
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-[background-color,border-color] duration-300",
+        "fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,transform] duration-500 ease-[cubic-bezier(0.2,0.7,0.2,1)]",
+        hidden && !open && "-translate-y-full",
         pastHero && !overDark && !open ? "border-b border-line bg-bg" : "border-b border-transparent bg-transparent",
       )}
     >
@@ -62,11 +83,20 @@ export function LandingHeader({ signedIn }: { signedIn: boolean }) {
         <a href="#top" className="font-[family-name:var(--font-display)] text-[20px] font-bold tracking-[-0.04em] text-fg" aria-label="LINGUA — наверх">
           LINGUA
         </a>
-        <nav aria-label="Разделы" className="ml-6 hidden items-center gap-1 md:flex">
+        <nav aria-label="Разделы" className="ml-6 hidden items-center gap-1 lg:flex">
           {NAV.map((n) => (
-            <a key={n.href} href={n.href} className="group relative rounded-md px-3 py-2 text-[14px] text-muted transition-colors hover:text-fg">
+            <a
+              key={n.href}
+              href={n.href}
+              aria-current={active === n.href ? "true" : undefined}
+              className={cn("group relative rounded-md px-3 py-2 text-[14px] transition-colors hover:text-fg", active === n.href ? "text-fg" : "text-muted")}
+            >
               {n.label}
-              <span className="absolute inset-x-3 bottom-1 h-px origin-left scale-x-0 bg-accent transition-transform duration-300 group-hover:scale-x-100" />
+              {active === n.href ? (
+                <motion.span layoutId="nav-active" className="absolute inset-x-3 bottom-1 h-px bg-accent" transition={{ type: "spring", stiffness: 380, damping: 34 }} />
+              ) : (
+                <span className="absolute inset-x-3 bottom-1 h-px origin-left scale-x-0 bg-line-strong transition-transform duration-300 group-hover:scale-x-100" />
+              )}
             </a>
           ))}
         </nav>
@@ -91,7 +121,7 @@ export function LandingHeader({ signedIn }: { signedIn: boolean }) {
         )}
         <button
           type="button"
-          className="relative inline-flex size-10 items-center justify-center rounded-full text-fg md:hidden"
+          className="relative inline-flex size-10 items-center justify-center rounded-full text-fg lg:hidden"
           aria-label={open ? "Закрыть меню" : "Открыть меню"}
           aria-expanded={open}
           onClick={() => setOpen((o) => !o)}
@@ -105,7 +135,7 @@ export function LandingHeader({ signedIn }: { signedIn: boolean }) {
         {open && (
           <motion.nav
             aria-label="Меню"
-            className="fixed inset-x-0 bottom-0 top-[72px] flex flex-col bg-bg px-6 pb-10 pt-6 md:hidden"
+            className="fixed inset-x-0 bottom-0 top-[72px] flex flex-col bg-bg px-6 pb-10 pt-6 lg:hidden"
             initial={{ clipPath: "inset(0 0 100% 0)" }}
             animate={{ clipPath: "inset(0 0 0% 0)" }}
             exit={{ clipPath: "inset(0 0 100% 0)" }}

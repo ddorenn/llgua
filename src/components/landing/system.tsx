@@ -4,6 +4,14 @@ import * as React from "react";
 import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from "motion/react";
 import { Reveal, RevealText } from "@/components/brand/reveal";
 
+/** True facts about the programme, not marketing numbers. */
+const FACTS = [
+  { value: "A1→C2", label: "шесть уровней одной программы" },
+  { value: "6", label: "направлений английского" },
+  { value: "60", label: "минут в день по готовому плану" },
+  { value: "24/7", label: "AI-репетитор под рукой" },
+];
+
 const STAGES = [
   { name: "Обучение", text: "Уроки по программе от A1 до C2: правило, примеры, упражнения." },
   { name: "Практика", text: "План на 60 минут в день: словарь, грамматика, чтение или аудирование, речь или письмо." },
@@ -50,6 +58,20 @@ export function SystemSection() {
             </p>
           </Reveal>
         </div>
+
+        <dl className="mt-20 grid grid-cols-2 border-t border-line lg:mt-28 lg:grid-cols-4">
+          {FACTS.map((f, i) => (
+            <Reveal key={f.label} delay={i * 0.08} className="border-b border-line py-8 pr-4 odd:border-r odd:pr-6 lg:border-b-0 lg:border-r lg:px-8 lg:first:pl-0 lg:last:border-r-0">
+              <dt className="sr-only">{f.label}</dt>
+              <dd>
+                <span className="block font-[family-name:var(--font-display)] text-[44px] font-semibold leading-none tracking-[-0.05em] text-fg sm:text-[64px] lg:text-[80px]">
+                  {f.value}
+                </span>
+                <span className="mt-3 block max-w-[20ch] text-[14px] leading-snug text-muted">{f.label}</span>
+              </dd>
+            </Reveal>
+          ))}
+        </dl>
 
         <div ref={ref} className="relative mt-24 lg:mt-32">
           {/* the line that joins the stages */}
