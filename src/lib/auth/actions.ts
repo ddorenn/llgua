@@ -69,10 +69,13 @@ export async function loginAction(_prev: LoginState, formData: FormData): Promis
   if (mode === "supabase") {
     const { createSupabaseServerClient } = await import("@/lib/db/supabase/server");
     const supabase = await createSupabaseServerClient();
-    const { error } = await supabase.auth.signInWithPassword({ email: username, password });
+    // Short usernames map to a private email domain (Supabase Auth requires an email).
+    const domain = process.env.LINGUA_LOGIN_DOMAIN || "lingua.local";
+    const email = username.includes("@") ? username : `${username.toLowerCase()}@${domain}`;
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
       recordFailure(key);
-      return { error: "Incorrect email or password.", values };
+      return { error: "Incorrect username or password.", values };
     }
     redirect(next);
   }

@@ -88,7 +88,7 @@ export function LoginForm({
           <input type="hidden" name="next" value={next} />
 
           <div>
-            <Label htmlFor="username">{mode === "supabase" ? "Email" : "Username or email"}</Label>
+            <Label htmlFor="username">Username or email</Label>
             <Input
               id="username"
               name="username"
@@ -98,7 +98,7 @@ export function LoginForm({
               aria-invalid={Boolean(errors.username)}
               aria-describedby={errors.username ? "username-error" : undefined}
               onChange={() => client.username && setClient((c) => ({ ...c, username: undefined }))}
-              placeholder={mode === "supabase" ? "you@example.com" : "your username"}
+              placeholder="your username"
             />
             <FieldError id="username-error">{errors.username}</FieldError>
           </div>
