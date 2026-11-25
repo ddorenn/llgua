@@ -58,7 +58,9 @@ Paste the two printed lines into `.env.local`, add `LINGUA_AUTH_USERNAME=yournam
 
 Without a key, the tutor UI runs fully, but the app says plainly that **no AI model is connected**. Messages are saved locally and you get no fake replies.
 
-To enable it, add `ANTHROPIC_API_KEY` to `.env.local` (optional: `AI_MODEL`, default `claude-opus-5-5`; `AI_EFFORT`, default `medium`). The tutor then calls Claude through the official SDK, with server-side refusal fallback enabled.
+**Groq (connected):** set `AI_PROVIDER=groq` and `GROQ_API_KEY` (optional `GROQ_MODEL`, default `openai/gpt-oss-120b`). Tested end-to-end: replies in English and Russian, multi-turn context, Markdown rendering.
+
+**Claude (alternative):** add `ANTHROPIC_API_KEY` to `.env.local` (optional: `AI_MODEL`, default `claude-opus-5-5`; `AI_EFFORT`, default `medium`). The tutor then calls Claude through the official SDK, with server-side refusal fallback enabled.
 
 - Mode instructions: `content/ai/base.md` + `content/ai/modes/*.md` (placeholders like `{{level}}` are filled from settings)
 - Mode registry and suggested prompts: `content/ai/modes.json`
@@ -121,7 +123,7 @@ Files marked `"sample": true` show a **Sample content** badge wherever they appe
 
 ### Prepared but not connected (code exists, not verified end-to-end)
 - **Supabase Auth** login and session refresh. Written to the `@supabase/ssr` pattern but **not tested**, because no Supabase project was available.
-- **Anthropic provider**. Type-checked against the SDK, but **no real API call was made** (no key). The "no provider" path is tested.
+- **Anthropic provider**. Type-checked against the SDK, but **no real API call was made** (no key). The Groq provider *is* tested with a real key.
 
 ### Not implemented yet
 - Syncing learner state to Supabase (`SupabaseAdapter`). Data stays in one browser for now.
