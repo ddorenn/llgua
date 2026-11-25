@@ -48,7 +48,7 @@ function Row({ label, hint, children, htmlFor }: { label: string; hint?: string;
 }
 
 export default function SettingsPage() {
-  const { state, actions } = useStore();
+  const { state, actions, syncMode } = useStore();
   const s = state.settings;
   const [profile, setProfile] = React.useState({ displayName: s.displayName, email: s.email });
   const [errors, setErrors] = React.useState<{ displayName?: string; email?: string }>({});
@@ -214,9 +214,16 @@ export default function SettingsPage() {
       </Section>
 
       <Section id="account" icon={KeyRound} title="Account & data" description="Sign-in, data storage and export.">
-        <Notice icon={Database} title="Data is stored in this browser">
-          Progress is saved locally (localStorage). Connect Supabase to sync across devices — see README → Database.
-        </Notice>
+        {syncMode === "remote" ? (
+          <Notice icon={Database} title="Progress syncs to your account" tone="accent">
+            Everything you do is saved to Supabase and available on every device where you sign in. A copy is kept on this device,
+            so you can keep studying offline — changes upload automatically when the connection returns.
+          </Notice>
+        ) : (
+          <Notice icon={Database} title="Data is stored in this browser">
+            Progress is saved locally (localStorage). Sign in with Supabase to sync across devices.
+          </Notice>
+        )}
         <Row label="Sample preview" hint="Show labelled demonstration analytics">
           <Switch checked={s.samplePreview} onChange={(v) => set({ samplePreview: v })} label="Sample preview" />
         </Row>

@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FlaskConical, LogOut, Menu, X } from "lucide-react";
+import { Cloud, CloudOff, FlaskConical, HardDrive, Loader2, LogOut, Menu, X } from "lucide-react";
 import { MOBILE_TABS, NAVIGATION, SETTINGS_NAV, type NavItem } from "@/config/navigation";
 import { logoutAction } from "@/lib/auth/actions";
 import type { AuthMode } from "@/lib/auth/config";
@@ -96,8 +96,27 @@ function SidebarContent({ user, onNavigate }: { user: ShellUser; onNavigate?: ()
   );
 }
 
+function SyncIndicator() {
+  const { syncStatus } = useStore();
+  const meta = {
+    local: { icon: HardDrive, label: "This browser", title: "Progress is stored in this browser only", tone: "text-subtle" },
+    loading: { icon: Loader2, label: "Loading", title: "Loading your progress", tone: "text-subtle" },
+    saving: { icon: Loader2, label: "Saving", title: "Saving to your account", tone: "text-muted" },
+    synced: { icon: Cloud, label: "Saved", title: "All progress is saved to your account", tone: "text-success" },
+    offline: { icon: CloudOff, label: "Offline", title: "No connection — changes are kept on this device and will sync automatically", tone: "text-warning" },
+    error: { icon: CloudOff, label: "Not saved", title: "Your session expired — sign in again to sync", tone: "text-danger" },
+  }[syncStatus];
+  const Icon = meta.icon;
+  return (
+    <span className={cn("inline-flex items-center gap-1.5 text-[12px]", meta.tone)} title={meta.title} role="status" aria-live="polite">
+      <Icon className={cn("size-3.5", (syncStatus === "saving" || syncStatus === "loading") && "animate-spin")} />
+      <span className="hidden sm:inline">{meta.label}</span>
+    </span>
+  );
+}
+
 function SampleToggle() {
-  const { state, actions } = useStore();
+  const { state, actions, ready } = useStore();
   return (
     <label className="flex cursor-pointer items-center gap-2 text-[12px] text-muted" title="Show labelled demonstration analytics">
       <FlaskConical className={cn("size-3.5", state.settings.samplePreview ? "text-warning" : "text-subtle")} />
@@ -106,6 +125,7 @@ function SampleToggle() {
         checked={state.settings.samplePreview}
         onChange={(v) => actions.updateSettings({ samplePreview: v })}
         label="Sample preview"
+        disabled={!ready}
       />
     </label>
   );
@@ -196,6 +216,7 @@ export function AppShell({ user, children }: { user: ShellUser; children: React.
           <span className="text-subtle">Level</span>
           <span className="font-semibold text-accent-soft">{level ?? "—"}</span>
         </Link>
+        <SyncIndicator />
         <SampleToggle />
       </header>
 

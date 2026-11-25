@@ -30,6 +30,8 @@ export interface Settings {
   };
   /** When true the UI shows clearly labelled demonstration analytics. */
   samplePreview: boolean;
+  /** Set on every settings change; used to resolve conflicts between devices. */
+  updatedAt?: string;
 }
 
 export interface DailyPlanDay {

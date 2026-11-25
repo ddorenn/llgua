@@ -2,7 +2,8 @@
 
 import * as React from "react";
 import { APP, VOCAB_PROGRESSION } from "@/config/app";
-import { LocalStorageAdapter, type StateAdapter } from "@/lib/db/adapter";
+import { LocalStorageAdapter, type StateAdapter, type SyncStatus } from "@/lib/db/adapter";
+import { RemoteStateAdapter } from "@/lib/db/remote-adapter";
 import { getDictionary } from "@/lib/i18n";
 import { todayKey, uid } from "@/lib/utils";
 import { createInitialState, hydrate } from "./initial";
@@ -15,6 +16,8 @@ type Updater = (s: LinguaState) => LinguaState;
 interface StoreValue {
   state: LinguaState;
   ready: boolean;
+  syncStatus: SyncStatus;
+  syncMode: "local" | "remote";
   update: (fn: Updater) => void;
   actions: ReturnType<typeof makeActions>;
 }
@@ -29,7 +32,7 @@ function logActivity(s: LinguaState, type: ActivityEvent["type"], label: string)
 function makeActions(update: (fn: Updater) => void) {
   return {
     updateSettings(patch: Partial<Settings>) {
-      update((s) => ({ ...s, settings: { ...s.settings, ...patch } }));
+      update((s) => ({ ...s, settings: { ...s.settings, ...patch, updatedAt: new Date().toISOString() } }));
     },
     togglePlanBlock(blockId: string, label: string, date = todayKey()) {
       update((s) => {
@@ -165,7 +168,7 @@ function makeActions(update: (fn: Updater) => void) {
     },
     appendTutorMessage(mode: string, msg: Omit<TutorMessage, "id" | "createdAt">) {
       const m: TutorMessage = { ...msg, id: uid("msg"), createdAt: new Date().toISOString() };
-      update((s) => ({ ...s, tutor: { ...s.tutor, [mode]: [...(s.tutor[mode] ?? []), m] } }));
+      update((s) => ({ ...s, tutor: { ...s.tutor, [mode]: [...(s.tutor[mode] ?? []), m].slice(-100) } }));
       return m;
     },
     clearTutor(mode: string) {
@@ -177,25 +180,57 @@ function makeActions(update: (fn: Updater) => void) {
   };
 }
 
-export function StoreProvider({ children, adapter }: { children: React.ReactNode; adapter?: StateAdapter }) {
-  const adapterRef = React.useRef<StateAdapter>(adapter ?? new LocalStorageAdapter(APP.storageKey));
+export interface StorageConfig {
+  /** "remote" = Supabase sync with offline cache; "local" = this browser only. */
+  kind: "local" | "remote";
+  /** Per-account cache key suffix, so two accounts never share browser data. */
+  userKey: string;
+}
+
+function createAdapter(storage?: StorageConfig): StateAdapter {
+  if (storage?.kind === "remote") return new RemoteStateAdapter(`${APP.storageKey}:${storage.userKey}`);
+  return new LocalStorageAdapter(APP.storageKey);
+}
+
+export function StoreProvider({ children, storage }: { children: React.ReactNode; storage?: StorageConfig }) {
+  const adapterRef = React.useRef<StateAdapter | null>(null);
+  if (!adapterRef.current) adapterRef.current = createAdapter(storage);
   const [state, setState] = React.useState<LinguaState>(createInitialState);
   const [ready, setReady] = React.useState(false);
+  const [syncStatus, setSyncStatus] = React.useState<SyncStatus>(storage?.kind === "remote" ? "loading" : "local");
+  /** The last state object that came *from* storage — never echo it back as a save. */
+  const fromStorage = React.useRef<LinguaState | null>(null);
 
   React.useEffect(() => {
+    const adapter = adapterRef.current!;
     let alive = true;
-    adapterRef.current.load().then((persisted) => {
+    const detach = adapter.attach?.();
+    const offStatus = adapter.onStatus?.((st) => alive && setSyncStatus(st));
+    const offRemote = adapter.onRemoteState?.((remote) => {
       if (!alive) return;
-      setState(hydrate(persisted));
+      const next = hydrate(remote);
+      fromStorage.current = next;
+      setState(next);
+    });
+    adapter.load().then((persisted) => {
+      if (!alive) return;
+      const next = hydrate(persisted);
+      fromStorage.current = next;
+      setState(next);
       setReady(true);
     });
     return () => {
       alive = false;
+      offStatus?.();
+      offRemote?.();
+      detach?.();
+      adapter.dispose?.();
     };
   }, []);
 
   React.useEffect(() => {
-    if (ready) void adapterRef.current.save(state);
+    if (!ready || state === fromStorage.current) return;
+    adapterRef.current!.save(state);
   }, [state, ready]);
 
   React.useEffect(() => {
@@ -204,7 +239,10 @@ export function StoreProvider({ children, adapter }: { children: React.ReactNode
 
   const update = React.useCallback((fn: Updater) => setState((s) => fn(s)), []);
   const actions = React.useMemo(() => makeActions(update), [update]);
-  const value = React.useMemo(() => ({ state, ready, update, actions }), [state, ready, update, actions]);
+  const value = React.useMemo(
+    () => ({ state, ready, update, actions, syncStatus, syncMode: storage?.kind ?? "local" }),
+    [state, ready, update, actions, syncStatus, storage?.kind],
+  );
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
 }

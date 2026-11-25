@@ -12,7 +12,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   if (!user) redirect("/login");
 
   return (
-    <StoreProvider>
+    <StoreProvider storage={{ kind: user.mode === "supabase" ? "remote" : "local", userKey: user.id }}>
       <AppShell user={{ name: user.name, mode: user.mode }}>
         <ReadyGate>{children}</ReadyGate>
       </AppShell>

@@ -33,7 +33,14 @@ Tokens are defined once in `src/app/globals.css` (`@theme`): `bg #0B0A10`, `surf
 line, status and radius tokens. Use utilities like `bg-card text-muted border-line`, never hex values in components.
 Charts use the same palette (`components/charts/charts.tsx`).
 
-## State → table mapping (for the SupabaseAdapter)
+## Progress sync (implemented)
+
+`RemoteStateAdapter` (`src/lib/db/remote-adapter.ts`) stores the whole `LinguaState` in `learner_state`
+via `/api/state` → `save_learner_state(p_state, p_base_version)` (optimistic concurrency, RLS as the caller).
+On a version conflict the server returns its copy; the client merges (`src/lib/store/merge.ts`) and retries.
+A per-account browser cache (`lingua:state:v1:<userId>`) keeps the app usable offline.
+
+## State → table mapping (future normalised analytics)
 
 | `LinguaState` slice | Table(s) |
 |---|---|

@@ -1,17 +1,23 @@
 /**
- * Persistence adapter for learner state.
- *
- * v1 ships a LocalStorageAdapter (works offline, no credentials needed).
- * A SupabaseAdapter can implement the same interface by mapping each slice of
- * LinguaState to the tables in supabase/migrations (see docs/ARCHITECTURE.md).
+ * Persistence adapters for learner state.
+ *  - LocalStorageAdapter: browser only (demo / private-account modes).
+ *  - RemoteStateAdapter (./remote-adapter.ts): Supabase sync with an offline browser cache.
  */
 import type { LinguaState } from "@/lib/store/types";
+
+export type SyncStatus = "local" | "loading" | "saving" | "synced" | "offline" | "error";
 
 export interface StateAdapter {
   readonly id: "local" | "supabase";
   load(): Promise<Partial<LinguaState> | null>;
-  save(state: LinguaState): Promise<void>;
+  save(state: LinguaState): void;
   clear(): Promise<void>;
+  /** Called when a newer copy arrives from another device. Returns an unsubscribe fn. */
+  onRemoteState?(cb: (state: LinguaState) => void): () => void;
+  onStatus?(cb: (status: SyncStatus) => void): () => void;
+  /** Start background listeners (focus, network). Returns a detach function. */
+  attach?(): () => void;
+  dispose?(): void;
 }
 
 export class LocalStorageAdapter implements StateAdapter {
@@ -27,7 +33,7 @@ export class LocalStorageAdapter implements StateAdapter {
     }
   }
 
-  async save(state: LinguaState) {
+  save(state: LinguaState) {
     try {
       window.localStorage.setItem(this.key, JSON.stringify(state));
     } catch {
@@ -41,5 +47,10 @@ export class LocalStorageAdapter implements StateAdapter {
     } catch {
       /* ignore */
     }
+  }
+
+  onStatus(cb: (s: SyncStatus) => void) {
+    cb("local");
+    return () => {};
   }
 }

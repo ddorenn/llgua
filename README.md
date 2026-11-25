@@ -72,7 +72,8 @@ Without a key, the tutor UI runs fully, but the app says plainly that **no AI mo
 
 - Schema: [`supabase/migrations/20261125000000_initial_schema.sql`](supabase/migrations/20261125000000_initial_schema.sql). It contains every suggested entity, RLS on all learner tables, and a trigger that creates `profiles` and `learning_goals` rows for new users.
 - Apply it with `supabase db push` (Supabase CLI) or paste it into the SQL editor.
-- **Today, learner progress is stored in the browser (localStorage)** behind the `StateAdapter` interface (`src/lib/db/adapter.ts`). Syncing to Supabase is the next step: implement a `SupabaseAdapter` using the slice-to-table mapping in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+- **Progress sync (Supabase mode):** all learner progress is saved to `learner_state` (one JSON document per user, RLS-protected) through `/api/state`. Saves use version numbers; if two devices save at the same time, the copies are merged so nothing is lost (`src/lib/store/merge.ts`). A copy is kept in the browser, so the app works offline and uploads changes when the connection returns. The tab pulls the latest copy when it becomes visible. The top bar shows the sync status.
+- Apply both migrations in order: `20261125000000_initial_schema.sql`, then `20261125120000_learner_state_sync.sql` (which also adds explicit table grants).
 
 ---
 
@@ -121,12 +122,12 @@ Files marked `"sample": true` show a **Sample content** badge wherever they appe
 - **Sample preview** toggle: demonstration analytics are always badged and bannered. Turn it off to see only your own data.
 - Supabase migration, checked against Postgres (PGlite).
 
+- **Progress sync with Supabase**, tested with two browsers on the real project: data appears on the second device, concurrent edits merge, offline changes upload on reconnect, a focused tab pulls fresh data.
+
 ### Prepared but not connected (code exists, not verified end-to-end)
-- **Supabase Auth** login and session refresh. Written to the `@supabase/ssr` pattern but **not tested**, because no Supabase project was available.
 - **Anthropic provider**. Type-checked against the SDK, but **no real API call was made** (no key). The Groq provider *is* tested with a real key.
 
 ### Not implemented yet
-- Syncing learner state to Supabase (`SupabaseAdapter`). Data stays in one browser for now.
 - AI-generated feedback for homework/writing, AI weekly reports, speech-to-text and pronunciation analysis, audio upload.
 - Real audio files for listening (TTS preview only), notification delivery, IELTS/TOEFL modules.
 - A validated curriculum, item bank and CEFR scoring. **All educational content is demonstration material.**
