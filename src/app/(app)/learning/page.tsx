@@ -52,7 +52,7 @@ export default function LearningPage() {
               aria-pressed={active}
               className={cn(
                 "group cursor-pointer rounded-lg border p-3 text-left transition-colors",
-                active ? "border-accent/60 bg-accent-muted" : "border-line bg-card hover:border-line-strong",
+                active ? "border-accent-line bg-accent-muted" : "border-line bg-card hover:border-line-strong",
               )}
             >
               <div className="flex items-center justify-between">
@@ -95,7 +95,7 @@ export default function LearningPage() {
               <section key={m.id} className="rounded-lg border border-line bg-card">
                 <header className="flex flex-col gap-3 border-b border-line px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
                   <div className="min-w-0">
-                    <div className="text-[11px] font-medium uppercase tracking-[0.14em] text-subtle">Module {mi + 1}</div>
+                    <div className="text-[13px] font-medium text-subtle">Module {mi + 1}</div>
                     <h3 className="mt-0.5 text-[15px] font-medium">{m.title}</h3>
                     <p className="mt-0.5 text-[13px] text-muted">{m.description}</p>
                   </div>

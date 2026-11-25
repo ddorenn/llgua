@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import {
-  ArrowUp, BookA, CalendarRange, ClipboardCheck, GraduationCap, Info, LineChart, Loader2, MessagesSquare, Mic, PlugZap, Sparkles, Trash2, User,
+  ArrowUp, BookA, CalendarRange, ClipboardCheck, GraduationCap, Info, LineChart, Loader2, MessagesSquare, Mic, PlugZap, Sparkles, Trash2,
   type LucideIcon,
 } from "lucide-react";
 import { tutorModesFile, vocabularyFile } from "@/lib/content";
@@ -15,6 +15,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Markdown } from "@/components/shared/markdown";
+import { motion, useReducedMotion } from "motion/react";
 
 const ICONS: Record<string, LucideIcon> = {
   "graduation-cap": GraduationCap,
@@ -27,6 +28,7 @@ const ICONS: Record<string, LucideIcon> = {
 
 export default function TutorPage() {
   const { state, actions } = useStore();
+  const reduce = useReducedMotion();
   const modes = tutorModesFile.modes;
   const [modeId, setModeId] = React.useState(modes[0].id);
   const mode = modes.find((m) => m.id === modeId)!;
@@ -104,8 +106,8 @@ export default function TutorPage() {
   return (
     <div className="-mx-4 -mb-28 -mt-6 grid h-[calc(100dvh-56px-56px)] grid-cols-1 sm:-mx-6 lg:-mx-8 lg:-mb-12 lg:-mt-8 lg:h-[calc(100dvh-56px)] lg:grid-cols-[240px_1fr] xl:grid-cols-[240px_1fr_300px]">
       {/* Modes */}
-      <aside className="hidden flex-col border-r border-line bg-surface/50 lg:flex">
-        <div className="px-4 pb-2 pt-5 text-[11px] font-medium uppercase tracking-[0.14em] text-subtle">Tutor modes</div>
+      <aside className="hidden flex-col border-r border-line bg-surface lg:flex">
+        <div className="px-4 pb-2 pt-6 text-[13px] text-muted">Choose a role</div>
         <div className="space-y-0.5 px-2">
           {modes.map((m) => {
             const Icon = ICONS[m.icon] ?? Sparkles;
@@ -119,7 +121,7 @@ export default function TutorPage() {
                 aria-pressed={active}
                 className={cn(
                   "flex w-full cursor-pointer items-start gap-3 rounded-md px-2.5 py-2.5 text-left transition-colors",
-                  active ? "bg-card" : "hover:bg-card/60",
+                  active ? "bg-card shadow-lift dark:bg-elevated" : "hover:bg-elevated/70",
                 )}
               >
                 <Icon className={cn("mt-0.5 size-4 shrink-0", active ? "text-accent-soft" : "text-subtle")} />
@@ -137,7 +139,7 @@ export default function TutorPage() {
       {/* Chat */}
       <section className="flex min-h-0 flex-col">
         <header className="flex items-center gap-3 border-b border-line px-4 py-3 sm:px-6">
-          <div className="flex size-9 shrink-0 items-center justify-center rounded-md border border-accent/30 bg-accent-muted text-accent-soft">
+          <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-accent-muted text-accent-soft">
             <ModeIcon className="size-[18px]" />
           </div>
           <div className="min-w-0 flex-1">
@@ -174,7 +176,7 @@ export default function TutorPage() {
               onClick={() => setModeId(m.id)}
               className={cn(
                 "h-7 shrink-0 cursor-pointer rounded-full border px-3 text-[12px]",
-                m.id === modeId ? "border-accent/60 bg-accent-muted text-fg" : "border-line text-muted",
+                m.id === modeId ? "border-accent bg-accent-muted text-accent-soft" : "border-line text-muted",
               )}
             >
               {m.name}
@@ -184,8 +186,8 @@ export default function TutorPage() {
 
         <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto px-4 py-6 sm:px-6" aria-live="polite">
           {messages.length === 0 ? (
-            <div className="mx-auto flex h-full max-w-xl flex-col items-center justify-center text-center">
-              <div className="mb-4 flex size-12 items-center justify-center rounded-lg border border-accent/30 bg-accent-muted text-accent-soft">
+            <div className="mx-auto flex min-h-full max-w-xl flex-col items-center justify-center py-2 text-center">
+              <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-accent-muted text-accent-soft">
                 <ModeIcon className="size-5" />
               </div>
               <h2 className="text-[20px] font-semibold tracking-tight">{mode.name}</h2>
@@ -196,7 +198,7 @@ export default function TutorPage() {
                     key={s}
                     type="button"
                     onClick={() => send(s)}
-                    className="cursor-pointer rounded-md border border-line bg-card px-4 py-3 text-left text-[13.5px] text-fg/90 transition-colors hover:border-line-strong hover:bg-card-hover"
+                    className="cursor-pointer rounded-lg border border-line bg-card px-4 py-3 text-left text-[14px] text-fg shadow-lift transition-colors hover:border-line-strong"
                   >
                     {s}
                   </button>
@@ -209,40 +211,38 @@ export default function TutorPage() {
               )}
             </div>
           ) : (
-            <div className="mx-auto max-w-2xl space-y-5">
+            <div className="mx-auto max-w-2xl space-y-7">
               {messages.map((m) =>
                 m.kind === "notice" ? (
-                  <div key={m.id} className="flex items-start gap-2 rounded-md border border-warning/25 bg-warning/[0.06] px-3 py-2.5 text-[12.5px] text-warning">
-                    <Info className="mt-0.5 size-3.5 shrink-0" />
+                  <div key={m.id} className="flex items-start gap-2 rounded-r-md border-l-2 border-warning bg-surface px-3.5 py-2.5 text-[13px] text-muted">
+                    <Info className="mt-0.5 size-3.5 shrink-0 text-warning" />
                     {m.content}
                   </div>
+                ) : m.role === "user" ? (
+                  <motion.div
+                    key={m.id}
+                    initial={reduce ? false : { opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="ml-auto w-fit max-w-[85%] whitespace-pre-wrap break-words rounded-lg bg-elevated px-4 py-2.5 text-[14.5px] leading-relaxed text-fg"
+                  >
+                    {m.content}
+                  </motion.div>
                 ) : (
-                  <div key={m.id} className={cn("flex gap-3", m.role === "user" && "flex-row-reverse")}>
-                    <div
-                      className={cn(
-                        "flex size-7 shrink-0 items-center justify-center rounded-md border",
-                        m.role === "user" ? "border-line bg-elevated text-muted" : "border-accent/30 bg-accent-muted text-accent-soft",
-                      )}
-                    >
-                      {m.role === "user" ? <User className="size-3.5" /> : <Sparkles className="size-3.5" />}
-                    </div>
-                    <div
-                      className={cn(
-                        "min-w-0 max-w-[85%] break-words rounded-lg px-3.5 py-2.5 text-[14px] leading-relaxed",
-                        m.role === "user" ? "whitespace-pre-wrap bg-accent text-white" : "border border-line bg-card text-fg/90",
-                      )}
-                    >
-                      {m.role === "assistant" ? <Markdown text={m.content} /> : m.content}
-                    </div>
-                  </div>
+                  <motion.article
+                    key={m.id}
+                    initial={reduce ? false : { opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="min-w-0 break-words border-l-2 border-accent pl-4 text-[15px] leading-[1.7] text-fg"
+                  >
+                    <div className="mb-1.5 text-[12.5px] font-medium text-accent-soft">{mode.name}</div>
+                    <Markdown text={m.content} />
+                  </motion.article>
                 ),
               )}
               {sending && (
-                <div className="flex gap-3">
-                  <div className="flex size-7 items-center justify-center rounded-md border border-accent/30 bg-accent-muted text-accent-soft">
-                    <Sparkles className="size-3.5" />
-                  </div>
-                  <div className="flex items-center gap-1 rounded-lg border border-line bg-card px-4 py-3">
+                <div className="border-l-2 border-accent pl-4" aria-label="Tutor is writing">
+                  <div className="mb-2 text-[12.5px] font-medium text-accent-soft">{mode.name}</div>
+                  <div className="flex items-center gap-1.5">
                     {[0, 1, 2].map((i) => (
                       <span key={i} className="size-1.5 animate-pulse-dot rounded-full bg-accent-soft" style={{ animationDelay: `${i * 0.2}s` }} />
                     ))}
@@ -255,7 +255,7 @@ export default function TutorPage() {
 
         <div className="border-t border-line px-4 pb-4 pt-3 sm:px-6">
           {voiceNote && (
-            <div className="mx-auto mb-2 flex max-w-2xl items-start gap-2 rounded-md border border-line bg-surface px-3 py-2 text-[12px] text-muted">
+            <div className="mx-auto mb-2 flex max-w-2xl items-start gap-2 rounded-r-md border-l-2 border-line-strong bg-surface px-3 py-2 text-[12.5px] text-muted">
               <Mic className="mt-0.5 size-3.5 shrink-0 text-accent-soft" />
               Voice conversation is planned: speech-to-text will fill this box and replies can be read aloud. Not available yet.
               <button type="button" className="ml-auto cursor-pointer text-subtle hover:text-fg" onClick={() => setVoiceNote(false)}>
@@ -264,7 +264,7 @@ export default function TutorPage() {
             </div>
           )}
           <form
-            className="mx-auto flex max-w-2xl items-end gap-2 rounded-lg border border-line bg-surface p-2 focus-within:border-accent/60"
+            className="mx-auto flex max-w-2xl items-end gap-2 rounded-xl border border-line bg-card p-2 shadow-lift transition-colors focus-within:border-accent"
             onSubmit={(e) => {
               e.preventDefault();
               void send(input);
@@ -305,8 +305,8 @@ export default function TutorPage() {
       </section>
 
       {/* Context */}
-      <aside className="hidden min-h-0 overflow-y-auto border-l border-line bg-surface/50 p-5 xl:block">
-        <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-subtle">Learning context</h2>
+      <aside className="hidden min-h-0 overflow-y-auto border-l border-line bg-surface p-5 xl:block">
+        <h2 className="text-[14px] font-semibold text-fg">What the tutor knows</h2>
         <dl className="mt-3 space-y-3 text-[13px]">
           {[
             ["Level", state.settings.currentLevel ?? "Not set"],
@@ -329,7 +329,7 @@ export default function TutorPage() {
           <Switch checked={shareStats} onChange={setShareStats} label="Share my stats with the tutor" />
         </div>
 
-        <h2 className="mt-7 text-[11px] font-medium uppercase tracking-[0.14em] text-subtle">Suggested</h2>
+        <h2 className="mt-8 text-[14px] font-semibold text-fg">Try asking</h2>
         <div className="mt-3 space-y-1.5">
           {mode.suggestions.map((s) => (
             <button
@@ -343,7 +343,7 @@ export default function TutorPage() {
           ))}
         </div>
 
-        <h2 className="mt-7 text-[11px] font-medium uppercase tracking-[0.14em] text-subtle">Provider</h2>
+        <h2 className="mt-8 text-[14px] font-semibold text-fg">Model</h2>
         <p className="mt-2 text-[12.5px] leading-relaxed text-muted">
           {connected
             ? `${status?.provider} · ${status?.model}`

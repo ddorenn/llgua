@@ -14,7 +14,7 @@ import { PageHeader, EmptyState, SKILL_LABEL, StatCard } from "@/components/shar
 import { SampleBadge, SamplePreviewBanner } from "@/components/shared/sample";
 import { CHART, ColumnChart, CompareBars, GrowthArea, Legend, RankedBars, TrendLine } from "@/components/charts/charts";
 import { buttonVariants } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/section";
 import { ProgressRing } from "@/components/ui/progress";
 import { Tabs } from "@/components/ui/tabs";
 
@@ -146,7 +146,7 @@ export default function ProgressPage() {
           <CardHeader><CardTitle>Data table</CardTitle>{badge}</CardHeader>
           <CardContent className="space-y-6 overflow-x-auto text-[13px]">
             <table className="w-full min-w-[420px] text-left">
-              <thead className="text-[11.5px] uppercase tracking-[0.1em] text-subtle"><tr><th className="py-2">Skill</th><th>Initial</th><th>Current</th><th>Change</th></tr></thead>
+              <thead className="text-[13px] font-medium text-subtle"><tr><th className="py-2">Skill</th><th>Initial</th><th>Current</th><th>Change</th></tr></thead>
               <tbody className="divide-y divide-line">
                 {skills.map((s) => (
                   <tr key={s.skill}><td className="py-2">{s.skill}</td><td className="tabular">{s.initial}%</td><td className="tabular">{s.current}%</td><td className="tabular">{s.current - s.initial >= 0 ? "+" : ""}{s.current - s.initial}</td></tr>
@@ -155,7 +155,7 @@ export default function ProgressPage() {
               </tbody>
             </table>
             <table className="w-full min-w-[420px] text-left">
-              <thead className="text-[11.5px] uppercase tracking-[0.1em] text-subtle"><tr><th className="py-2">Day</th><th>Minutes</th></tr></thead>
+              <thead className="text-[13px] font-medium text-subtle"><tr><th className="py-2">Day</th><th>Minutes</th></tr></thead>
               <tbody className="divide-y divide-line">
                 {weekly.map((d) => <tr key={d.day}><td className="py-2">{d.day}</td><td className="tabular">{d.minutes}</td></tr>)}
               </tbody>

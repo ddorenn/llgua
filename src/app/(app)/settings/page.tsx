@@ -1,7 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { Bell, Check, Database, Download, Globe2, KeyRound, Target, Trash2, User } from "lucide-react";
+import { Bell, Check, Database, Download, Globe2, KeyRound, Palette, Target, Trash2, User } from "lucide-react";
+import { ThemePicker } from "@/components/shared/theme-toggle";
 import { CEFR, SKILLS, type Cefr, type Skill } from "@/lib/content";
 import { LOCALES, type Locale } from "@/lib/i18n";
 import { useStore } from "@/lib/store/store";
@@ -9,7 +10,7 @@ import type { Settings, TargetExam, TeachingLanguage } from "@/lib/store/types";
 import { cn } from "@/lib/utils";
 import { PageHeader, Notice, SKILL_LABEL } from "@/components/shared/page";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/section";
 import { FieldError, Input, Label, Select } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 
@@ -19,14 +20,13 @@ function Section({ id, icon: Icon, title, description, children, footer }: {
   id: string; icon: typeof User; title: string; description: string; children: React.ReactNode; footer?: React.ReactNode;
 }) {
   return (
-    <Card id={id} className="scroll-mt-20">
+    <Card id={id} className="scroll-mt-20 pb-4">
       <CardHeader>
-        <div className="flex gap-3">
-          <div className="flex size-9 shrink-0 items-center justify-center rounded-md border border-line bg-surface text-muted"><Icon className="size-4" /></div>
-          <div>
-            <CardTitle>{title}</CardTitle>
-            <CardDescription>{description}</CardDescription>
-          </div>
+        <div>
+          <CardTitle className="flex items-center gap-2">
+            <Icon className="size-4 text-subtle" aria-hidden /> {title}
+          </CardTitle>
+          <CardDescription>{description}</CardDescription>
         </div>
       </CardHeader>
       <CardContent className="space-y-5">{children}</CardContent>
@@ -88,7 +88,7 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="mx-auto max-w-4xl space-y-6">
+    <div className="mx-auto max-w-4xl space-y-10">
       <PageHeader
         title="Settings"
         description="Personalise your learning. Changes save automatically."
@@ -96,10 +96,14 @@ export default function SettingsPage() {
       />
 
       <nav className="flex gap-1.5 overflow-x-auto" aria-label="Settings sections">
-        {[["profile", "Profile"], ["goals", "Learning goals"], ["language", "Language"], ["notifications", "Notifications"], ["account", "Account"]].map(([id, label]) => (
-          <a key={id} href={`#${id}`} className="shrink-0 rounded-full border border-line px-3 py-1 text-[12px] text-muted hover:border-line-strong hover:text-fg">{label}</a>
+        {[["appearance", "Appearance"], ["profile", "Profile"], ["goals", "Daily goal"], ["language", "Language"], ["notifications", "Notifications"], ["account", "Account"]].map(([id, label]) => (
+          <a key={id} href={`#${id}`} className="shrink-0 rounded-full bg-elevated px-3 py-1.5 text-[13px] text-muted transition-colors hover:text-fg">{label}</a>
         ))}
       </nav>
+
+      <Section id="appearance" icon={Palette} title="Appearance" description="Choose how Lingua looks on this device. System follows your device setting.">
+        <ThemePicker />
+      </Section>
 
       <form onSubmit={saveProfile}>
         <Section
@@ -120,7 +124,7 @@ export default function SettingsPage() {
         </Section>
       </form>
 
-      <Section id="goals" icon={Target} title="Learning goals" description="Your level, target and daily study time.">
+      <Section id="goals" icon={Target} title="Daily goal and learning preferences" description="Your level, target, daily study time and focus.">
         <Row label="Current level" hint="Self-reported until a validated assessment exists" htmlFor="currentLevel">
           <Select id="currentLevel" value={s.currentLevel ?? ""} onChange={(e) => set({ currentLevel: (e.target.value || null) as Cefr | null })}>
             <option value="">Not set</option>
@@ -166,7 +170,7 @@ export default function SettingsPage() {
                   onClick={() => toggleSkill(sk)}
                   className={cn(
                     "h-8 cursor-pointer rounded-full border px-3 text-[12.5px] transition-colors",
-                    on ? "border-accent/60 bg-accent-muted text-fg" : "border-line text-muted hover:border-line-strong",
+                    on ? "border-accent-line bg-accent-muted text-fg" : "border-line text-muted hover:border-line-strong",
                   )}
                 >
                   {SKILL_LABEL[sk]}

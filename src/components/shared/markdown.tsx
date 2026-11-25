@@ -6,7 +6,7 @@ import * as React from "react";
  * fenced code blocks, horizontal rules and simple pipe tables.
  */
 const INLINE =
-  /`([^`]+)`|\*\*(.+?)\*\*|\*((?:\*\*.+?\*\*|[^*\s])(?:\*\*.+?\*\*|[^*])*?)\*(?!\*)|(?<![\w])_([^_\n]+?)_(?![\w])/;
+  /~~(.+?)~~|`([^`]+)`|\*\*(.+?)\*\*|\*((?:\*\*.+?\*\*|[^*\s])(?:\*\*.+?\*\*|[^*])*?)\*(?!\*)|(?<![\w])_([^_\n]+?)_(?![\w])/;
 
 /** Recursive inline parser: `code`, **bold**, *italic* (may contain **bold**), _italic_. */
 function inline(text: string, key: string): React.ReactNode[] {
@@ -22,9 +22,11 @@ function inline(text: string, key: string): React.ReactNode[] {
     if (m.index > 0) out.push(<React.Fragment key={`${key}-${i++}`}>{rest.slice(0, m.index)}</React.Fragment>);
     const k = `${key}-${i++}`;
     if (m[1] !== undefined)
-      out.push(<code key={k} className="rounded bg-elevated px-1 py-0.5 font-mono text-[0.9em] text-accent-soft">{m[1]}</code>);
-    else if (m[2] !== undefined) out.push(<strong key={k} className="font-semibold text-fg">{inline(m[2], k)}</strong>);
-    else out.push(<em key={k}>{inline(m[3] ?? m[4], k)}</em>);
+      out.push(<del key={k} className="text-muted decoration-accent decoration-2">{m[1]}</del>);
+    else if (m[2] !== undefined)
+      out.push(<code key={k} className="rounded bg-elevated px-1 py-0.5 font-mono text-[0.9em] text-accent-soft">{m[2]}</code>);
+    else if (m[3] !== undefined) out.push(<strong key={k} className="font-semibold text-fg">{inline(m[3], k)}</strong>);
+    else out.push(<em key={k} className="lang">{inline(m[4] ?? m[5], k)}</em>);
     rest = rest.slice(m.index + m[0].length);
   }
   return out;

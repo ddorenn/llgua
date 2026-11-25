@@ -7,7 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export function ReadyGate({ children }: { children: React.ReactNode }) {
   const { ready } = useStore();
   if (!ready) return <PageSkeleton />;
-  return <div className="animate-fade-in">{children}</div>;
+  return <>{children}</>;
 }
 
 export function PageSkeleton() {

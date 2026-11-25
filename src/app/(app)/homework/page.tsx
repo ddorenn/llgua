@@ -78,7 +78,7 @@ function Detail({ hw }: { hw: Homework }) {
               value={text}
               onChange={(e) => setText(e.target.value)}
               aria-invalid={Boolean(error)}
-              className="min-h-44"
+              className="lang min-h-44 text-[16px]"
               placeholder="Write here…"
             />
             <div className="mt-1.5 flex items-center justify-between text-[12px] text-subtle">
@@ -95,7 +95,7 @@ function Detail({ hw }: { hw: Homework }) {
         ) : (
           <div className="space-y-4">
             <div>
-              <div className="mb-1.5 text-[12px] font-medium uppercase tracking-[0.12em] text-muted">Your submission</div>
+              <div className="mb-1.5 text-[13px] font-medium text-muted">Your submission</div>
               <div className="whitespace-pre-wrap rounded-md border border-line bg-surface px-4 py-3 text-[14px] leading-relaxed text-fg/90">{submission.text}</div>
             </div>
             <Button variant="ghost" size="sm" onClick={() => actions.withdrawHomework(hw.id)}>
@@ -106,7 +106,7 @@ function Detail({ hw }: { hw: Homework }) {
 
         <div className="border-t border-line pt-5">
           <div className="mb-3 flex items-center justify-between">
-            <div className="flex items-center gap-2 text-[12px] font-medium uppercase tracking-[0.12em] text-muted">
+            <div className="flex items-center gap-2 text-[13px] font-medium text-muted">
               <MessageSquareText className="size-3.5" /> Feedback
             </div>
             {sample && hw.sampleFeedback && <SampleBadge />}
@@ -163,11 +163,11 @@ export default function HomeworkPage() {
           { label: "Submitted", value: submitted.length, icon: CheckCircle2 },
           { label: "Reviewed", value: Object.values(state.homework).filter((h) => h.status === "reviewed").length, icon: ClipboardCheck },
         ].map((s) => (
-          <div key={s.label} className="rounded-lg border border-line bg-card px-4 py-3.5">
-            <div className="flex items-center justify-between text-[12px] text-muted">
-              {s.label} <s.icon className="size-3.5 text-subtle" />
+          <div key={s.label} className="border-t border-line pt-3">
+            <div className="flex items-center gap-1.5 text-[13px] text-muted">
+              <s.icon className="size-3.5 text-subtle" /> {s.label}
             </div>
-            <div className="tabular mt-1.5 text-[22px] font-semibold">{s.value}</div>
+            <div className="tabular mt-1 text-[26px] font-semibold tracking-[-0.03em]">{s.value}</div>
           </div>
         ))}
       </div>
@@ -201,7 +201,7 @@ export default function HomeworkPage() {
                       aria-pressed={active}
                       className={cn(
                         "flex w-full cursor-pointer items-start gap-3 rounded-lg border p-4 text-left transition-colors",
-                        active ? "border-accent/50 bg-accent-muted/50" : "border-line bg-card hover:border-line-strong",
+                        active ? "border-accent-line bg-accent-muted" : "border-line bg-card hover:border-line-strong",
                       )}
                     >
                       <span className={cn("mt-1 size-2 shrink-0 rounded-full", sub ? "bg-success" : h.dueInDays <= 1 ? "bg-warning" : "bg-line-strong")} />

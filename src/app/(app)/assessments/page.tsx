@@ -81,7 +81,7 @@ export default function AssessmentsPage() {
         ) : (
           <div className="overflow-x-auto rounded-lg border border-line">
             <table className="w-full min-w-[560px] text-left text-[13px]">
-              <thead className="border-b border-line bg-surface text-[11.5px] uppercase tracking-[0.1em] text-subtle">
+              <thead className="border-b border-line bg-surface text-[13px] font-medium text-subtle">
                 <tr>
                   <th className="px-4 py-2.5 font-medium">Date</th>
                   <th className="px-4 py-2.5 font-medium">Assessment</th>

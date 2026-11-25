@@ -105,7 +105,7 @@ export function AssessmentRunner({ id }: { id: string }) {
         <Card>
           <CardContent className="space-y-6 p-7">
             <div className="text-center">
-              <p className="text-[12px] uppercase tracking-[0.14em] text-muted">{assessment.title}</p>
+              <p className="text-[13px] font-medium text-muted">{assessment.title}</p>
               <div className="tabular mt-3 text-[56px] font-semibold leading-none tracking-[-0.04em]">{pct(result.score, result.total)}%</div>
               <p className="mt-2 text-[14px] text-muted">{result.score} of {result.total} correct</p>
             </div>
@@ -192,9 +192,9 @@ export function AssessmentRunner({ id }: { id: string }) {
             <span className="flex items-center gap-1 text-[12px] text-subtle"><Clock className="size-3" /> {answeredCount}/{flat.length} answered</span>
           </div>
           {cur.passage && (
-            <blockquote className="rounded-md border-l-2 border-accent bg-surface px-4 py-3 text-[14.5px] leading-relaxed text-fg/85">{cur.passage}</blockquote>
+            <blockquote className="lang rounded-r-md border-l-2 border-accent bg-surface px-4 py-3 text-[17px] leading-relaxed text-fg">{cur.passage}</blockquote>
           )}
-          <h2 className="text-[19px] font-medium leading-snug">{cur.q.prompt}</h2>
+          <h2 className="lang text-[24px] leading-snug text-fg">{cur.q.prompt}</h2>
 
           {cur.q.type === "mcq" ? (
             <div className="grid gap-2">
@@ -207,11 +207,11 @@ export function AssessmentRunner({ id }: { id: string }) {
                     aria-pressed={selected}
                     onClick={() => setAnswers((a) => ({ ...a, [cur.q.id]: oi }))}
                     className={cn(
-                      "flex h-12 cursor-pointer items-center gap-3 rounded-md border px-4 text-left text-[14.5px] transition-colors",
-                      selected ? "border-accent/70 bg-accent-muted text-fg" : "border-line bg-surface text-fg/85 hover:border-line-strong",
+                      "lang flex h-12 cursor-pointer items-center gap-3 rounded-md border px-4 text-left text-[16.5px] transition-colors",
+                      selected ? "border-accent-line bg-accent-muted text-fg" : "border-line bg-surface text-fg/85 hover:border-line-strong",
                     )}
                   >
-                    <span className={cn("flex size-6 items-center justify-center rounded-[5px] border text-[11px] font-medium", selected ? "border-accent bg-accent text-white" : "border-line-strong text-subtle")}>
+                    <span className={cn("flex size-6 items-center justify-center rounded-full border font-sans text-[11.5px] font-medium", selected ? "border-accent bg-accent text-on-accent" : "border-line-strong text-subtle")}>
                       {String.fromCharCode(65 + oi)}
                     </span>
                     {o}
@@ -231,7 +231,7 @@ export function AssessmentRunner({ id }: { id: string }) {
               }}
               placeholder="Type your answer"
               aria-label="Your answer"
-              className="h-12 text-[15px]"
+              className="lang h-12 text-[17px]"
             />
           )}
 

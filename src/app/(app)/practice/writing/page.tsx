@@ -88,7 +88,7 @@ export default function WritingPage() {
               aria-invalid={Boolean(error)}
               spellCheck
               placeholder="Start writing…"
-              className="min-h-[340px] w-full flex-1 resize-y rounded-md border border-line bg-surface px-4 py-3.5 text-[15.5px] leading-[1.8] text-fg placeholder:text-subtle focus:border-accent/60 focus:outline-none focus:ring-2 focus:ring-accent/15"
+              className="lang min-h-[340px] w-full flex-1 resize-y rounded-md border border-line bg-surface px-5 py-4 text-[17px] leading-[1.8] text-fg placeholder:text-subtle focus:border-accent focus:outline-none focus:ring-3 focus:ring-accent-muted"
             />
             <div className="mt-3 space-y-2">
               <div className="flex flex-wrap items-center justify-between gap-2 text-[12px]">

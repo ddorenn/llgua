@@ -99,7 +99,7 @@ function Recorder({ taskId, onRecorded }: { taskId: string; onRecorded: () => vo
           aria-label={rec === "recording" ? "Stop recording" : "Start recording"}
           className={cn(
             "relative flex size-20 cursor-pointer items-center justify-center rounded-full border transition-colors disabled:opacity-50",
-            rec === "recording" ? "border-danger/50 bg-danger text-white" : "border-accent/40 bg-accent text-white hover:bg-accent-hover",
+            rec === "recording" ? "border-danger/50 bg-danger text-on-accent" : "border-accent-line bg-accent text-on-accent hover:bg-accent-hover",
           )}
         >
           {rec === "recording" ? <Square className="size-6 fill-current" /> : <Mic className="size-7" />}
@@ -171,7 +171,7 @@ export default function SpeakingPage() {
               <p className="text-[15.5px] leading-relaxed text-fg/90">{task.prompt}</p>
               {task.hints.length > 0 && (
                 <div className="rounded-md border border-line bg-surface p-4">
-                  <div className="mb-2 flex items-center gap-2 text-[12px] font-medium uppercase tracking-[0.12em] text-muted"><Lightbulb className="size-3.5" /> Useful language</div>
+                  <div className="mb-2 flex items-center gap-2 text-[13px] font-medium text-muted"><Lightbulb className="size-3.5" /> Useful language</div>
                   <ul className="flex flex-wrap gap-2">
                     {task.hints.map((h) => (
                       <li key={h} className="rounded-[5px] border border-line bg-card px-2 py-1 text-[13px] text-fg/90">{h}</li>

@@ -125,12 +125,12 @@ export default function ListeningPage() {
             </CardHeader>
             <CardContent>
               {showScript ? (
-                <div className="space-y-2 text-[14.5px] leading-relaxed">
+                <div className="lang space-y-2.5 text-[16.5px] leading-relaxed">
                   {ex.transcript.split(/(?=\b[A-Z][a-z]+:\s)/).map((line, i) => {
                     const m = line.match(/^([A-Z][a-z]+):\s([\s\S]*)$/);
                     return (
                       <p key={i} className="text-fg/90">
-                        {m ? <><span className="mr-2 font-medium text-accent-soft">{m[1]}</span>{m[2]}</> : line}
+                        {m ? <><span className="mr-2 font-sans text-[13.5px] font-medium text-accent-soft">{m[1]}</span>{m[2]}</> : line}
                       </p>
                     );
                   })}

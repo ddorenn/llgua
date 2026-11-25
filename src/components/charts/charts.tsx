@@ -11,13 +11,15 @@ import {
   type TooltipContentProps,
 } from "recharts";
 
+/** Chart colours come from theme tokens, so charts follow light/dark automatically. */
 export const CHART = {
-  accent: "#8855D9",
-  accentSoft: "#B28AFF",
-  baseline: "#5B5468",
-  grid: "#24202F",
-  axis: "#6F6879",
-  surface: "#1B1825",
+  accent: "var(--c-accent)",
+  accentSoft: "var(--c-accent-soft)",
+  baseline: "var(--c-chart-baseline)",
+  grid: "var(--c-line)",
+  axis: "var(--c-subtle)",
+  surface: "var(--c-card)",
+  label: "var(--c-muted)",
 };
 
 const axisProps = {
@@ -32,7 +34,7 @@ type Row = Record<string, string | number>;
 function ChartTooltip({ active, payload, label, unit }: Partial<TooltipContentProps<number, string>> & { unit?: string }) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="rounded-md border border-line-strong bg-elevated px-3 py-2 text-[12px] shadow-xl">
+    <div className="rounded-md border border-line bg-card px-3 py-2 text-[12.5px] shadow-pop">
       {label !== undefined && <div className="mb-1 text-muted">{String(label)}</div>}
       {payload.map((p) => (
         <div key={String(p.dataKey)} className="flex items-center gap-2">
@@ -68,8 +70,8 @@ export function ColumnChart({ data, x, y, name, unit, height = 220 }: { data: Ro
         <CartesianGrid vertical={false} stroke={CHART.grid} />
         <XAxis dataKey={x} {...axisProps} />
         <YAxis {...axisProps} allowDecimals={false} width={44} />
-        <Tooltip cursor={{ fill: "rgb(255 255 255 / 0.03)" }} content={<ChartTooltip unit={unit} />} />
-        <Bar dataKey={y} name={name} fill={CHART.accent} radius={[4, 4, 0, 0]} maxBarSize={36} />
+        <Tooltip cursor={{ fill: "var(--c-accent-muted)", opacity: 0.5 }} content={<ChartTooltip unit={unit} />} />
+        <Bar dataKey={y} name={name} fill={CHART.accent} radius={[4, 4, 0, 0]} maxBarSize={22} />
       </BarChart>
     </ResponsiveContainer>
   );
@@ -98,8 +100,8 @@ export function CompareBars({
       <BarChart data={data} layout="vertical" margin={{ top: 0, right: 12, left: 0, bottom: 0 }} barGap={2} barCategoryGap="26%">
         <CartesianGrid horizontal={false} stroke={CHART.grid} />
         <XAxis type="number" domain={[0, 100]} {...axisProps} />
-        <YAxis type="category" dataKey={category} {...axisProps} tick={{ fill: "#A49CAF", fontSize: 12 }} width={84} />
-        <Tooltip cursor={{ fill: "rgb(255 255 255 / 0.03)" }} content={<ChartTooltip unit={unit} />} />
+        <YAxis type="category" dataKey={category} {...axisProps} tick={{ fill: CHART.label, fontSize: 12 }} width={84} />
+        <Tooltip cursor={{ fill: "var(--c-accent-muted)", opacity: 0.5 }} content={<ChartTooltip unit={unit} />} />
         <Bar dataKey={a} name={aName} fill={CHART.baseline} radius={[0, 4, 4, 0]} maxBarSize={10} />
         <Bar dataKey={b} name={bName} fill={CHART.accent} radius={[0, 4, 4, 0]} maxBarSize={10} />
       </BarChart>

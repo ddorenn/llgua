@@ -18,7 +18,7 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000. With no configuration the app runs in **development demo mode** (clearly labelled, *not secure*). Sign in with `demo` / `lingua-demo` (the login screen has a button that fills them in).
+Open http://localhost:3000 — the public landing page. **Enter LINGUA / Log in** leads to sign-in, then to the platform. With no configuration the app runs in **development demo mode** (clearly labelled, *not secure*). Sign in with `demo` / `lingua-demo` (the login screen has a button that fills them in).
 
 Other scripts:
 
@@ -135,8 +135,17 @@ Files marked `"sample": true` show a **Sample content** badge wherever they appe
 
 ---
 
+## Design system
+
+The full concept is in [`docs/superpowers/specs/2026-11-25-lingua-redesign-design.md`](docs/superpowers/specs/2026-11-25-lingua-redesign-design.md).
+
+- **Themes:** Light, Dark and System, chosen in Settings → Appearance or with the quick toggle (top bar, landing header, login). Stored per device; no flash on load; colours cross-fade on change (instant with reduced motion). All colours, shadows and lines are CSS variables in `src/app/globals.css`, and both themes are checked for WCAG AA text contrast.
+- **Type:** Onest for the interface; Literata (the `.lang` class) for the English being learned — examples, words, reading texts, questions, your writing.
+- **Motion:** the `motion` library, used for the landing correction mark, CEFR staircase, tutor demo, page transitions, progress fills, card flip and theme icon. All of it respects `prefers-reduced-motion`.
+- **Vocabulary for other clients:** rules live in `src/lib/vocab` (UI-free); `GET /api/v1/vocabulary` returns cards (word + learner progress) for future clients such as a Telegram Mini App.
+
 ## Tech stack
 
-Next.js 15 (App Router) · TypeScript · Tailwind CSS v4 · shadcn/ui-style primitives (cva + tailwind-merge, in `src/components/ui`) · Recharts · Zod · Supabase (`@supabase/ssr`) · Anthropic SDK · lucide-react. Deploys to Vercel as a standard Next.js app (set the env vars in project settings).
+Next.js 15 (App Router) · TypeScript · Tailwind CSS v4 · Motion · shadcn/ui-style primitives (cva + tailwind-merge, in `src/components/ui`) · Recharts · Zod · Supabase (`@supabase/ssr`) · Anthropic SDK · lucide-react. Deploys to Vercel as a standard Next.js app (set the env vars in project settings).
 
 Architecture details: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).

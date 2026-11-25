@@ -11,6 +11,7 @@ import { useStore, useT } from "@/lib/store/store";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/shared/logo";
 import { Switch } from "@/components/ui/switch";
+import { ThemeToggle } from "@/components/shared/theme-toggle";
 
 export interface ShellUser {
   name: string;
@@ -32,12 +33,11 @@ function NavLink({ item, onNavigate }: { item: NavItem; onNavigate?: () => void 
       onClick={onNavigate}
       aria-current={active ? "page" : undefined}
       className={cn(
-        "group relative flex h-9 items-center gap-3 rounded-md px-2.5 text-[13.5px] transition-colors",
-        active ? "bg-card text-fg" : "text-muted hover:bg-card/60 hover:text-fg",
+        "group relative flex h-9 items-center gap-3 rounded-md px-2.5 text-[14px] transition-colors",
+        active ? "bg-card font-medium text-fg shadow-lift dark:bg-elevated" : "text-muted hover:bg-elevated/70 hover:text-fg",
       )}
     >
-      {active && <span className="absolute left-0 top-1/2 h-4 w-[2px] -translate-y-1/2 rounded-full bg-accent" />}
-      <Icon className={cn("size-[17px] shrink-0", active ? "text-accent-soft" : "text-subtle group-hover:text-muted")} />
+      <Icon className={cn("size-4 shrink-0", active ? "text-accent-soft" : "text-subtle group-hover:text-muted")} strokeWidth={active ? 2.1 : 1.8} />
       <span className="truncate">{t.nav[item.key]}</span>
     </Link>
   );
@@ -58,7 +58,7 @@ function SidebarContent({ user, onNavigate }: { user: ShellUser; onNavigate?: ()
       <nav className="flex-1 space-y-6 overflow-y-auto px-3 py-2" aria-label="Main">
         {NAVIGATION.map((section) => (
           <div key={section.key}>
-            <div className="mb-1.5 px-2.5 text-[11px] font-medium uppercase tracking-[0.14em] text-subtle">{t.nav[section.key]}</div>
+            <div className="mb-1 px-2.5 text-[12.5px] text-subtle">{t.nav[section.key]}</div>
             <div className="space-y-0.5">
               {section.items.map((item) => (
                 <NavLink key={item.href} item={item} onNavigate={onNavigate} />
@@ -71,7 +71,7 @@ function SidebarContent({ user, onNavigate }: { user: ShellUser; onNavigate?: ()
       <div className="space-y-1 border-t border-line p-3">
         <NavLink item={SETTINGS_NAV} onNavigate={onNavigate} />
         <div className="flex items-center gap-3 rounded-md px-2.5 py-2">
-          <div className="flex size-8 shrink-0 items-center justify-center rounded-md border border-line bg-elevated text-[11px] font-semibold text-accent-soft">
+          <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-accent-muted text-[12px] font-semibold text-accent-soft">
             {initials}
           </div>
           <div className="min-w-0 flex-1">
@@ -120,7 +120,7 @@ function SampleToggle() {
   return (
     <label className="flex cursor-pointer items-center gap-2 text-[12px] text-muted" title="Show labelled demonstration analytics">
       <FlaskConical className={cn("size-3.5", state.settings.samplePreview ? "text-warning" : "text-subtle")} />
-      <span className="hidden sm:inline">Sample preview</span>
+      <span className="hidden xl:inline">Sample data</span>
       <Switch
         checked={state.settings.samplePreview}
         onChange={(v) => actions.updateSettings({ samplePreview: v })}
@@ -165,7 +165,7 @@ export function AppShell({ user, children }: { user: ShellUser; children: React.
       {/* Mobile drawer */}
       <div className={cn("fixed inset-0 z-40 lg:hidden", open ? "pointer-events-auto" : "pointer-events-none")} aria-hidden={!open}>
         <div
-          className={cn("absolute inset-0 bg-black/60 transition-opacity duration-200", open ? "opacity-100" : "opacity-0")}
+          className={cn("absolute inset-0 bg-[var(--overlay)] transition-opacity duration-200", open ? "opacity-100" : "opacity-0")}
           onClick={() => setOpen(false)}
         />
         <aside
@@ -190,7 +190,7 @@ export function AppShell({ user, children }: { user: ShellUser; children: React.
       </div>
 
       {/* Top bar */}
-      <header className="sticky top-0 z-20 flex h-14 items-center gap-3 border-b border-line bg-bg/85 px-4 backdrop-blur-md sm:px-6 lg:px-8">
+      <header className="sticky top-0 z-20 flex h-14 items-center gap-2 border-b border-line bg-bg px-3 sm:gap-3 sm:px-6 lg:px-8">
         <button
           type="button"
           onClick={() => setOpen(true)}
@@ -204,13 +204,13 @@ export function AppShell({ user, children }: { user: ShellUser; children: React.
         </Link>
         <div className="flex-1" />
         {user.mode === "demo" && (
-          <span className="hidden items-center gap-1.5 rounded-[5px] border border-warning/30 bg-warning/[0.07] px-2 py-1 text-[11px] font-medium text-warning md:inline-flex">
-            Demo auth
+          <span className="hidden items-center rounded-full bg-warning/14 px-2 py-0.5 text-[11.5px] font-medium text-warning md:inline-flex">
+            Demo sign-in
           </span>
         )}
         <Link
           href={level ? "/learning" : "/assessments"}
-          className="inline-flex h-7 items-center gap-1.5 rounded-[6px] border border-line bg-surface px-2 text-[12px] text-muted transition-colors hover:border-line-strong hover:text-fg"
+          className="inline-flex h-8 items-center gap-1.5 rounded-md px-2 text-[13px] text-muted transition-colors hover:bg-elevated hover:text-fg"
           title={level ? "Current level (self-reported)" : "Level not set yet"}
         >
           <span className="text-subtle">Level</span>
@@ -218,6 +218,7 @@ export function AppShell({ user, children }: { user: ShellUser; children: React.
         </Link>
         <SyncIndicator />
         <SampleToggle />
+        <ThemeToggle />
       </header>
 
       <main id="main" className="mx-auto w-full max-w-[1240px] px-4 pb-28 pt-6 sm:px-6 lg:px-8 lg:pb-12 lg:pt-8">
@@ -227,7 +228,7 @@ export function AppShell({ user, children }: { user: ShellUser; children: React.
       {/* Mobile bottom tabs */}
       <nav
         aria-label="Quick navigation"
-        className="fixed inset-x-0 bottom-0 z-20 grid grid-cols-5 border-t border-line bg-surface/95 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden"
+        className="fixed inset-x-0 bottom-0 z-20 grid grid-cols-5 border-t border-line bg-surface pb-[env(safe-area-inset-bottom)] lg:hidden"
       >
         {MOBILE_TABS.map((item) => {
           const active = isActive(pathname, item.href);

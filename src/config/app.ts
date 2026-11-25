@@ -28,9 +28,3 @@ export const DEFAULT_SETTINGS: Settings = {
   },
   samplePreview: true,
 };
-
-/** Vocabulary review: how many correct answers move a word to the next status. */
-export const VOCAB_PROGRESSION = {
-  reviewAfter: 3,
-  learnedAfter: 5,
-} as const;

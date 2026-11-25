@@ -6,7 +6,7 @@ import { library, type Resource } from "@/lib/content";
 import { cn } from "@/lib/utils";
 import { PageHeader, EmptyState } from "@/components/shared/page";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/section";
 import { Input } from "@/components/ui/input";
 
 const ICONS: Record<string, LucideIcon> = {
@@ -58,7 +58,7 @@ export default function LibraryPage() {
               onClick={() => setCat(active ? "all" : c.id)}
               className={cn(
                 "group flex cursor-pointer flex-col gap-3 rounded-lg border p-4 text-left transition-colors",
-                active ? "border-accent/50 bg-accent-muted/50" : "border-line bg-card hover:border-line-strong",
+                active ? "border-accent-line bg-accent-muted" : "border-line bg-card hover:border-line-strong",
               )}
             >
               <div className="flex items-center justify-between">

@@ -25,7 +25,7 @@ export function ExercisePicker({ items, value, onChange }: { items: PickerItem[]
             aria-pressed={active}
             className={cn(
               "flex min-w-[220px] shrink-0 cursor-pointer items-start gap-3 rounded-lg border px-4 py-3 text-left transition-colors",
-              active ? "border-accent/50 bg-accent-muted/50" : "border-line bg-card hover:border-line-strong",
+              active ? "border-accent-line bg-accent-muted" : "border-line bg-card hover:border-line-strong",
             )}
           >
             <div className="min-w-0 flex-1">

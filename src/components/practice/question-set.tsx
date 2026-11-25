@@ -52,10 +52,10 @@ export function QuestionSet({
           setError(undefined);
         }}
         className={cn(
-          "flex min-h-10 w-full cursor-pointer items-center justify-between gap-2 rounded-md border px-3 py-2 text-left text-[13.5px] transition-colors disabled:cursor-default",
+          "lang flex min-h-10 w-full cursor-pointer items-center justify-between gap-2 rounded-md border px-3 py-2 text-left text-[15px] transition-colors disabled:cursor-default",
           correct ? "border-success/50 bg-success/10 text-fg"
           : wrong ? "border-danger/50 bg-danger/10 text-fg"
-          : selected ? "border-accent/70 bg-accent-muted text-fg"
+          : selected ? "border-accent-line bg-accent-muted text-fg"
           : "border-line bg-surface text-muted hover:border-line-strong hover:text-fg",
         )}
       >
@@ -72,12 +72,12 @@ export function QuestionSet({
         <div
           className={cn(
             "flex items-center justify-between rounded-lg border px-4 py-3",
-            score === questions.length ? "border-success/30 bg-success/[0.07]" : "border-line bg-surface",
+            score === questions.length ? "border-success/30 bg-success/10" : "border-line bg-surface",
           )}
           role="status"
         >
           <div>
-            <div className="text-[12px] uppercase tracking-[0.12em] text-muted">Result</div>
+            <div className="text-[13px] font-medium text-muted">Result</div>
             <div className="tabular text-[22px] font-semibold">
               {score} / {questions.length}
               <span className="ml-2 text-[14px] font-normal text-muted">{Math.round((score / questions.length) * 100)}%</span>
@@ -98,10 +98,10 @@ export function QuestionSet({
 
       {questions.map((q, i) => (
         <fieldset key={q.id}>
-          <legend className="mb-2 text-[14px] text-fg">
-            <span className="tabular mr-2 text-subtle">{i + 1}.</span>
+          <legend className="lang mb-2.5 text-[16px] text-fg">
+            <span className="tabular mr-2 font-sans text-[13px] text-subtle">{i + 1}</span>
             {q.prompt}
-            {q.type === "truefalse" && <span className="ml-2 text-[12px] text-subtle">True or false?</span>}
+            {q.type === "truefalse" && <span className="ml-2 font-sans text-[12.5px] text-subtle">True or false?</span>}
           </legend>
           <div className={cn("grid gap-2", q.type === "truefalse" ? "grid-cols-2" : "sm:grid-cols-2")}>
             {q.type === "mcq" ? q.options.map((o, oi) => option(q, oi, o)) : [option(q, true, "True"), option(q, false, "False")]}

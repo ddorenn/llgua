@@ -19,9 +19,9 @@ export function SamplePreviewBanner() {
   const t = useT();
   if (!state.settings.samplePreview) return null;
   return (
-    <div className="flex flex-col gap-2 rounded-md border border-warning/25 bg-warning/[0.06] px-3.5 py-2.5 text-[12.5px] text-warning sm:flex-row sm:items-center sm:justify-between">
+    <div className="flex flex-col gap-2 rounded-r-md border-l-2 border-warning bg-surface px-4 py-3 text-[13px] text-muted sm:flex-row sm:items-center sm:justify-between">
       <span className="flex items-start gap-2">
-        <FlaskConical className="mt-0.5 size-3.5 shrink-0" />
+        <FlaskConical className="mt-0.5 size-3.5 shrink-0 text-warning" />
         {t.common.samplePreviewOn}
       </span>
       <button

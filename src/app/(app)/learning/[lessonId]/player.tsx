@@ -26,7 +26,7 @@ function Quiz({ block, onResult }: { block: QuizBlock; onResult: (score: number,
     <div className="space-y-5">
       {block.questions.map((q, qi) => (
         <fieldset key={q.id}>
-          <legend className="mb-2.5 text-[14px] text-fg">
+          <legend className="lang mb-2.5 text-[17px] text-fg">
             <span className="tabular mr-2 text-subtle">{qi + 1}.</span>
             {q.prompt}
           </legend>
@@ -43,10 +43,10 @@ function Quiz({ block, onResult }: { block: QuizBlock; onResult: (score: number,
                   onClick={() => setAnswers((a) => ({ ...a, [q.id]: oi }))}
                   aria-pressed={selected}
                   className={cn(
-                    "flex h-10 cursor-pointer items-center justify-between rounded-md border px-3 text-left text-[13.5px] transition-colors disabled:cursor-default",
+                    "lang flex h-11 cursor-pointer items-center justify-between rounded-md border px-3 text-left text-[15.5px] transition-colors disabled:cursor-default",
                     correct ? "border-success/50 bg-success/10 text-fg"
                     : wrong ? "border-danger/50 bg-danger/10 text-fg"
-                    : selected ? "border-accent/70 bg-accent-muted text-fg"
+                    : selected ? "border-accent-line bg-accent-muted text-fg"
                     : "border-line bg-surface text-muted hover:border-line-strong hover:text-fg",
                   )}
                 >
@@ -138,7 +138,7 @@ export function LessonPlayer({ lessonId }: { lessonId: string }) {
       {lesson.objectives.length > 0 && (
         <Card>
           <CardContent className="py-4">
-            <div className="mb-2 flex items-center gap-2 text-[12px] font-medium uppercase tracking-[0.12em] text-muted">
+            <div className="mb-2 flex items-center gap-2 text-[13px] font-medium text-muted">
               <Target className="size-3.5" /> Objectives
             </div>
             <ul className="space-y-1.5">
@@ -157,7 +157,7 @@ export function LessonPlayer({ lessonId }: { lessonId: string }) {
           {b.type === "text" && (
             <>
               {b.title && <h2 className="mb-3 text-[16px] font-medium">{b.title}</h2>}
-              <RichText text={b.body} className="text-[15px] leading-[1.75] text-fg/85" />
+              <RichText text={b.body} className="max-w-[64ch] text-[16px] leading-[1.75] text-fg/90" />
             </>
           )}
           {b.type === "examples" && (
@@ -166,7 +166,7 @@ export function LessonPlayer({ lessonId }: { lessonId: string }) {
               <div className="overflow-hidden rounded-lg border border-line">
                 {b.items.map((ex, j) => (
                   <div key={j} className="grid gap-1 border-b border-line bg-card px-4 py-3 last:border-0 sm:grid-cols-2 sm:gap-6">
-                    <span className="text-[14.5px] text-fg">{ex.en}</span>
+                    <span className="lang text-[17px] text-fg">{ex.en}</span>
                     {ex.ru && <span className="text-[14px] text-muted">{ex.ru}</span>}
                   </div>
                 ))}
@@ -174,7 +174,7 @@ export function LessonPlayer({ lessonId }: { lessonId: string }) {
             </>
           )}
           {b.type === "tip" && (
-            <div className="flex gap-3 rounded-lg border border-accent/25 bg-accent-muted px-4 py-3.5 text-[14px] text-fg/90">
+            <div className="flex gap-3 rounded-lg border border-accent-line bg-accent-muted px-4 py-3.5 text-[14px] text-fg/90">
               <Lightbulb className="mt-0.5 size-4 shrink-0 text-accent-soft" />
               <RichText text={b.body} />
             </div>

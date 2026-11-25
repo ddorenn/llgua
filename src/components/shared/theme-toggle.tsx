@@ -75,7 +75,7 @@ export function ThemePicker() {
 
 function ThemeSwatch({ kind }: { kind: ThemePreference }) {
   const light = { bg: "#f1eff3", card: "#fbfafc", line: "#e2dee7", ink: "#23212a", acc: "#5e45b8" };
-  const dark = { bg: "#18171c", card: "#26232c", line: "#302d37", ink: "#ece9f1", acc: "#8c6ee6" };
+  const dark = { bg: "#18171c", card: "#26232c", line: "#302d37", ink: "#ece9f1", acc: "#7655d6" };
   const half = (c: typeof light) => (
     <div className="flex h-full flex-col gap-1.5 p-2" style={{ background: c.bg }}>
       <div className="h-1.5 w-8 rounded-full" style={{ background: c.ink, opacity: 0.8 }} />

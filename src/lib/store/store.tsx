@@ -1,7 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { APP, VOCAB_PROGRESSION } from "@/config/app";
+import { APP } from "@/config/app";
+import { applyReview, applyStatus } from "@/lib/vocab";
 import { LocalStorageAdapter, type StateAdapter, type SyncStatus } from "@/lib/db/adapter";
 import { RemoteStateAdapter } from "@/lib/db/remote-adapter";
 import { getDictionary } from "@/lib/i18n";
@@ -69,31 +70,12 @@ function makeActions(update: (fn: Updater) => void) {
         return { ...s, lessons };
       });
     },
-    /** Record a vocabulary review answer and advance/regress status. */
+    /** Record a vocabulary review answer (rules live in lib/vocab). */
     reviewWord(wordId: string, knewIt: boolean) {
-      update((s) => {
-        const prev: UserVocab = s.vocabulary[wordId] ?? { status: "new", reviews: 0, correct: 0 };
-        const correct = knewIt ? prev.correct + 1 : Math.max(0, prev.correct - 1);
-        // Status is derived purely from the number of net correct answers.
-        const status: UserVocab["status"] =
-          correct >= VOCAB_PROGRESSION.learnedAfter ? "learned"
-          : correct >= VOCAB_PROGRESSION.reviewAfter ? "review"
-          : "learning";
-        return {
-          ...s,
-          vocabulary: {
-            ...s.vocabulary,
-            [wordId]: { status, reviews: prev.reviews + 1, correct, lastReviewed: new Date().toISOString() },
-          },
-        };
-      });
+      update((s) => ({ ...s, vocabulary: { ...s.vocabulary, [wordId]: applyReview(s.vocabulary[wordId], knewIt) } }));
     },
     setWordStatus(wordId: string, status: UserVocab["status"]) {
-      update((s) => {
-        const prev = s.vocabulary[wordId] ?? { status: "new", reviews: 0, correct: 0 };
-        const correct = status === "learned" ? Math.max(prev.correct, VOCAB_PROGRESSION.learnedAfter) : status === "new" ? 0 : prev.correct;
-        return { ...s, vocabulary: { ...s.vocabulary, [wordId]: { ...prev, status, correct } } };
-      });
+      update((s) => ({ ...s, vocabulary: { ...s.vocabulary, [wordId]: applyStatus(s.vocabulary[wordId], status) } }));
     },
     logReviewSession(count: number) {
       if (count > 0) update((s) => logActivity(s, "vocabulary", `Reviewed ${count} vocabulary card${count === 1 ? "" : "s"}`));

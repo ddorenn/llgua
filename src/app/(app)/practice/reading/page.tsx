@@ -49,7 +49,7 @@ export default function ReadingPage() {
             </Button>
           </CardHeader>
           <CardContent>
-            <article className={cn("space-y-4 font-[450] text-fg/90", large ? "text-[18px] leading-[1.85]" : "text-[15.5px] leading-[1.8]")}>
+            <article className={cn("lang max-w-[62ch] space-y-5 text-fg", large ? "text-[20px] leading-[1.85]" : "text-[17.5px] leading-[1.8]")}>
               {ex.text.split(/\n{2,}/).map((p, i) => (
                 <p key={i}>{p}</p>
               ))}
