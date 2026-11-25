@@ -37,7 +37,7 @@ function Section({ id, icon: Icon, title, description, children, footer }: {
 
 function Row({ label, hint, children, htmlFor }: { label: string; hint?: string; children: React.ReactNode; htmlFor?: string }) {
   return (
-    <div className="grid gap-2 sm:grid-cols-[220px_1fr] sm:items-center sm:gap-6">
+    <div className="grid grid-cols-1 gap-2 sm:grid-cols-[220px_1fr] sm:items-center sm:gap-6">
       <div>
         <Label htmlFor={htmlFor} className="mb-0">{label}</Label>
         {hint && <p className="mt-0.5 text-[12px] text-subtle">{hint}</p>}

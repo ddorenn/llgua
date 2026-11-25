@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
+import { Markdown } from "@/components/shared/markdown";
 
 const ICONS: Record<string, LucideIcon> = {
   "graduation-cap": GraduationCap,
@@ -82,7 +83,7 @@ export default function TutorPage() {
       actions.appendTutorMessage(modeId, {
         role: "system",
         kind: "notice",
-        content: "Your message is saved, but no AI provider is connected yet, so there is no reply. Add ANTHROPIC_API_KEY to .env.local to enable the tutor.",
+        content: "Your message is saved, but no AI provider is connected yet, so there is no reply. Add an AI provider key (GROQ_API_KEY or ANTHROPIC_API_KEY) to .env.local to enable the tutor.",
       });
       return;
     }
@@ -227,11 +228,11 @@ export default function TutorPage() {
                     </div>
                     <div
                       className={cn(
-                        "max-w-[85%] whitespace-pre-wrap rounded-lg px-3.5 py-2.5 text-[14px] leading-relaxed",
-                        m.role === "user" ? "bg-accent text-white" : "border border-line bg-card text-fg/90",
+                        "min-w-0 max-w-[85%] break-words rounded-lg px-3.5 py-2.5 text-[14px] leading-relaxed",
+                        m.role === "user" ? "whitespace-pre-wrap bg-accent text-white" : "border border-line bg-card text-fg/90",
                       )}
                     >
-                      {m.content}
+                      {m.role === "assistant" ? <Markdown text={m.content} /> : m.content}
                     </div>
                   </div>
                 ),
@@ -293,7 +294,7 @@ export default function TutorPage() {
               maxLength={8000}
               placeholder={`Message ${mode.name}…`}
               aria-label="Message"
-              className="max-h-[180px] min-h-8 flex-1 resize-none bg-transparent py-1.5 text-[14px] text-fg placeholder:text-subtle focus:outline-none"
+              className="max-h-[180px] min-h-8 flex-1 resize-none bg-transparent py-1.5 text-[16px] text-fg placeholder:text-subtle focus:outline-none focus-visible:outline-none sm:text-[14px]"
             />
             <Button type="submit" size="icon-sm" aria-label="Send" disabled={!input.trim() || sending}>
               {sending ? <Loader2 className="animate-spin" /> : <ArrowUp />}
@@ -348,7 +349,7 @@ export default function TutorPage() {
             ? `${status?.provider} · ${status?.model}`
             : statusError
               ? "Could not reach the tutor API."
-              : "Not connected. Configure ANTHROPIC_API_KEY on the server. Mode instructions live in content/ai/."}
+              : "Not connected. Set GROQ_API_KEY or ANTHROPIC_API_KEY on the server. Mode instructions live in content/ai/."}
         </p>
       </aside>
     </div>

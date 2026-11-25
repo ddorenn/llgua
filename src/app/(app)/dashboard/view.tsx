@@ -72,7 +72,7 @@ export function DashboardView() {
       <SamplePreviewBanner />
 
       {/* Hero */}
-      <section className="grid gap-4 lg:grid-cols-[1.6fr_1fr]">
+      <section className="grid grid-cols-1 gap-4 lg:grid-cols-[1.6fr_1fr]">
         <Card className="relative overflow-hidden">
           <div aria-hidden className="pointer-events-none absolute -right-24 -top-24 size-72 rounded-full bg-accent/10 blur-3xl" />
           <CardContent className="relative flex h-full flex-col justify-between gap-8 p-6 sm:p-7">
@@ -159,7 +159,7 @@ export function DashboardView() {
         </div>
       </section>
 
-      <section className="grid gap-4 lg:grid-cols-3">
+      <section className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         {/* Today's plan */}
         <Card className="lg:col-span-2">
           <CardHeader>
@@ -246,7 +246,7 @@ export function DashboardView() {
         </Card>
       </section>
 
-      <section className="grid gap-4 lg:grid-cols-3">
+      <section className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         {/* Weak areas */}
         <Card>
           <CardHeader>

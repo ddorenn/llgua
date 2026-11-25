@@ -73,7 +73,7 @@ export function AssessmentRunner({ id }: { id: string }) {
               ].map(([k, v]) => (
                 <div key={k} className="rounded-md border border-line bg-surface px-3 py-3">
                   <div className="text-[11.5px] text-subtle">{k}</div>
-                  <div className="tabular mt-1 text-[18px] font-semibold">{v}</div>
+                  <div className="tabular mt-1 text-[16px] sm:text-[18px] font-semibold">{v}</div>
                 </div>
               ))}
             </div>

@@ -267,7 +267,7 @@ export default function VocabularyPage() {
           action={<Button variant="secondary" size="sm" onClick={() => { setQuery(""); setLevel("all"); setStatus("all"); }}><RotateCcw /> Reset filters</Button>}
         />
       ) : (
-        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {filtered.map((w) => (
             <WordCard key={w.id} w={w} hideTranslation={hide} />
           ))}

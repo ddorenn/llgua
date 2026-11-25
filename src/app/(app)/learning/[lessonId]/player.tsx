@@ -30,7 +30,7 @@ function Quiz({ block, onResult }: { block: QuizBlock; onResult: (score: number,
             <span className="tabular mr-2 text-subtle">{qi + 1}.</span>
             {q.prompt}
           </legend>
-          <div className="grid gap-2 sm:grid-cols-3">
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
             {q.options.map((opt, oi) => {
               const selected = answers[q.id] === oi;
               const correct = checked && oi === q.answer;

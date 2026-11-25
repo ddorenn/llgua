@@ -34,7 +34,7 @@ export default function ReadingPage() {
         onChange={setId}
         items={exercises.map((e) => ({ ...e, done: state.reading[e.id] ? `${state.reading[e.id].score}/${state.reading[e.id].total}` : undefined }))}
       />
-      <div className="grid gap-5 lg:grid-cols-[1.2fr_1fr]">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.2fr_1fr]">
         <Card>
           <CardHeader className="items-center">
             <div className="min-w-0">

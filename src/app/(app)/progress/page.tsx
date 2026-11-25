@@ -121,7 +121,7 @@ export default function ProgressPage() {
         }
       />
 
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr_1fr]">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr_1fr]">
         <Card className="sm:col-span-2 lg:col-span-1">
           <CardContent className="flex items-center gap-5 p-5">
             <ProgressRing value={kpi.overall} size={84} stroke={6}>
@@ -164,7 +164,7 @@ export default function ProgressPage() {
         </Card>
       ) : (
         <>
-          <div className="grid gap-4 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
             <Card>
               <CardHeader>
                 <div>
@@ -206,7 +206,7 @@ export default function ProgressPage() {
             </Card>
           </div>
 
-          <div className="grid gap-4 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
             <Card>
               <CardHeader>
                 <div>

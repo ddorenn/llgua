@@ -103,7 +103,7 @@ export default function ListeningPage() {
         onChange={setId}
         items={exercises.map((e) => ({ ...e, done: state.listening[e.id] ? `${state.listening[e.id].score}/${state.listening[e.id].total}` : undefined }))}
       />
-      <div className="grid gap-5 lg:grid-cols-[1.1fr_1fr]">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.1fr_1fr]">
         <div className="space-y-5">
           <Card>
             <CardHeader>

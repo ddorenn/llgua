@@ -67,7 +67,7 @@ export default function WritingPage() {
         items={tasks.map((t) => ({ ...t, done: state.writing[t.id]?.submittedAt ? "Submitted" : undefined }))}
       />
 
-      <div className="grid gap-5 lg:grid-cols-[1.45fr_1fr]">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.45fr_1fr]">
         <Card className="flex flex-col">
           <CardHeader>
             <div>

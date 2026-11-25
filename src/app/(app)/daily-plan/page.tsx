@@ -97,7 +97,7 @@ export default function DailyPlanPage() {
         }
       />
 
-      <div className="grid gap-4 lg:grid-cols-[1fr_320px]">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_320px]">
         <Card>
           <CardHeader className="items-center">
             <div>
@@ -131,7 +131,7 @@ export default function DailyPlanPage() {
                   <li
                     key={b.id}
                     className={cn(
-                      "flex items-start gap-4 rounded-lg border p-4 transition-colors",
+                      "flex flex-wrap items-start gap-x-4 gap-y-3 rounded-lg border p-4 transition-colors sm:flex-nowrap",
                       done ? "border-line bg-surface/60" : isFocus ? "border-accent/50 bg-accent-muted/40" : "border-line bg-surface",
                     )}
                   >
@@ -160,10 +160,10 @@ export default function DailyPlanPage() {
                       </div>
                       <p className="mt-1 text-[13px] leading-relaxed text-muted">{b.description}</p>
                     </div>
-                    <div className="flex shrink-0 flex-col items-end gap-1.5 sm:flex-row sm:items-center">
+                    <div className="ml-11 flex w-full shrink-0 items-center gap-1.5 sm:ml-0 sm:w-auto">
                       {!done && (
                         <Button variant={isFocus ? "secondary" : "ghost"} size="sm" onClick={() => setFocusId(b.id)} aria-label={`Focus on ${r.title}`}>
-                          <Timer /> <span className="hidden sm:inline">Focus</span>
+                          <Timer /> <span>Focus</span>
                         </Button>
                       )}
                       {r.href && (

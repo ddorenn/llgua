@@ -30,7 +30,7 @@ export default function AssessmentsPage() {
         CEFR level. A validated item bank and scoring model will replace them later.
       </Notice>
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         {assessments.map((a) => {
           const Icon = TYPE_ICON[a.type];
           const attempts = history.filter((h) => h.assessmentId === a.id);

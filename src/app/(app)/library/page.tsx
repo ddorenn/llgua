@@ -80,7 +80,7 @@ export default function LibraryPage() {
       </div>
 
       {filtered.length ? (
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((r) => (
             <Card key={r.id}>
               <CardContent className="space-y-2 p-4">
@@ -101,7 +101,7 @@ export default function LibraryPage() {
           ))}
         </div>
       ) : (
-        <div className="grid gap-4 lg:grid-cols-[1fr_1.1fr]">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_1.1fr]">
           <EmptyState
             icon={FolderPlus}
             title={resources.length ? "No resources match" : "Your library is empty"}

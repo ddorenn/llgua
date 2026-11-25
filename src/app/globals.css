@@ -85,6 +85,15 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+/* iOS/iPadOS Safari zooms into any focused field smaller than 16px — keep fields at 16px on phones and touch screens. */
+@media (max-width: 639px), (pointer: coarse) {
+  input:not([type="checkbox"]):not([type="radio"]),
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

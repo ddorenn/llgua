@@ -154,7 +154,7 @@ export default function SpeakingPage() {
         onChange={setId}
         items={tasks.map((t) => ({ ...t, done: state.speaking[t.id]?.recordings ? `${state.speaking[t.id].recordings} take${state.speaking[t.id].recordings > 1 ? "s" : ""}` : undefined }))}
       />
-      <div className="grid gap-5 lg:grid-cols-[1.1fr_1fr]">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.1fr_1fr]">
         <div className="space-y-5">
           <Card>
             <CardHeader>

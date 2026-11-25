@@ -172,7 +172,7 @@ export default function HomeworkPage() {
         ))}
       </div>
 
-      <div className="grid gap-5 lg:grid-cols-[1fr_1.15fr]">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1fr_1.15fr]">
         <div className="space-y-3">
           <Tabs
             value={tab}
