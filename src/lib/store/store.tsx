@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { APP } from "@/config/app";
+import { APP, DEFAULT_SETTINGS } from "@/config/app";
 import { applyReview, applyStatus } from "@/lib/vocab";
 import { LocalStorageAdapter, type StateAdapter, type SyncStatus } from "@/lib/db/adapter";
 import { RemoteStateAdapter } from "@/lib/db/remote-adapter";
@@ -174,7 +174,16 @@ function createAdapter(storage?: StorageConfig): StateAdapter {
   return new LocalStorageAdapter(APP.storageKey);
 }
 
-export function StoreProvider({ children, storage }: { children: React.ReactNode; storage?: StorageConfig }) {
+export function StoreProvider({
+  children,
+  storage,
+  defaultName,
+}: {
+  children: React.ReactNode;
+  storage?: StorageConfig;
+  /** Profile name used until the learner sets their own display name. */
+  defaultName?: string;
+}) {
   const adapterRef = React.useRef<StateAdapter | null>(null);
   if (!adapterRef.current) adapterRef.current = createAdapter(storage);
   const [state, setState] = React.useState<LinguaState>(createInitialState);
@@ -198,7 +207,12 @@ export function StoreProvider({ children, storage }: { children: React.ReactNode
       if (!alive) return;
       const next = hydrate(persisted);
       fromStorage.current = next;
-      setState(next);
+      // First visit: take the name from the profile instead of the generic default.
+      if (defaultName && next.settings.displayName === DEFAULT_SETTINGS.displayName && !next.settings.updatedAt) {
+        setState({ ...next, settings: { ...next.settings, displayName: defaultName } });
+      } else {
+        setState(next);
+      }
       setReady(true);
     });
     return () => {
@@ -208,7 +222,7 @@ export function StoreProvider({ children, storage }: { children: React.ReactNode
       detach?.();
       adapter.dispose?.();
     };
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   React.useEffect(() => {
     if (!ready || state === fromStorage.current) return;
