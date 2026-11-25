@@ -5,17 +5,29 @@ import * as React from "react";
  * Supports: headings (#..###), paragraphs, bullet & numbered lists, **bold**, *italic*, `code`,
  * fenced code blocks, horizontal rules and simple pipe tables.
  */
+const INLINE =
+  /`([^`]+)`|\*\*(.+?)\*\*|\*((?:\*\*.+?\*\*|[^*\s])(?:\*\*.+?\*\*|[^*])*?)\*(?!\*)|(?<![\w])_([^_\n]+?)_(?![\w])/;
+
+/** Recursive inline parser: `code`, **bold**, *italic* (may contain **bold**), _italic_. */
 function inline(text: string, key: string): React.ReactNode[] {
-  const parts = text.split(/(`[^`]+`|\*\*[^*]+\*\*|\*[^*\s][^*]*\*|_[^_\s][^_]*_)/g).filter(Boolean);
-  return parts.map((p, i) => {
-    const k = `${key}-${i}`;
-    if (p.startsWith("`") && p.endsWith("`") && p.length > 1)
-      return <code key={k} className="rounded bg-elevated px-1 py-0.5 font-mono text-[0.9em] text-accent-soft">{p.slice(1, -1)}</code>;
-    if (p.startsWith("**") && p.endsWith("**") && p.length > 4) return <strong key={k} className="font-semibold text-fg">{p.slice(2, -2)}</strong>;
-    if ((p.startsWith("*") && p.endsWith("*")) || (p.startsWith("_") && p.endsWith("_")))
-      return <em key={k}>{p.slice(1, -1)}</em>;
-    return <React.Fragment key={k}>{p}</React.Fragment>;
-  });
+  const out: React.ReactNode[] = [];
+  let rest = text;
+  let i = 0;
+  while (rest) {
+    const m = INLINE.exec(rest);
+    if (!m) {
+      out.push(<React.Fragment key={`${key}-${i++}`}>{rest}</React.Fragment>);
+      break;
+    }
+    if (m.index > 0) out.push(<React.Fragment key={`${key}-${i++}`}>{rest.slice(0, m.index)}</React.Fragment>);
+    const k = `${key}-${i++}`;
+    if (m[1] !== undefined)
+      out.push(<code key={k} className="rounded bg-elevated px-1 py-0.5 font-mono text-[0.9em] text-accent-soft">{m[1]}</code>);
+    else if (m[2] !== undefined) out.push(<strong key={k} className="font-semibold text-fg">{inline(m[2], k)}</strong>);
+    else out.push(<em key={k}>{inline(m[3] ?? m[4], k)}</em>);
+    rest = rest.slice(m.index + m[0].length);
+  }
+  return out;
 }
 
 function isTableSep(line: string) {
