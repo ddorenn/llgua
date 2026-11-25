@@ -1,0 +1,48 @@
+/** English UI dictionary. Keys are the source of truth; other locales must match its shape. */
+export const en = {
+  nav: {
+    section_main: "Overview",
+    section_practice: "Practice",
+    section_track: "Track",
+    dashboard: "Dashboard",
+    learning: "My Learning",
+    dailyPlan: "Daily Plan",
+    tutor: "AI Tutor",
+    homework: "Homework",
+    vocabulary: "Vocabulary",
+    reading: "Reading",
+    listening: "Listening",
+    speaking: "Speaking",
+    writing: "Writing",
+    progress: "Progress",
+    assessments: "Assessments",
+    library: "Library",
+    settings: "Settings",
+    signOut: "Sign out",
+  },
+  common: {
+    sampleData: "Sample data",
+    sampleContent: "Sample content",
+    samplePreviewOn: "Sample preview is on — charts and stats below are demonstration data, not your results.",
+    showMyData: "Show my data",
+    minutes: "min",
+    submit: "Submit",
+    continue: "Continue",
+    start: "Start",
+    retry: "Try again",
+    notConnected: "Not connected",
+  },
+  auth: {
+    title: "Welcome back",
+    subtitle: "Sign in to your private learning space.",
+    username: "Username or email",
+    password: "Password",
+    remember: "Keep me signed in for 30 days",
+    signIn: "Sign in",
+    signingIn: "Signing in…",
+    privateNote: "Private workspace · No public registration",
+  },
+  dashboard: { greeting_morning: "Good morning", greeting_afternoon: "Good afternoon", greeting_evening: "Good evening" },
+};
+
+export type Dictionary = typeof en;

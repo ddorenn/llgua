@@ -1,0 +1,53 @@
+{
+  "meta": { "sample": true, "source": "Fabricated demonstration analytics for UI preview only. These are NOT your results.", "version": 1 },
+  "level": "B1",
+  "streak": 9,
+  "wordsLearned": 186,
+  "lessonsCompleted": 23,
+  "studyMinutesWeek": 342,
+  "overallProgress": 38,
+  "weeklyActivity": [
+    { "day": "Mon", "minutes": 60 }, { "day": "Tue", "minutes": 55 }, { "day": "Wed", "minutes": 40 },
+    { "day": "Thu", "minutes": 60 }, { "day": "Fri", "minutes": 32 }, { "day": "Sat", "minutes": 75 }, { "day": "Sun", "minutes": 20 }
+  ],
+  "skills": [
+    { "skill": "Grammar", "initial": 48, "current": 61 },
+    { "skill": "Vocabulary", "initial": 52, "current": 64 },
+    { "skill": "Reading", "initial": 60, "current": 68 },
+    { "skill": "Listening", "initial": 41, "current": 50 },
+    { "skill": "Writing", "initial": 38, "current": 47 },
+    { "skill": "Speaking", "initial": 35, "current": 44 }
+  ],
+  "grammarTopics": [
+    { "topic": "Present Perfect", "mastery": 72 }, { "topic": "Past Simple", "mastery": 85 },
+    { "topic": "Conditionals", "mastery": 46 }, { "topic": "Articles", "mastery": 39 }, { "topic": "Passive voice", "mastery": 30 }
+  ],
+  "vocabularyGrowth": [
+    { "week": "W1", "words": 40 }, { "week": "W2", "words": 78 }, { "week": "W3", "words": 121 }, { "week": "W4", "words": 150 }, { "week": "W5", "words": 186 }
+  ],
+  "assessments": [
+    { "date": "2026-10-14", "title": "Initial Assessment", "score": 54 },
+    { "date": "2026-10-21", "title": "Weekly Assessment", "score": 60 },
+    { "date": "2026-10-28", "title": "14-Day Progress Assessment", "score": 63 },
+    { "date": "2026-11-04", "title": "Weekly Assessment", "score": 67 }
+  ],
+  "mistakes": [
+    { "category": "Articles (a/an/the)", "count": 34 },
+    { "category": "Present Perfect vs Past", "count": 21 },
+    { "category": "Prepositions", "count": 18 },
+    { "category": "Word order", "count": 11 },
+    { "category": "Spelling", "count": 7 }
+  ],
+  "weakAreas": ["Articles (a/an/the)", "Listening at natural speed", "Speaking fluency"],
+  "recentActivity": [
+    { "label": "Completed lesson “Present Perfect vs Past Simple”", "when": "2 h ago", "type": "lesson" },
+    { "label": "Reviewed 24 vocabulary cards", "when": "Today", "type": "vocabulary" },
+    { "label": "Submitted homework “Opinion paragraph”", "when": "Yesterday", "type": "homework" },
+    { "label": "Weekly Assessment — 67%", "when": "3 days ago", "type": "assessment" }
+  ],
+  "tutorReport": {
+    "date": "2026-11-24",
+    "summary": "Consistent daily practice this week. Grammar accuracy on Present Perfect improved; articles remain the most frequent error type. Listening scores lag behind reading.",
+    "recommendations": ["Add 5 minutes of article drills to grammar blocks", "Use listening exercises at B1 before moving to B2", "Record one speaking answer every other day"]
+  }
+}

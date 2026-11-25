@@ -1,0 +1,12 @@
+{
+  "meta": { "sample": false, "source": "Library index. Add your own materials and metadata here.", "version": 1 },
+  "categories": [
+    { "id": "grammar", "title": "Grammar", "description": "Reference explanations, grammar tables, exercise books." },
+    { "id": "vocabulary", "title": "Vocabulary", "description": "Word lists, topic vocabulary, collocations and phrasal verbs." },
+    { "id": "reading", "title": "Reading", "description": "Graded readers, articles and texts with questions." },
+    { "id": "listening", "title": "Listening", "description": "Audio, podcasts and scripts with comprehension tasks." },
+    { "id": "writing", "title": "Writing", "description": "Model texts, templates and evaluation criteria." },
+    { "id": "speaking", "title": "Speaking", "description": "Conversation topics, role-plays and pronunciation material." }
+  ],
+  "resources": []
+}

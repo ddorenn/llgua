@@ -1,0 +1,12 @@
+{
+  "meta": { "sample": false, "source": "LINGUA tutor mode registry. Edit freely.", "version": 1 },
+  "baseInstructions": "base.md",
+  "modes": [
+    { "id": "teacher", "name": "Teacher", "short": "Explanations & lessons", "icon": "graduation-cap", "instructions": "modes/teacher.md", "suggestions": ["Explain the difference between Present Perfect and Past Simple", "Why do we say “interested in” and not “interested about”?", "Give me 5 examples of second conditionals"] },
+    { "id": "examiner", "name": "Examiner", "short": "Assessment & homework checks", "icon": "clipboard-check", "instructions": "modes/examiner.md", "suggestions": ["Check my paragraph for grammar mistakes", "Give me a 5-question quiz on articles", "Grade this sentence: I have seen him yesterday."] },
+    { "id": "planner", "name": "Planner", "short": "Learning plans", "icon": "calendar-range", "instructions": "modes/planner.md", "suggestions": ["Build my plan for the next 7 days", "I only have 30 minutes today — what should I do?", "How should I prepare for IELTS in 6 months?"] },
+    { "id": "analyst", "name": "Analyst", "short": "Progress analysis", "icon": "line-chart", "instructions": "modes/analyst.md", "suggestions": ["What are my weakest areas?", "Summarise my progress this week", "Which mistakes do I repeat most often?"] },
+    { "id": "speaking", "name": "Speaking Partner", "short": "Conversation practice", "icon": "messages-square", "instructions": "modes/speaking-partner.md", "suggestions": ["Let's talk about travel", "Role-play a job interview with me", "Ask me questions about my weekend"] },
+    { "id": "vocabulary", "name": "Vocabulary Coach", "short": "Vocabulary training", "icon": "book-a", "instructions": "modes/vocabulary-coach.md", "suggestions": ["Quiz me on my learning words", "Teach me 5 phrasal verbs with “get”", "What's the difference between “borrow” and “lend”?"] }
+  ]
+}

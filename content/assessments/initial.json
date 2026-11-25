@@ -1,0 +1,48 @@
+{
+  "meta": { "sample": true, "source": "Demonstration items written for LINGUA. NOT a validated placement test.", "version": 1 },
+  "id": "initial",
+  "type": "initial",
+  "title": "Initial Assessment",
+  "description": "A short diagnostic across grammar, vocabulary and reading to create a starting snapshot.",
+  "minutes": 20,
+  "validated": false,
+  "sections": [
+    {
+      "id": "grammar",
+      "title": "Grammar",
+      "skill": "grammar",
+      "questions": [
+        { "id": "g1", "type": "mcq", "level": "A1", "prompt": "She ___ a teacher.", "options": ["am", "is", "are", "be"], "answer": 1, "tag": "to-be" },
+        { "id": "g2", "type": "mcq", "level": "A2", "prompt": "We ___ to the cinema last night.", "options": ["go", "goes", "went", "have gone"], "answer": 2, "tag": "past-simple" },
+        { "id": "g3", "type": "mcq", "level": "B1", "prompt": "I ___ here since 2019.", "options": ["live", "lived", "have lived", "am living"], "answer": 2, "tag": "present-perfect" },
+        { "id": "g4", "type": "mcq", "level": "B1", "prompt": "If it rains, we ___ at home.", "options": ["stay", "will stay", "would stay", "stayed"], "answer": 1, "tag": "conditionals" },
+        { "id": "g5", "type": "mcq", "level": "B2", "prompt": "If I ___ about the problem, I would have helped.", "options": ["knew", "had known", "have known", "would know"], "answer": 1, "tag": "conditionals" },
+        { "id": "g6", "type": "gap", "level": "A2", "prompt": "There isn't ___ milk in the fridge. (some / any)", "accepted": ["any"], "tag": "quantifiers" },
+        { "id": "g7", "type": "mcq", "level": "C1", "prompt": "Not only ___ late, but he also forgot the tickets.", "options": ["he was", "was he", "he is", "did he"], "answer": 1, "tag": "inversion" },
+        { "id": "g8", "type": "mcq", "level": "B2", "prompt": "The bridge ___ in 1890.", "options": ["built", "was built", "has built", "is building"], "answer": 1, "tag": "passive" }
+      ]
+    },
+    {
+      "id": "vocabulary",
+      "title": "Vocabulary",
+      "skill": "vocabulary",
+      "questions": [
+        { "id": "v1", "type": "mcq", "level": "A1", "prompt": "The opposite of “cheap” is…", "options": ["expensive", "small", "easy", "fast"], "answer": 0, "tag": "adjectives" },
+        { "id": "v2", "type": "mcq", "level": "B1", "prompt": "I'm really looking forward ___ the holiday.", "options": ["for", "to", "at", "on"], "answer": 1, "tag": "prepositions" },
+        { "id": "v3", "type": "mcq", "level": "B2", "prompt": "She made a ___ effort to finish on time.", "options": ["strong", "deliberate", "heavy", "tall"], "answer": 1, "tag": "collocations" },
+        { "id": "v4", "type": "mcq", "level": "C1", "prompt": "His explanation was so ___ that nobody understood it.", "options": ["lucid", "convoluted", "concise", "vivid"], "answer": 1, "tag": "advanced-adjectives" },
+        { "id": "v5", "type": "gap", "level": "A2", "prompt": "Can I ___ your pen? I'll give it back. (borrow / lend)", "accepted": ["borrow"], "tag": "confusing-words" }
+      ]
+    },
+    {
+      "id": "reading",
+      "title": "Reading",
+      "skill": "reading",
+      "passage": "Most people believe that multitasking makes them more productive. Research suggests the opposite: when we switch between tasks, our brain needs time to refocus, and small delays add up. People who focus on one task at a time often finish faster and make fewer mistakes.",
+      "questions": [
+        { "id": "r1", "type": "mcq", "level": "B1", "prompt": "What does the research suggest?", "options": ["Multitasking is more productive", "Switching tasks costs time", "The brain never needs to refocus", "Mistakes are unavoidable"], "answer": 1, "tag": "main-idea" },
+        { "id": "r2", "type": "mcq", "level": "B2", "prompt": "“Small delays add up” means…", "options": ["delays disappear", "delays become significant together", "delays are pleasant", "delays help focus"], "answer": 1, "tag": "inference" }
+      ]
+    }
+  ]
+}

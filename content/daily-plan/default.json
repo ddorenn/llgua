@@ -1,0 +1,19 @@
+{
+  "meta": { "sample": false, "source": "Default LINGUA routine (configurable)", "version": 1 },
+  "id": "default-60",
+  "title": "Balanced daily practice",
+  "totalMinutes": 60,
+  "blocks": [
+    { "id": "vocabulary", "title": "Vocabulary", "skill": "vocabulary", "minutes": 10, "description": "Review due words, then learn 5–8 new ones in context.", "href": "/vocabulary" },
+    { "id": "grammar", "title": "Grammar", "skill": "grammar", "minutes": 15, "description": "Work through the next grammar lesson on your learning path.", "href": "/learning" },
+    { "id": "receptive", "title": "Reading or Listening", "skill": "rotation", "minutes": 15, "description": "Alternates daily between a reading text and a listening exercise.", "rotation": [
+      { "skill": "reading", "title": "Reading", "href": "/practice/reading" },
+      { "skill": "listening", "title": "Listening", "href": "/practice/listening" }
+    ] },
+    { "id": "productive", "title": "Speaking or Writing", "skill": "rotation", "minutes": 15, "description": "Alternates daily between a speaking task and a writing task.", "rotation": [
+      { "skill": "speaking", "title": "Speaking", "href": "/practice/speaking" },
+      { "skill": "writing", "title": "Writing", "href": "/practice/writing" }
+    ] },
+    { "id": "review", "title": "Review", "skill": "review", "minutes": 5, "description": "Revisit today's mistakes and note one thing you learned.", "href": "/progress" }
+  ]
+}

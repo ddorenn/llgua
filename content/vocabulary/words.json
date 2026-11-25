@@ -1,0 +1,23 @@
+{
+  "meta": { "sample": true, "source": "Demonstration word list written for LINGUA. Replace with your own lists.", "version": 1 },
+  "words": [
+    { "id": "w-reliable", "word": "reliable", "pos": "adjective", "ipa": "/rɪˈlaɪəbl/", "translation": "надёжный", "level": "B1", "topic": "Character", "examples": ["She's a reliable colleague — she never misses a deadline."] },
+    { "id": "w-improve", "word": "improve", "pos": "verb", "ipa": "/ɪmˈpruːv/", "translation": "улучшать(ся)", "level": "A2", "topic": "Learning", "examples": ["I want to improve my pronunciation."] },
+    { "id": "w-schedule", "word": "schedule", "pos": "noun", "ipa": "/ˈʃedjuːl/ · /ˈskedʒuːl/", "translation": "расписание, график", "level": "A2", "topic": "Work", "examples": ["My schedule is very busy this week."] },
+    { "id": "w-although", "word": "although", "pos": "conjunction", "ipa": "/ɔːlˈðəʊ/", "translation": "хотя", "level": "B1", "topic": "Linking", "examples": ["Although it was raining, we went for a walk."] },
+    { "id": "w-opportunity", "word": "opportunity", "pos": "noun", "ipa": "/ˌɒpəˈtjuːnəti/", "translation": "возможность", "level": "B1", "topic": "Work", "examples": ["This job is a great opportunity to travel."] },
+    { "id": "w-neighbour", "word": "neighbour", "pos": "noun", "ipa": "/ˈneɪbə/", "translation": "сосед", "level": "A1", "topic": "Home", "examples": ["Our neighbours are very friendly."] },
+    { "id": "w-awkward", "word": "awkward", "pos": "adjective", "ipa": "/ˈɔːkwəd/", "translation": "неловкий", "level": "B2", "topic": "Feelings", "examples": ["There was an awkward silence after his joke."] },
+    { "id": "w-get-used-to", "word": "get used to", "pos": "phrase", "ipa": "/ɡet juːst tə/", "translation": "привыкать к", "level": "B1", "topic": "Change", "examples": ["It took me a month to get used to the new city."] },
+    { "id": "w-thorough", "word": "thorough", "pos": "adjective", "ipa": "/ˈθʌrə/", "translation": "тщательный", "level": "B2", "topic": "Work", "examples": ["The doctor gave me a thorough examination."] },
+    { "id": "w-breakfast", "word": "breakfast", "pos": "noun", "ipa": "/ˈbrekfəst/", "translation": "завтрак", "level": "A1", "topic": "Food", "examples": ["I usually have breakfast at eight."] },
+    { "id": "w-consequence", "word": "consequence", "pos": "noun", "ipa": "/ˈkɒnsɪkwəns/", "translation": "последствие", "level": "B2", "topic": "Society", "examples": ["Every decision has consequences."] },
+    { "id": "w-nevertheless", "word": "nevertheless", "pos": "adverb", "ipa": "/ˌnevəðəˈles/", "translation": "тем не менее", "level": "C1", "topic": "Linking", "examples": ["The plan was risky. Nevertheless, it worked."] },
+    { "id": "w-cheap", "word": "cheap", "pos": "adjective", "ipa": "/tʃiːp/", "translation": "дешёвый", "level": "A1", "topic": "Shopping", "examples": ["This café is cheap and good."] },
+    { "id": "w-look-forward", "word": "look forward to", "pos": "phrase", "ipa": "/lʊk ˈfɔːwəd tə/", "translation": "ждать с нетерпением", "level": "B1", "topic": "Feelings", "examples": ["I'm looking forward to seeing you."] },
+    { "id": "w-ubiquitous", "word": "ubiquitous", "pos": "adjective", "ipa": "/juːˈbɪkwɪtəs/", "translation": "вездесущий", "level": "C2", "topic": "Society", "examples": ["Smartphones have become ubiquitous."] },
+    { "id": "w-borrow", "word": "borrow", "pos": "verb", "ipa": "/ˈbɒrəʊ/", "translation": "брать взаймы", "level": "A2", "topic": "Everyday", "examples": ["Can I borrow your pen?"] },
+    { "id": "w-reluctant", "word": "reluctant", "pos": "adjective", "ipa": "/rɪˈlʌktənt/", "translation": "неохотный", "level": "C1", "topic": "Feelings", "examples": ["He was reluctant to admit his mistake."] },
+    { "id": "w-achieve", "word": "achieve", "pos": "verb", "ipa": "/əˈtʃiːv/", "translation": "достигать", "level": "B1", "topic": "Learning", "examples": ["She achieved her goal of running a marathon."] }
+  ]
+}

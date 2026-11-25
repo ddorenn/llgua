@@ -1,0 +1,12 @@
+{
+  "meta": { "sample": true, "source": "Generic demonstration rubric written for LINGUA. Replace with your own evaluation criteria.", "version": 1 },
+  "id": "writing-general",
+  "title": "General writing rubric",
+  "scale": { "min": 0, "max": 5 },
+  "criteria": [
+    { "id": "task", "title": "Task completion", "description": "Covers every part of the task with relevant, developed ideas." },
+    { "id": "organisation", "title": "Organisation", "description": "Clear paragraphs, logical order and appropriate linking words." },
+    { "id": "vocabulary", "title": "Vocabulary range", "description": "Uses varied and accurate vocabulary suited to the topic." },
+    { "id": "grammar", "title": "Grammatical accuracy", "description": "Uses a range of structures with few errors that affect meaning." }
+  ]
+}

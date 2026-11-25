@@ -1,0 +1,48 @@
+import type { Dictionary } from "./en";
+
+/** Russian UI dictionary (partial UI coverage; page content stays in English by design). */
+export const ru: Dictionary = {
+  nav: {
+    section_main: "Обзор",
+    section_practice: "Практика",
+    section_track: "Прогресс",
+    dashboard: "Главная",
+    learning: "Моё обучение",
+    dailyPlan: "План на день",
+    tutor: "AI-репетитор",
+    homework: "Домашние задания",
+    vocabulary: "Словарь",
+    reading: "Чтение",
+    listening: "Аудирование",
+    speaking: "Говорение",
+    writing: "Письмо",
+    progress: "Прогресс",
+    assessments: "Тесты",
+    library: "Библиотека",
+    settings: "Настройки",
+    signOut: "Выйти",
+  },
+  common: {
+    sampleData: "Пример данных",
+    sampleContent: "Пример контента",
+    samplePreviewOn: "Включён демо-режим — графики и цифры ниже являются примером, а не вашими результатами.",
+    showMyData: "Показать мои данные",
+    minutes: "мин",
+    submit: "Отправить",
+    continue: "Продолжить",
+    start: "Начать",
+    retry: "Попробовать снова",
+    notConnected: "Не подключено",
+  },
+  auth: {
+    title: "С возвращением",
+    subtitle: "Войдите в своё личное учебное пространство.",
+    username: "Логин или email",
+    password: "Пароль",
+    remember: "Оставаться в системе 30 дней",
+    signIn: "Войти",
+    signingIn: "Вход…",
+    privateNote: "Личное пространство · Без публичной регистрации",
+  },
+  dashboard: { greeting_morning: "Доброе утро", greeting_afternoon: "Добрый день", greeting_evening: "Добрый вечер" },
+};

@@ -1,0 +1,31 @@
+import "server-only";
+import { cookies } from "next/headers";
+import { getAuthMode, getSessionSecret, SESSION_COOKIE, type AuthMode } from "./config";
+import { verifySession } from "./session";
+
+export interface CurrentUser {
+  id: string;
+  name: string;
+  mode: AuthMode;
+}
+
+/** Resolve the signed-in user for the current request, or null. */
+export async function getCurrentUser(): Promise<CurrentUser | null> {
+  const mode = getAuthMode();
+  if (mode === "disabled") return null;
+
+  if (mode === "supabase") {
+    const { createSupabaseServerClient } = await import("@/lib/db/supabase/server");
+    const supabase = await createSupabaseServerClient();
+    const { data } = await supabase.auth.getUser();
+    if (!data.user) return null;
+    return { id: data.user.id, name: data.user.email ?? "Student", mode };
+  }
+
+  const secret = getSessionSecret(mode);
+  if (!secret) return null;
+  const store = await cookies();
+  const payload = await verifySession(store.get(SESSION_COOKIE)?.value, secret);
+  if (!payload || payload.mode !== mode) return null;
+  return { id: payload.sub, name: payload.sub, mode };
+}

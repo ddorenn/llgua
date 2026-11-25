@@ -1,0 +1,32 @@
+{
+  "meta": { "sample": true, "source": "Original demonstration texts written for LINGUA.", "version": 1 },
+  "exercises": [
+    {
+      "id": "r-morning-routine",
+      "title": "A Different Kind of Morning",
+      "level": "A2",
+      "minutes": 10,
+      "text": "Anna is a nurse. She works at a hospital in the centre of the city. Most people start work at nine, but Anna's day is different. She gets up at half past five, has a quick breakfast and takes the first bus at six.\n\nHer shift starts at seven and finishes at three in the afternoon. After work, she usually goes to the gym or meets a friend for coffee. In the evening she reads or watches a film. She goes to bed early, at about ten o'clock.\n\nAnna likes her job because she helps people every day. The only thing she doesn't like is the early start, especially in winter when it is still dark outside.",
+      "questions": [
+        { "id": "q1", "type": "mcq", "prompt": "What time does Anna get up?", "options": ["5:00", "5:30", "6:00", "7:00"], "answer": 1 },
+        { "id": "q2", "type": "mcq", "prompt": "How does Anna travel to work?", "options": ["By car", "On foot", "By bus", "By metro"], "answer": 2 },
+        { "id": "q3", "type": "truefalse", "prompt": "Anna's shift finishes in the evening.", "answer": false },
+        { "id": "q4", "type": "truefalse", "prompt": "Anna enjoys helping people.", "answer": true },
+        { "id": "q5", "type": "mcq", "prompt": "What does Anna dislike about her job?", "options": ["Her colleagues", "The early start", "The hospital", "The salary"], "answer": 1 }
+      ]
+    },
+    {
+      "id": "r-remote-work",
+      "title": "Is Remote Work Here to Stay?",
+      "level": "B1",
+      "minutes": 15,
+      "text": "Ten years ago, working from home was a privilege enjoyed by only a few employees. Today, millions of people work remotely at least part of the week. Supporters say it saves time and money: there is no daily commute, and people can organise their day more flexibly.\n\nHowever, remote work also has disadvantages. Some employees feel isolated and miss the informal conversations that happen in an office. Managers sometimes find it harder to build a team spirit, and new staff may take longer to learn how the company works.\n\nAs a result, many companies have chosen a hybrid model, where employees spend two or three days in the office and the rest at home. Although nobody knows exactly how work will look in the future, it seems unlikely that we will completely return to the old ways.",
+      "questions": [
+        { "id": "q1", "type": "mcq", "prompt": "According to supporters, what is one benefit of remote work?", "options": ["Higher salaries", "No daily commute", "Bigger offices", "Fewer meetings"], "answer": 1 },
+        { "id": "q2", "type": "mcq", "prompt": "Which problem is mentioned for new staff?", "options": ["They earn less", "They learn company processes more slowly", "They work longer hours", "They cannot use computers"], "answer": 1 },
+        { "id": "q3", "type": "truefalse", "prompt": "A hybrid model means working only from home.", "answer": false },
+        { "id": "q4", "type": "mcq", "prompt": "What is the writer's conclusion?", "options": ["Everyone will return to the office", "Remote work will disappear", "A full return to old ways is unlikely", "Hybrid work is a failure"], "answer": 2 }
+      ]
+    }
+  ]
+}

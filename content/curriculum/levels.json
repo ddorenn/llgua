@@ -1,0 +1,11 @@
+{
+  "meta": { "sample": false, "source": "Level names follow the Council of Europe CEFR. Descriptions are short paraphrases written for this app, not official descriptors.", "version": 1 },
+  "levels": [
+    { "id": "A1", "name": "Beginner", "summary": "Understand and use familiar everyday expressions and very basic phrases." },
+    { "id": "A2", "name": "Elementary", "summary": "Communicate in simple, routine tasks on familiar topics." },
+    { "id": "B1", "name": "Intermediate", "summary": "Deal with most everyday situations and describe experiences and plans." },
+    { "id": "B2", "name": "Upper-Intermediate", "summary": "Interact with fluency on a wide range of topics and argue a viewpoint." },
+    { "id": "C1", "name": "Advanced", "summary": "Use language flexibly for social, academic and professional purposes." },
+    { "id": "C2", "name": "Proficient", "summary": "Understand virtually everything and express yourself with precision." }
+  ]
+}

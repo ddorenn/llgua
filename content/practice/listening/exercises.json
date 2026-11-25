@@ -1,0 +1,35 @@
+{
+  "meta": { "sample": true, "source": "Original demonstration scripts written for LINGUA. No audio files yet — the browser's text-to-speech is used as a preview.", "version": 1 },
+  "exercises": [
+    {
+      "id": "l-cafe-order",
+      "title": "Ordering at a café",
+      "level": "A2",
+      "minutes": 10,
+      "audioUrl": null,
+      "durationSec": 45,
+      "transcript": "Barista: Good morning! What can I get you? Customer: Hi, can I have a large cappuccino, please? Barista: Of course. Would you like anything to eat? Customer: Yes, a blueberry muffin. How much is that? Barista: That's six pounds twenty. Is that to take away or to have here? Customer: To have here, please. Barista: Great. Take a seat and I'll bring it over.",
+      "questions": [
+        { "id": "q1", "type": "mcq", "prompt": "What size coffee does the customer order?", "options": ["Small", "Medium", "Large"], "answer": 2 },
+        { "id": "q2", "type": "mcq", "prompt": "What does the customer eat?", "options": ["A croissant", "A blueberry muffin", "A sandwich"], "answer": 1 },
+        { "id": "q3", "type": "mcq", "prompt": "How much does it cost?", "options": ["£6.20", "£2.60", "£6.02"], "answer": 0 },
+        { "id": "q4", "type": "truefalse", "prompt": "The customer takes the order away.", "answer": false }
+      ]
+    },
+    {
+      "id": "l-weekend-plans",
+      "title": "Weekend plans",
+      "level": "B1",
+      "minutes": 15,
+      "audioUrl": null,
+      "durationSec": 60,
+      "transcript": "Tom: Are you doing anything this weekend, Maria? Maria: I was going to go hiking, but the forecast says it's going to rain all Saturday. Tom: That's a shame. What about Sunday? Maria: Sunday looks better, so I've moved the trip. On Saturday I'll probably stay in and finally finish that book I started last month. Tom: Sounds relaxing. If you need company on Sunday, I'd be happy to join. Maria: Really? That would be great. We're meeting at the station at eight.",
+      "questions": [
+        { "id": "q1", "type": "mcq", "prompt": "Why did Maria change her plans?", "options": ["She was ill", "Bad weather forecast", "Tom was busy"], "answer": 1 },
+        { "id": "q2", "type": "mcq", "prompt": "What will Maria do on Saturday?", "options": ["Go hiking", "Finish a book", "Meet Tom"], "answer": 1 },
+        { "id": "q3", "type": "truefalse", "prompt": "Tom offers to join the hike.", "answer": true },
+        { "id": "q4", "type": "mcq", "prompt": "Where are they meeting?", "options": ["At the station", "At a café", "At Maria's house"], "answer": 0 }
+      ]
+    }
+  ]
+}
