@@ -1,9 +1,61 @@
 {
-  "meta": { "sample": true, "source": "Demonstration assignments for LINGUA.", "version": 1 },
+  "meta": {
+    "sample": true,
+    "source": "Demonstration assignments for LINGUA.",
+    "version": 1
+  },
   "assignments": [
-    { "id": "hw-pp-sentences", "title": "Present Perfect: 10 sentences about your life", "skill": "grammar", "level": "B1", "lessonId": "b1-present-perfect", "dueInDays": 1, "submission": "text", "instructions": "Write 10 sentences about your life experiences using the Present Perfect. Use ever, never, already and yet at least once each.", "minWords": 60, "sampleFeedback": { "score": 82, "summary": "Good range of experiences. Watch the position of 'already' and 'yet'.", "corrections": [ { "original": "I have been yesterday to the park.", "corrected": "I went to the park yesterday.", "note": "A finished time expression needs the Past Simple." } ] } },
-    { "id": "hw-opinion-paragraph", "title": "Opinion paragraph: remote work", "skill": "writing", "level": "B1", "lessonId": "b1-linking", "dueInDays": 2, "submission": "text", "instructions": "After reading “Is Remote Work Here to Stay?”, write one paragraph (100–140 words) giving your opinion. Use at least three linking words.", "minWords": 100 },
-    { "id": "hw-intro-recording", "title": "Record a 2-minute self-introduction", "skill": "speaking", "level": "A2", "dueInDays": 3, "submission": "audio", "instructions": "Record yourself introducing yourself for about two minutes. Audio submission will be supported in a future version — for now, write notes of what you said." },
-    { "id": "hw-vocab-sentences", "title": "Vocabulary: use 8 new words", "skill": "vocabulary", "level": "B1", "dueInDays": 4, "submission": "text", "instructions": "Choose 8 words from your vocabulary list and write one example sentence for each.", "minWords": 40 }
+    {
+      "id": "hw-pp-sentences",
+      "title": "Present Perfect: 10 предложений о себе",
+      "skill": "grammar",
+      "level": "B1",
+      "lessonId": "b1-present-perfect",
+      "dueInDays": 1,
+      "submission": "text",
+      "instructions": "Напиши 10 предложений о своём жизненном опыте в Present Perfect. Хотя бы по разу используй ever, never, already и yet.",
+      "minWords": 60,
+      "sampleFeedback": {
+        "score": 82,
+        "summary": "Хороший набор примеров. Следи за местом already и yet в предложении.",
+        "corrections": [
+          {
+            "original": "I have been yesterday to the park.",
+            "corrected": "I went to the park yesterday.",
+            "note": "С указанием законченного времени нужен Past Simple."
+          }
+        ]
+      }
+    },
+    {
+      "id": "hw-opinion-paragraph",
+      "title": "Абзац-мнение: удалённая работа",
+      "skill": "writing",
+      "level": "B1",
+      "lessonId": "b1-linking",
+      "dueInDays": 2,
+      "submission": "text",
+      "instructions": "Прочитай текст «Is Remote Work Here to Stay?» и напиши один абзац (100–140 слов) со своим мнением. Используй минимум три слова-связки.",
+      "minWords": 100
+    },
+    {
+      "id": "hw-intro-recording",
+      "title": "Запиши рассказ о себе на 2 минуты",
+      "skill": "speaking",
+      "level": "A2",
+      "dueInDays": 3,
+      "submission": "audio",
+      "instructions": "Запиши, как ты рассказываешь о себе примерно две минуты. Сдача аудио появится позже — пока запиши тезисы того, что сказал."
+    },
+    {
+      "id": "hw-vocab-sentences",
+      "title": "Словарь: используй 8 новых слов",
+      "skill": "vocabulary",
+      "level": "B1",
+      "dueInDays": 4,
+      "submission": "text",
+      "instructions": "Выбери 8 слов из своего словаря и напиши по одному примеру с каждым.",
+      "minWords": 40
+    }
   ]
 }

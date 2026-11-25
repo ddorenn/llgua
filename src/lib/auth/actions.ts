@@ -52,19 +52,19 @@ export async function loginAction(_prev: LoginState, formData: FormData): Promis
   const values = { username, remember };
 
   const fieldErrors: LoginState["fieldErrors"] = {};
-  if (!username) fieldErrors.username = "Enter your username or email.";
-  if (!password) fieldErrors.password = "Enter your password.";
-  else if (password.length < 6) fieldErrors.password = "Password must be at least 6 characters.";
+  if (!username) fieldErrors.username = "Введите логин или email.";
+  if (!password) fieldErrors.password = "Введите пароль.";
+  else if (password.length < 6) fieldErrors.password = "Пароль должен быть не короче 6 символов.";
   if (fieldErrors.username || fieldErrors.password) return { fieldErrors, values };
 
   const mode = getAuthMode();
   if (mode === "disabled") {
-    return { error: "Sign-in is not configured on this server. See README → Authentication.", values };
+    return { error: "Вход на этом сервере не настроен. Подробности — в README, раздел Authentication.", values };
   }
 
   const ip = (await headers()).get("x-forwarded-for")?.split(",")[0]?.trim() ?? "local";
   const key = throttleKey(ip, username);
-  if (isThrottled(key)) return { error: "Too many attempts. Please wait 15 minutes and try again.", values };
+  if (isThrottled(key)) return { error: "Слишком много попыток. Подождите 15 минут и попробуйте снова.", values };
 
   if (mode === "supabase") {
     const { createSupabaseServerClient } = await import("@/lib/db/supabase/server");
@@ -75,7 +75,7 @@ export async function loginAction(_prev: LoginState, formData: FormData): Promis
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
       recordFailure(key);
-      return { error: "Incorrect username or password.", values };
+      return { error: "Неверный логин или пароль.", values };
     }
     redirect(next);
   }
@@ -91,7 +91,7 @@ export async function loginAction(_prev: LoginState, formData: FormData): Promis
 
   if (!ok) {
     recordFailure(key);
-    return { error: "Incorrect username or password.", values };
+    return { error: "Неверный логин или пароль.", values };
   }
   attempts.delete(key);
 

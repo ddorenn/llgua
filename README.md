@@ -135,17 +135,24 @@ Files marked `"sample": true` show a **Sample content** badge wherever they appe
 
 ---
 
-## Design system
+## Brand and design system
 
-The full concept is in [`docs/superpowers/specs/2026-11-25-lingua-redesign-design.md`](docs/superpowers/specs/2026-11-25-lingua-redesign-design.md).
-
-- **Themes:** Light, Dark and System, chosen in Settings → Appearance or with the quick toggle (top bar, landing header, login). Stored per device; no flash on load; colours cross-fade on change (instant with reduced motion). All colours, shadows and lines are CSS variables in `src/app/globals.css`, and both themes are checked for WCAG AA text contrast.
-- **Type:** Onest for the interface; Literata (the `.lang` class) for the English being learned — examples, words, reading texts, questions, your writing.
-- **Motion:** the `motion` library, used for the landing correction mark, CEFR staircase, tutor demo, page transitions, progress fills, card flip and theme icon. All of it respects `prefers-reduced-motion`.
-- **Vocabulary for other clients:** rules live in `src/lib/vocab` (UI-free); `GET /api/v1/vocabulary` returns cards (word + learner progress) for future clients such as a Telegram Mini App.
+- **Brand:** the LINGUA wordmark in Bricolage Grotesque; the tagline is "YOUR ENGLISH TUTOR". The palette is Deep Charcoal `#111110`, Graphite `#1C1B19`, Warm Gray `#77736C`, Soft Cream `#E9E4DA`, Warm Beige `#C8B99F` and Muted Sand `#B9AA91`.
+- **Landing page (`/`):**
+  - The full-screen dark hero is always dark. It has a coordinate grid with a perspective floor, and a warm light that follows the pointer and lights the grid and the cell under it.
+  - The wordmark letters react to the cursor: drift, tilt, weight and colour. A custom cursor is used on fine pointers.
+  - Russian sections follow: About, Directions, Why LINGUA, then a closing CTA.
+  - A curtain transition leads to `/login`.
+- **Performance:** the hero effects are implemented with refs and a single requestAnimationFrame loop that stops when idle, and moving layers use transforms only.
+  - In headless Chromium without a GPU, at 4× CPU throttling: no long tasks during interaction.
+  - The custom cursor is off on touch devices and with reduced motion.
+- **Themes:** Light, Dark and System, chosen in Settings → Appearance or with the quick toggle. The choice is stored per device. All colours are CSS variables in `src/app/globals.css`, and text colours meet WCAG AA in both themes.
+- **Language:** the interface is in Russian; English learning materials stay in English and are set in Literata (the `.lang` class). The UI font is Onest.
+- **Auth page:** two tabs, "Вход" (sign in) and "Регистрация" (sign up). Access is closed, so the sign-up tab explains how to get an account and contains no fake form.
+- **Vocabulary for other clients:** the rules live in `src/lib/vocab`, and `GET /api/v1/vocabulary` serves cards for future clients such as a Telegram Mini App.
 
 ## Tech stack
 
-Next.js 15 (App Router) · TypeScript · Tailwind CSS v4 · Motion · shadcn/ui-style primitives (cva + tailwind-merge, in `src/components/ui`) · Recharts · Zod · Supabase (`@supabase/ssr`) · Anthropic SDK · lucide-react. Deploys to Vercel as a standard Next.js app (set the env vars in project settings).
+Next.js 15 (App Router) · TypeScript · Tailwind CSS v4 · Motion · Bricolage Grotesque / Onest / Literata · shadcn/ui-style primitives (cva + tailwind-merge, in `src/components/ui`) · Recharts · Zod · Supabase (`@supabase/ssr`) · Anthropic SDK · lucide-react. Deploys to Vercel as a standard Next.js app (set the env vars in project settings).
 
 Architecture details: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).

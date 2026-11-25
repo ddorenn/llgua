@@ -1,39 +1,131 @@
 {
-  "meta": { "sample": true, "source": "Demonstration items written for LINGUA.", "version": 1 },
+  "meta": {
+    "sample": true,
+    "source": "Demonstration items written for LINGUA.",
+    "version": 1
+  },
   "id": "progress-14d",
   "type": "progress",
-  "title": "14-Day Progress Assessment",
-  "description": "Repeats the structure of the initial assessment so results can be compared side by side.",
+  "title": "Тест прогресса за 14 дней",
+  "description": "Повторяет структуру входного теста, чтобы результаты можно было сравнить.",
   "minutes": 20,
   "validated": false,
   "sections": [
     {
       "id": "grammar",
-      "title": "Grammar",
+      "title": "Грамматика",
       "skill": "grammar",
       "questions": [
-        { "id": "p1", "type": "mcq", "level": "A2", "prompt": "They ___ dinner when I called.", "options": ["had", "were having", "have", "are having"], "answer": 1, "tag": "past-continuous" },
-        { "id": "p2", "type": "mcq", "level": "B1", "prompt": "I've ___ finished my homework.", "options": ["yet", "already", "ever", "since"], "answer": 1, "tag": "present-perfect" },
-        { "id": "p3", "type": "mcq", "level": "B2", "prompt": "I wish I ___ more time.", "options": ["have", "had", "will have", "am having"], "answer": 1, "tag": "wishes" },
-        { "id": "p4", "type": "gap", "level": "B1", "prompt": "If I see her, I ___ tell her. (will / would)", "accepted": ["will", "'ll"], "tag": "conditionals" }
+        {
+          "id": "p1",
+          "type": "mcq",
+          "level": "A2",
+          "prompt": "They ___ dinner when I called.",
+          "options": [
+            "had",
+            "were having",
+            "have",
+            "are having"
+          ],
+          "answer": 1,
+          "tag": "past-continuous"
+        },
+        {
+          "id": "p2",
+          "type": "mcq",
+          "level": "B1",
+          "prompt": "I've ___ finished my homework.",
+          "options": [
+            "yet",
+            "already",
+            "ever",
+            "since"
+          ],
+          "answer": 1,
+          "tag": "present-perfect"
+        },
+        {
+          "id": "p3",
+          "type": "mcq",
+          "level": "B2",
+          "prompt": "I wish I ___ more time.",
+          "options": [
+            "have",
+            "had",
+            "will have",
+            "am having"
+          ],
+          "answer": 1,
+          "tag": "wishes"
+        },
+        {
+          "id": "p4",
+          "type": "gap",
+          "level": "B1",
+          "prompt": "If I see her, I ___ tell her. (will / would)",
+          "accepted": [
+            "will",
+            "'ll"
+          ],
+          "tag": "conditionals"
+        }
       ]
     },
     {
       "id": "vocabulary",
-      "title": "Vocabulary",
+      "title": "Словарь",
       "skill": "vocabulary",
       "questions": [
-        { "id": "p5", "type": "mcq", "level": "B1", "prompt": "It took me weeks to get ___ to the new job.", "options": ["use", "used", "using", "uses"], "answer": 1, "tag": "phrases" },
-        { "id": "p6", "type": "mcq", "level": "B2", "prompt": "Every action has its ___.", "options": ["consequences", "opportunities", "schedules", "neighbours"], "answer": 0, "tag": "nouns" }
+        {
+          "id": "p5",
+          "type": "mcq",
+          "level": "B1",
+          "prompt": "It took me weeks to get ___ to the new job.",
+          "options": [
+            "use",
+            "used",
+            "using",
+            "uses"
+          ],
+          "answer": 1,
+          "tag": "phrases"
+        },
+        {
+          "id": "p6",
+          "type": "mcq",
+          "level": "B2",
+          "prompt": "Every action has its ___.",
+          "options": [
+            "consequences",
+            "opportunities",
+            "schedules",
+            "neighbours"
+          ],
+          "answer": 0,
+          "tag": "nouns"
+        }
       ]
     },
     {
       "id": "reading",
-      "title": "Reading",
+      "title": "Чтение",
       "skill": "reading",
       "passage": "Learning a language is often compared to building a house. Without a strong foundation of basic grammar and vocabulary, the higher floors — fluent conversation, complex writing — become unstable.",
       "questions": [
-        { "id": "p7", "type": "mcq", "level": "B1", "prompt": "What does the “foundation” represent?", "options": ["Fluent conversation", "Basic grammar and vocabulary", "Complex writing", "A real house"], "answer": 1, "tag": "inference" }
+        {
+          "id": "p7",
+          "type": "mcq",
+          "level": "B1",
+          "prompt": "What does the “foundation” represent?",
+          "options": [
+            "Fluent conversation",
+            "Basic grammar and vocabulary",
+            "Complex writing",
+            "A real house"
+          ],
+          "answer": 1,
+          "tag": "inference"
+        }
       ]
     }
   ]

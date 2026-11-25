@@ -14,8 +14,8 @@ export function ThemeToggle({ className }: { className?: string }) {
     <button
       type="button"
       onClick={toggle}
-      aria-label={dark ? "Switch to light theme" : "Switch to dark theme"}
-      title={dark ? "Light theme" : "Dark theme"}
+      aria-label={dark ? "Включить светлую тему" : "Включить тёмную тему"}
+      title={dark ? "Светлая тема" : "Тёмная тема"}
       className={cn(
         "relative inline-flex size-9 cursor-pointer items-center justify-center overflow-hidden rounded-md text-muted transition-colors hover:bg-elevated hover:text-fg",
         className,
@@ -38,16 +38,16 @@ export function ThemeToggle({ className }: { className?: string }) {
 }
 
 const OPTIONS: { value: ThemePreference; label: string; icon: typeof Sun }[] = [
-  { value: "light", label: "Light", icon: Sun },
-  { value: "dark", label: "Dark", icon: Moon },
-  { value: "system", label: "System", icon: Monitor },
+  { value: "light", label: "Светлая", icon: Sun },
+  { value: "dark", label: "Тёмная", icon: Moon },
+  { value: "system", label: "Системная", icon: Monitor },
 ];
 
 /** Full three-way picker (Settings → Appearance). */
 export function ThemePicker() {
   const { preference, setPreference } = useTheme();
   return (
-    <div role="radiogroup" aria-label="Theme" className="grid grid-cols-3 gap-2 sm:max-w-md">
+    <div role="radiogroup" aria-label="Тема" className="grid grid-cols-3 gap-2 sm:max-w-md">
       {OPTIONS.map((o) => {
         const active = preference === o.value;
         return (

@@ -31,7 +31,7 @@ export function QuestionSet({
   const unanswered = questions.filter((q) => answers[q.id] === undefined).length;
 
   function submit() {
-    if (unanswered) return setError(`Answer all questions — ${unanswered} left.`);
+    if (unanswered) return setError(`Ответь на все вопросы — осталось ${unanswered}.`);
     setError(undefined);
     setSubmitted(true);
     onSubmit({ answers, score, total: questions.length, completedAt: new Date().toISOString() });
@@ -77,7 +77,7 @@ export function QuestionSet({
           role="status"
         >
           <div>
-            <div className="text-[13px] font-medium text-muted">Result</div>
+            <div className="text-[13px] font-medium text-muted">Результат</div>
             <div className="tabular text-[22px] font-semibold">
               {score} / {questions.length}
               <span className="ml-2 text-[14px] font-normal text-muted">{Math.round((score / questions.length) * 100)}%</span>
@@ -91,7 +91,7 @@ export function QuestionSet({
               setSubmitted(false);
             }}
           >
-            <RotateCcw /> Try again
+            <RotateCcw /> Попробовать снова
           </Button>
         </div>
       )}
@@ -101,18 +101,18 @@ export function QuestionSet({
           <legend className="lang mb-2.5 text-[16px] text-fg">
             <span className="tabular mr-2 font-sans text-[13px] text-subtle">{i + 1}</span>
             {q.prompt}
-            {q.type === "truefalse" && <span className="ml-2 font-sans text-[12.5px] text-subtle">True or false?</span>}
+            {q.type === "truefalse" && <span className="ml-2 font-sans text-[12.5px] text-subtle">Верно или нет?</span>}
           </legend>
           <div className={cn("grid gap-2", q.type === "truefalse" ? "grid-cols-2" : "sm:grid-cols-2")}>
-            {q.type === "mcq" ? q.options.map((o, oi) => option(q, oi, o)) : [option(q, true, "True"), option(q, false, "False")]}
+            {q.type === "mcq" ? q.options.map((o, oi) => option(q, oi, o)) : [option(q, true, "Верно"), option(q, false, "Неверно")]}
           </div>
         </fieldset>
       ))}
 
       {!submitted && (
         <div className="flex flex-wrap items-center gap-3 border-t border-line pt-4">
-          <Button onClick={submit}>Submit answers</Button>
-          {error ? <span role="alert" className="text-[12.5px] text-danger">{error}</span> : <span className="text-[12px] text-subtle">{questions.length - unanswered}/{questions.length} answered</span>}
+          <Button onClick={submit}>Отправить ответы</Button>
+          {error ? <span role="alert" className="text-[12.5px] text-danger">{error}</span> : <span className="text-[12px] text-subtle">Отвечено {questions.length - unanswered}/{questions.length}</span>}
         </div>
       )}
     </div>

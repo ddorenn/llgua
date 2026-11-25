@@ -18,10 +18,10 @@ export const VOCAB_RULES = {
 } as const;
 
 export const STATUS_LABEL: Record<VocabStatus, string> = {
-  new: "New",
-  learning: "Learning",
-  review: "Reviewing",
-  learned: "Learned",
+  new: "Новое",
+  learning: "Изучаю",
+  review: "Повторяю",
+  learned: "Выучено",
 };
 
 export function emptyProgress(): UserVocab {
@@ -37,7 +37,7 @@ export function applyReview(prev: UserVocab | undefined, knewIt: boolean, at = n
   return { status, reviews: p.reviews + 1, correct, lastReviewed: at };
 }
 
-/** Set a status manually (e.g. "I already know this word"). */
+/** Set a status manually (e.g. "Я уже знаю это слово"). */
 export function applyStatus(prev: UserVocab | undefined, status: VocabStatus): UserVocab {
   const p = prev ?? emptyProgress();
   const correct =

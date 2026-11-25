@@ -1,12 +1,35 @@
 {
-  "meta": { "sample": true, "source": "Generic demonstration rubric written for LINGUA. Replace with your own evaluation criteria.", "version": 1 },
+  "meta": {
+    "sample": true,
+    "source": "Generic demonstration rubric written for LINGUA. Replace with your own evaluation criteria.",
+    "version": 1
+  },
   "id": "speaking-general",
-  "title": "General speaking rubric",
-  "scale": { "min": 0, "max": 5 },
+  "title": "Общие критерии говорения",
+  "scale": {
+    "min": 0,
+    "max": 5
+  },
   "criteria": [
-    { "id": "fluency", "title": "Fluency & coherence", "description": "Speaks at length without long pauses; ideas connect logically." },
-    { "id": "vocabulary", "title": "Lexical resource", "description": "Uses a range of words and phrases appropriately." },
-    { "id": "grammar", "title": "Grammatical range & accuracy", "description": "Uses varied structures with control." },
-    { "id": "pronunciation", "title": "Pronunciation", "description": "Is easy to understand; uses stress and intonation naturally." }
+    {
+      "id": "fluency",
+      "title": "Беглость и связность",
+      "description": "Говоришь развёрнуто без долгих пауз, мысли связаны."
+    },
+    {
+      "id": "vocabulary",
+      "title": "Лексика",
+      "description": "Используешь разнообразные слова и выражения к месту."
+    },
+    {
+      "id": "grammar",
+      "title": "Грамматика",
+      "description": "Разнообразные конструкции под контролем."
+    },
+    {
+      "id": "pronunciation",
+      "title": "Произношение",
+      "description": "Тебя легко понять, ударение и интонация естественны."
+    }
   ]
 }

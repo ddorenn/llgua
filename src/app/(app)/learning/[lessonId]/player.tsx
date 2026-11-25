@@ -69,19 +69,19 @@ function Quiz({ block, onResult }: { block: QuizBlock; onResult: (score: number,
               onResult(score, block.questions.length);
             }}
           >
-            Check answers
+            Проверить
           </Button>
         ) : (
           <>
             <span className={cn("text-[14px] font-medium", score === block.questions.length ? "text-success" : "text-fg")}>
-              {score} / {block.questions.length} correct
+              {score} из {block.questions.length} верно
             </span>
             <Button variant="ghost" size="sm" onClick={() => { setAnswers({}); setChecked(false); }}>
-              <RotateCcw /> Retry
+              <RotateCcw /> Ещё раз
             </Button>
           </>
         )}
-        {!allAnswered && !checked && <span className="text-[12px] text-subtle">Answer every question to check.</span>}
+        {!allAnswered && !checked && <span className="text-[12px] text-subtle">Ответь на все вопросы, чтобы проверить.</span>}
       </div>
     </div>
   );
@@ -105,12 +105,12 @@ export function LessonPlayer({ lessonId }: { lessonId: string }) {
   const header = (
     <div className="space-y-4">
       <Link href="/learning" className="inline-flex items-center gap-1.5 text-[13px] text-muted hover:text-fg">
-        <ArrowLeft className="size-3.5" /> My Learning
+        <ArrowLeft className="size-3.5" /> Моё обучение
       </Link>
       <div className="flex flex-wrap items-center gap-2">
         <Badge variant="accent">{lesson.level}</Badge>
         <Badge variant="outline">{SKILL_LABEL[lesson.skill]}</Badge>
-        <span className="text-[12px] text-subtle">{mod.title} · {lesson.minutes} min</span>
+        <span className="text-[12px] text-subtle">{mod.title}, {lesson.minutes} мин</span>
         {course.meta.sample && <SampleBadge kind="content" />}
       </div>
       <h1 className="text-[28px] font-semibold leading-tight tracking-[-0.025em]">{lesson.title}</h1>
@@ -123,9 +123,9 @@ export function LessonPlayer({ lessonId }: { lessonId: string }) {
         {header}
         <EmptyState
           icon={ls === "locked" ? Lock : Hourglass}
-          title={ls === "locked" ? "This lesson is locked" : "Lesson content pending"}
-          description={ls === "locked" ? "Complete the previous lesson on your path to unlock it." : "This lesson is part of the planned structure. Its content will be added from your study materials."}
-          action={<Link href="/learning" className={buttonVariants({ variant: "secondary", size: "sm" })}>Back to path</Link>}
+          title={ls === "locked" ? "Урок пока закрыт" : "Материалы урока готовятся"}
+          description={ls === "locked" ? "Пройди предыдущий урок, чтобы открыть этот." : "Урок есть в плане программы. Материалы добавим из учебников."}
+          action={<Link href="/learning" className={buttonVariants({ variant: "secondary", size: "sm" })}>К программе</Link>}
         />
       </div>
     );
@@ -139,7 +139,7 @@ export function LessonPlayer({ lessonId }: { lessonId: string }) {
         <Card>
           <CardContent className="py-4">
             <div className="mb-2 flex items-center gap-2 text-[13px] font-medium text-muted">
-              <Target className="size-3.5" /> Objectives
+              <Target className="size-3.5" /> Цели урока
             </div>
             <ul className="space-y-1.5">
               {lesson.objectives.map((o) => (
@@ -182,7 +182,7 @@ export function LessonPlayer({ lessonId }: { lessonId: string }) {
           {b.type === "quiz" && (
             <Card>
               <CardContent>
-                <h2 className="mb-4 text-[16px] font-medium">{b.title ?? "Practice"}</h2>
+                <h2 className="mb-4 text-[16px] font-medium">{b.title ?? "Практика"}</h2>
                 <Quiz block={b} onResult={(score, total) => setQuiz({ score, total })} />
               </CardContent>
             </Card>
@@ -193,29 +193,29 @@ export function LessonPlayer({ lessonId }: { lessonId: string }) {
       <div className="flex flex-col gap-3 rounded-lg border border-line bg-surface p-4 sm:flex-row sm:items-center sm:justify-between">
         {completed ? (
           <div className="flex items-center gap-2 text-[14px] text-success">
-            <CheckCircle2 className="size-4" /> Lesson completed
+            <CheckCircle2 className="size-4" /> Урок пройден
             {state.lessons[lessonId]?.total ? (
-              <span className="text-muted">· quiz {state.lessons[lessonId]?.score}/{state.lessons[lessonId]?.total}</span>
+              <span className="text-muted">квиз {state.lessons[lessonId]?.score}/{state.lessons[lessonId]?.total}</span>
             ) : null}
           </div>
         ) : (
-          <p className="text-[13px] text-muted">Finished reading and practising? Mark the lesson complete to unlock the next one.</p>
+          <p className="text-[13px] text-muted">Прочитал и потренировался? Отметь урок пройденным — откроется следующий.</p>
         )}
         <div className="flex flex-wrap gap-2">
           {completed ? (
             <>
               <Button variant="ghost" size="sm" onClick={() => actions.resetLesson(lessonId)}>
-                <RotateCcw /> Reset
+                <RotateCcw /> Сбросить
               </Button>
               {next && (
                 <Link href={`/learning/${next.id}`} className={buttonVariants({ size: "sm" })}>
-                  Next lesson <ArrowRight />
+                  Следующий урок <ArrowRight />
                 </Link>
               )}
             </>
           ) : (
             <Button onClick={() => actions.completeLesson(lessonId, lesson.title, quiz?.score, quiz?.total)}>
-              <Check /> Mark complete
+              <Check /> Урок пройден
             </Button>
           )}
         </div>

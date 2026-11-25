@@ -8,7 +8,7 @@ import { useStore, useT } from "@/lib/store/store";
 export function SampleBadge({ kind = "data", className }: { kind?: "data" | "content"; className?: string }) {
   const t = useT();
   return (
-    <Badge variant="warning" className={className} title="Demonstration material — not real learning results">
+    <Badge variant="warning" className={className} title="Демонстрационные материалы — не настоящие результаты">
       <FlaskConical /> {kind === "data" ? t.common.sampleData : t.common.sampleContent}
     </Badge>
   );

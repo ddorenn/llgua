@@ -5,7 +5,7 @@ import { Volume2 } from "lucide-react";
 import type { VocabCard } from "@/lib/vocab";
 import { VOCAB_RULES } from "@/lib/vocab";
 import { speak, ttsSupported } from "@/lib/speech";
-import { cn } from "@/lib/utils";
+import { cn, plural } from "@/lib/utils";
 
 /**
  * Presentational word card. Takes a plain VocabCard view model (no store access),
@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
  */
 export function StrengthMeter({ value, className }: { value: number; className?: string }) {
   return (
-    <span className={cn("flex items-center gap-1", className)} aria-label={`Strength ${value} of ${VOCAB_RULES.meterSteps}`}>
+    <span className={cn("flex items-center gap-1", className)} aria-label={`Прочность ${value} из ${VOCAB_RULES.meterSteps}`}>
       {Array.from({ length: VOCAB_RULES.meterSteps }).map((_, i) => (
         <span key={i} className={cn("h-1 flex-1 rounded-full transition-colors duration-300", i < value ? "bg-accent" : "bg-elevated")} />
       ))}
@@ -28,8 +28,8 @@ export function PronounceButton({ text, className }: { text: string; className?:
   return (
     <button
       type="button"
-      aria-label={`Pronounce ${text}`}
-      title="Pronounce"
+      aria-label={`Произнести: ${text}`}
+      title="Произнести"
       onClick={(e) => {
         e.stopPropagation();
         speak(text, { rate: 0.85 });
@@ -90,9 +90,9 @@ export function WordCard({
           "mt-4 text-left text-[16px] transition-colors disabled:cursor-default",
           hidden ? "cursor-pointer rounded-md bg-elevated px-3 py-1.5 text-[13.5px] text-muted hover:text-fg" : "text-fg",
         )}
-        aria-label={hidden ? "Reveal translation" : undefined}
+        aria-label={hidden ? "Показать перевод" : undefined}
       >
-        {hidden ? "Show translation" : card.translation}
+        {hidden ? "Показать перевод" : card.translation}
       </button>
 
       {card.example && <ExampleSentence text={card.example} word={card.word} className="mt-3 text-[15px] leading-relaxed text-muted" />}
@@ -102,7 +102,7 @@ export function WordCard({
           <span className={cn(card.status === "learned" ? "text-success" : card.status === "new" ? "text-subtle" : "text-accent-soft")}>
             {card.statusLabel}
           </span>
-          <span className="text-subtle">{card.reviews ? `${card.reviews} review${card.reviews === 1 ? "" : "s"}` : "Not reviewed yet"}</span>
+          <span className="text-subtle">{card.reviews ? `${card.reviews} ${plural(card.reviews, "повторение", "повторения", "повторений")}` : "Ещё не повторялось"}</span>
         </div>
         <StrengthMeter value={card.strength} className="mt-2" />
         {footer && <div className="mt-4">{footer}</div>}

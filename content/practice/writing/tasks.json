@@ -1,8 +1,42 @@
 {
-  "meta": { "sample": true, "source": "Demonstration tasks written for LINGUA.", "version": 1 },
+  "meta": {
+    "sample": true,
+    "source": "Demonstration tasks written for LINGUA.",
+    "version": 1
+  },
   "tasks": [
-    { "id": "wr-email-friend", "title": "Email to a friend", "level": "A2", "minutes": 15, "type": "email", "instructions": "Write an email to a friend inviting them to visit you next month. Say what you can do together and how to get to your city.", "minWords": 80, "maxWords": 120, "rubricId": "writing-general" },
-    { "id": "wr-opinion-essay", "title": "Opinion essay: online learning", "level": "B1", "minutes": 25, "type": "essay", "instructions": "\"Online learning is as effective as learning in a classroom.\" Do you agree or disagree? Give reasons and examples from your own experience.", "minWords": 150, "maxWords": 220, "rubricId": "writing-general" },
-    { "id": "wr-review", "title": "Review of a film or book", "level": "B2", "minutes": 25, "type": "review", "instructions": "Write a review of a film or book you enjoyed recently. Describe it briefly, say what was good and what could be better, and recommend it to a specific type of person.", "minWords": 180, "maxWords": 260, "rubricId": "writing-general" }
+    {
+      "id": "wr-email-friend",
+      "title": "Письмо другу",
+      "level": "A2",
+      "minutes": 15,
+      "type": "email",
+      "instructions": "Write an email to a friend inviting them to visit you next month. Say what you can do together and how to get to your city.",
+      "minWords": 80,
+      "maxWords": 120,
+      "rubricId": "writing-general"
+    },
+    {
+      "id": "wr-opinion-essay",
+      "title": "Эссе-мнение: онлайн-обучение",
+      "level": "B1",
+      "minutes": 25,
+      "type": "essay",
+      "instructions": "\"Online learning is as effective as learning in a classroom.\" Do you agree or disagree? Give reasons and examples from your own experience.",
+      "minWords": 150,
+      "maxWords": 220,
+      "rubricId": "writing-general"
+    },
+    {
+      "id": "wr-review",
+      "title": "Отзыв о фильме или книге",
+      "level": "B2",
+      "minutes": 25,
+      "type": "review",
+      "instructions": "Write a review of a film or book you enjoyed recently. Describe it briefly, say what was good and what could be better, and recommend it to a specific type of person.",
+      "minWords": 180,
+      "maxWords": 260,
+      "rubricId": "writing-general"
+    }
   ]
 }

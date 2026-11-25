@@ -23,12 +23,16 @@ export function createInitialState(): LinguaState {
 export function hydrate(persisted: Partial<LinguaState> | null): LinguaState {
   const base = createInitialState();
   if (!persisted) return base;
+  const settings = { ...base.settings, ...(persisted.settings ?? {}) };
+  // Migrate defaults from the English-first version (never overwrite an explicit choice).
+  if (!persisted.settings?.updatedAt) settings.interfaceLanguage = "ru";
+  if (settings.mainGoal === "Balanced development of all English skills") settings.mainGoal = base.settings.mainGoal;
+  if (settings.displayName === "Student") settings.displayName = base.settings.displayName;
   return {
     ...base,
     ...persisted,
     settings: {
-      ...base.settings,
-      ...(persisted.settings ?? {}),
+      ...settings,
       notifications: { ...base.settings.notifications, ...(persisted.settings?.notifications ?? {}) },
     },
     schemaVersion: 1,

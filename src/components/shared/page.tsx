@@ -121,12 +121,12 @@ export function StatCard({
 }
 
 export const SKILL_LABEL: Record<string, string> = {
-  grammar: "Grammar",
-  vocabulary: "Vocabulary",
-  reading: "Reading",
-  listening: "Listening",
-  speaking: "Speaking",
-  writing: "Writing",
-  review: "Review",
-  rotation: "Rotation",
+  grammar: "Грамматика",
+  vocabulary: "Словарь",
+  reading: "Чтение",
+  listening: "Аудирование",
+  speaking: "Разговорная практика",
+  writing: "Письмо",
+  review: "Повторение",
+  rotation: "Чередование",
 };

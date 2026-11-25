@@ -8,7 +8,7 @@ import { getAssessment, type AssessmentQuestion } from "@/lib/content";
 import { gradeAssessment, isCorrect, type AnswerValue } from "@/lib/assessment";
 import { useStore } from "@/lib/store/store";
 import type { AssessmentResult } from "@/lib/store/types";
-import { cn, pct } from "@/lib/utils";
+import { cn, pct, plural } from "@/lib/utils";
 import { Notice, SKILL_LABEL } from "@/components/shared/page";
 import { SampleBadge } from "@/components/shared/sample";
 import { Badge } from "@/components/ui/badge";
@@ -53,12 +53,12 @@ export function AssessmentRunner({ id }: { id: string }) {
     return (
       <div className="mx-auto max-w-2xl space-y-6">
         <Link href="/assessments" className="inline-flex items-center gap-1.5 text-[13px] text-muted hover:text-fg">
-          <ArrowLeft className="size-3.5" /> Assessments
+          <ArrowLeft className="size-3.5" /> Тестирование
         </Link>
         <Card>
           <CardContent className="space-y-6 p-7">
             <div className="flex flex-wrap items-center gap-2">
-              <Badge variant="accent" className="capitalize">{assessment.type}</Badge>
+              <Badge variant="accent" className="capitalize">{assessment.type === "initial" ? "Входной" : assessment.type === "weekly" ? "Еженедельный" : "Прогресс"}</Badge>
               {assessment.meta.sample && <SampleBadge kind="content" />}
             </div>
             <div>
@@ -67,9 +67,9 @@ export function AssessmentRunner({ id }: { id: string }) {
             </div>
             <div className="grid grid-cols-3 gap-3">
               {[
-                ["Questions", String(flat.length)],
-                ["Time", `~${assessment.minutes} min`],
-                ["Sections", String(assessment.sections.length)],
+                ["Вопросы", String(flat.length)],
+                ["Время", `~${assessment.minutes} min`],
+                ["Разделы", String(assessment.sections.length)],
               ].map(([k, v]) => (
                 <div key={k} className="rounded-md border border-line bg-surface px-3 py-3">
                   <div className="text-[11.5px] text-subtle">{k}</div>
@@ -81,17 +81,17 @@ export function AssessmentRunner({ id }: { id: string }) {
               {assessment.sections.map((s) => (
                 <li key={s.id} className="flex justify-between border-b border-line pb-2 last:border-0">
                   <span className="text-fg/90">{s.title}</span>
-                  <span className="tabular">{s.questions.length} questions</span>
+                  <span className="tabular">{s.questions.length} {plural(s.questions.length, "вопрос", "вопроса", "вопросов")}</span>
                 </li>
               ))}
             </ul>
             {!assessment.validated && (
-              <Notice icon={ShieldAlert} title="Starting snapshot only" tone="warning">
-                Scores are raw percentages on demonstration items. They are not a CEFR placement.
+              <Notice icon={ShieldAlert} title="Только стартовый срез" tone="warning">
+                Результат — простой процент верных ответов на демонстрационных заданиях. Это не определение уровня CEFR.
               </Notice>
             )}
             <Button size="lg" className="w-full" onClick={() => setPhase("run")}>
-              Begin assessment <ArrowRight />
+              Начать тест <ArrowRight />
             </Button>
           </CardContent>
         </Card>
@@ -107,7 +107,7 @@ export function AssessmentRunner({ id }: { id: string }) {
             <div className="text-center">
               <p className="text-[13px] font-medium text-muted">{assessment.title}</p>
               <div className="tabular mt-3 text-[56px] font-semibold leading-none tracking-[-0.04em]">{pct(result.score, result.total)}%</div>
-              <p className="mt-2 text-[14px] text-muted">{result.score} of {result.total} correct</p>
+              <p className="mt-2 text-[14px] text-muted">{result.score} из {result.total} верно</p>
             </div>
             <div className="space-y-3">
               {Object.entries(result.bySkill).map(([skill, v]) => (
@@ -121,8 +121,8 @@ export function AssessmentRunner({ id }: { id: string }) {
               ))}
             </div>
             {!assessment.validated && (
-              <Notice icon={ShieldAlert} title="This is not a CEFR level" tone="warning">
-                Use this result to compare with your future attempts. If you know your approximate level, you can set it in Settings.
+              <Notice icon={ShieldAlert} title="Это не уровень CEFR" tone="warning">
+                Используй результат для сравнения со следующими попытками. Если знаешь свой примерный уровень, укажи его в настройках.
               </Notice>
             )}
           </CardContent>
@@ -130,7 +130,7 @@ export function AssessmentRunner({ id }: { id: string }) {
 
         <Card>
           <CardContent className="p-6">
-            <h2 className="mb-4 text-[15px] font-medium">Review answers</h2>
+            <h2 className="mb-4 text-[15px] font-medium">Разбор ответов</h2>
             <ol className="space-y-3">
               {flat.map(({ q }, idx) => {
                 const ok = isCorrect(q, answers[q.id]);
@@ -160,8 +160,8 @@ export function AssessmentRunner({ id }: { id: string }) {
         </Card>
 
         <div className="flex flex-wrap justify-center gap-3">
-          <Link href="/assessments" className={buttonVariants({ variant: "secondary" })}>All assessments</Link>
-          <Link href="/progress" className={buttonVariants()}>View progress</Link>
+          <Link href="/assessments" className={buttonVariants({ variant: "secondary" })}>Все тесты</Link>
+          <Link href="/progress" className={buttonVariants()}>Открыть прогресс</Link>
         </div>
       </div>
     );
@@ -172,13 +172,13 @@ export function AssessmentRunner({ id }: { id: string }) {
       <div className="flex items-center gap-4">
         {confirmExit ? (
           <div className="flex items-center gap-2 text-[12.5px]">
-            <span className="text-muted">Leave? Answers will be lost.</span>
-            <Button variant="danger" size="sm" onClick={() => router.push("/assessments")}>Leave</Button>
-            <Button variant="ghost" size="sm" onClick={() => setConfirmExit(false)}>Stay</Button>
+            <span className="text-muted">Выйти? Ответы не сохранятся.</span>
+            <Button variant="danger" size="sm" onClick={() => router.push("/assessments")}>Выйти</Button>
+            <Button variant="ghost" size="sm" onClick={() => setConfirmExit(false)}>Остаться</Button>
           </div>
         ) : (
           <Button variant="ghost" size="sm" onClick={() => setConfirmExit(true)}>
-            <X /> Exit
+            <X /> Выйти
           </Button>
         )}
         <Progress value={((i + 1) / flat.length) * 100} />
@@ -189,7 +189,7 @@ export function AssessmentRunner({ id }: { id: string }) {
         <CardContent className="space-y-6 p-6 sm:p-7">
           <div className="flex items-center justify-between">
             <Badge variant="outline">{cur.sectionTitle}</Badge>
-            <span className="flex items-center gap-1 text-[12px] text-subtle"><Clock className="size-3" /> {answeredCount}/{flat.length} answered</span>
+            <span className="flex items-center gap-1 text-[12px] text-subtle"><Clock className="size-3" /> Отвечено {answeredCount}/{flat.length}</span>
           </div>
           {cur.passage && (
             <blockquote className="lang rounded-r-md border-l-2 border-accent bg-surface px-4 py-3 text-[17px] leading-relaxed text-fg">{cur.passage}</blockquote>
@@ -229,28 +229,28 @@ export function AssessmentRunner({ id }: { id: string }) {
                 if (i < flat.length - 1) setI(i + 1);
                 else if (answeredCount === flat.length) finish();
               }}
-              placeholder="Type your answer"
-              aria-label="Your answer"
+              placeholder="Введи ответ"
+              aria-label="Твой ответ"
               className="lang h-12 text-[17px]"
             />
           )}
 
           <div className="flex items-center justify-between border-t border-line pt-5">
             <Button variant="ghost" onClick={() => setI((x) => Math.max(0, x - 1))} disabled={i === 0}>
-              <ArrowLeft /> Back
+              <ArrowLeft /> Назад
             </Button>
             {i < flat.length - 1 ? (
               <Button onClick={() => setI((x) => x + 1)} disabled={!answered}>
-                Next <ArrowRight />
+                Дальше <ArrowRight />
               </Button>
             ) : (
               <Button onClick={finish} disabled={answeredCount < flat.length}>
-                Finish <Check />
+                Завершить <Check />
               </Button>
             )}
           </div>
           {i === flat.length - 1 && answeredCount < flat.length && (
-            <p className="text-right text-[12px] text-subtle">Answer all questions to finish ({flat.length - answeredCount} left).</p>
+            <p className="text-right text-[12px] text-subtle">Ответь на все вопросы, чтобы завершить (осталось {flat.length - answeredCount}).</p>
           )}
         </CardContent>
       </Card>

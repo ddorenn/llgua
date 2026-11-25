@@ -1,9 +1,63 @@
 {
-  "meta": { "sample": true, "source": "Demonstration prompts written for LINGUA.", "version": 1 },
+  "meta": {
+    "sample": true,
+    "source": "Demonstration prompts written for LINGUA.",
+    "version": 1
+  },
   "tasks": [
-    { "id": "s-introduce", "title": "Introduce yourself", "level": "A2", "minutes": 3, "type": "monologue", "prompt": "Talk about yourself for one to two minutes: where you live, what you do, and how you spend your free time.", "hints": ["I live in…", "I work as… / I study…", "In my free time I…"], "rubricId": "speaking-general" },
-    { "id": "s-memorable-trip", "title": "A memorable trip", "level": "B1", "minutes": 3, "type": "monologue", "prompt": "Describe a trip you remember well. Say where you went, who you were with, what happened, and why it was memorable.", "hints": ["Use Past Simple for events", "Add one feeling or opinion"], "rubricId": "speaking-general" },
-    { "id": "s-technology-opinion", "title": "Technology and children", "level": "B2", "minutes": 4, "type": "discussion", "prompt": "Some people think children should not use smartphones before the age of 14. Do you agree? Give reasons and examples.", "hints": ["State your opinion clearly", "Give two reasons", "Mention the opposite view"], "rubricId": "speaking-general" },
-    { "id": "s-roleplay-hotel", "title": "Role-play: hotel complaint", "level": "B1", "minutes": 4, "type": "roleplay", "prompt": "You are a hotel guest. Your room is noisy and the Wi-Fi doesn't work. Explain the problem politely to the receptionist and ask for a solution.", "hints": ["I'm afraid there's a problem with…", "Would it be possible to…?"], "rubricId": "speaking-general" }
+    {
+      "id": "s-introduce",
+      "title": "Расскажи о себе",
+      "level": "A2",
+      "minutes": 3,
+      "type": "monologue",
+      "prompt": "Talk about yourself for one to two minutes: where you live, what you do, and how you spend your free time.",
+      "hints": [
+        "I live in…",
+        "I work as… / I study…",
+        "In my free time I…"
+      ],
+      "rubricId": "speaking-general"
+    },
+    {
+      "id": "s-memorable-trip",
+      "title": "Запомнившаяся поездка",
+      "level": "B1",
+      "minutes": 3,
+      "type": "monologue",
+      "prompt": "Describe a trip you remember well. Say where you went, who you were with, what happened, and why it was memorable.",
+      "hints": [
+        "Use Past Simple for events",
+        "Add one feeling or opinion"
+      ],
+      "rubricId": "speaking-general"
+    },
+    {
+      "id": "s-technology-opinion",
+      "title": "Технологии и дети",
+      "level": "B2",
+      "minutes": 4,
+      "type": "discussion",
+      "prompt": "Some people think children should not use smartphones before the age of 14. Do you agree? Give reasons and examples.",
+      "hints": [
+        "State your opinion clearly",
+        "Give two reasons",
+        "Mention the opposite view"
+      ],
+      "rubricId": "speaking-general"
+    },
+    {
+      "id": "s-roleplay-hotel",
+      "title": "Ролевая игра: жалоба в отеле",
+      "level": "B1",
+      "minutes": 4,
+      "type": "roleplay",
+      "prompt": "You are a hotel guest. Your room is noisy and the Wi-Fi doesn't work. Explain the problem politely to the receptionist and ask for a solution.",
+      "hints": [
+        "I'm afraid there's a problem with…",
+        "Would it be possible to…?"
+      ],
+      "rubricId": "speaking-general"
+    }
   ]
 }

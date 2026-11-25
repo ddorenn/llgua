@@ -85,7 +85,7 @@ export default function TutorPage() {
       actions.appendTutorMessage(modeId, {
         role: "system",
         kind: "notice",
-        content: "Your message is saved, but no AI provider is connected yet, so there is no reply. Add an AI provider key (GROQ_API_KEY or ANTHROPIC_API_KEY) to .env.local to enable the tutor.",
+        content: "Сообщение сохранено, но AI пока не подключён, поэтому ответа не будет.",
       });
       return;
     }
@@ -107,7 +107,7 @@ export default function TutorPage() {
     <div className="-mx-4 -mb-28 -mt-6 grid h-[calc(100dvh-56px-56px)] grid-cols-1 sm:-mx-6 lg:-mx-8 lg:-mb-12 lg:-mt-8 lg:h-[calc(100dvh-56px)] lg:grid-cols-[240px_1fr] xl:grid-cols-[240px_1fr_300px]">
       {/* Modes */}
       <aside className="hidden flex-col border-r border-line bg-surface lg:flex">
-        <div className="px-4 pb-2 pt-6 text-[13px] text-muted">Choose a role</div>
+        <div className="px-4 pb-2 pt-6 text-[13px] text-muted">Выбери роль</div>
         <div className="space-y-0.5 px-2">
           {modes.map((m) => {
             const Icon = ICONS[m.icon] ?? Sparkles;
@@ -146,11 +146,11 @@ export default function TutorPage() {
             <div className="flex items-center gap-2">
               <h1 className="truncate text-[15px] font-medium">{mode.name}</h1>
               {status === null && !statusError ? (
-                <Badge><Loader2 className="animate-spin" /> Checking</Badge>
+                <Badge><Loader2 className="animate-spin" /> Проверяем</Badge>
               ) : connected ? (
-                <Badge variant="success">Connected</Badge>
+                <Badge variant="success">Подключён</Badge>
               ) : (
-                <Badge variant="warning"><PlugZap /> AI not connected</Badge>
+                <Badge variant="warning"><PlugZap /> AI не подключён</Badge>
               )}
             </div>
             <p className="truncate text-[12px] text-muted">{mode.short}</p>
@@ -158,8 +158,8 @@ export default function TutorPage() {
           <Button
             variant="ghost"
             size="icon-sm"
-            aria-label="Clear conversation"
-            title="Clear conversation"
+            aria-label="Очистить диалог"
+            title="Очистить диалог"
             disabled={!messages.length}
             onClick={() => actions.clearTutor(modeId)}
           >
@@ -191,7 +191,7 @@ export default function TutorPage() {
                 <ModeIcon className="size-5" />
               </div>
               <h2 className="text-[20px] font-semibold tracking-tight">{mode.name}</h2>
-              <p className="mt-1.5 text-[14px] text-muted">{mode.short}. Ask anything, or start with a suggestion.</p>
+              <p className="mt-1.5 text-[14px] text-muted">{mode.short}. Спроси что угодно или начни с подсказки.</p>
               <div className="mt-6 grid w-full gap-2">
                 {mode.suggestions.map((s) => (
                   <button
@@ -206,7 +206,7 @@ export default function TutorPage() {
               </div>
               {!connected && status && (
                 <p className="mt-6 text-[12px] text-subtle">
-                  The interface is ready, but no AI model is connected. Messages are saved locally until a provider is configured.
+                  Интерфейс готов, но AI пока не подключён. Сообщения сохраняются, пока не появится модель.
                 </p>
               )}
             </div>
@@ -240,7 +240,7 @@ export default function TutorPage() {
                 ),
               )}
               {sending && (
-                <div className="border-l-2 border-accent pl-4" aria-label="Tutor is writing">
+                <div className="border-l-2 border-accent pl-4" aria-label="Репетитор печатает">
                   <div className="mb-2 text-[12.5px] font-medium text-accent-soft">{mode.name}</div>
                   <div className="flex items-center gap-1.5">
                     {[0, 1, 2].map((i) => (
@@ -257,9 +257,9 @@ export default function TutorPage() {
           {voiceNote && (
             <div className="mx-auto mb-2 flex max-w-2xl items-start gap-2 rounded-r-md border-l-2 border-line-strong bg-surface px-3 py-2 text-[12.5px] text-muted">
               <Mic className="mt-0.5 size-3.5 shrink-0 text-accent-soft" />
-              Voice conversation is planned: speech-to-text will fill this box and replies can be read aloud. Not available yet.
+              Голосовой режим в планах: речь будет превращаться в текст, а ответы — озвучиваться. Пока недоступно.
               <button type="button" className="ml-auto cursor-pointer text-subtle hover:text-fg" onClick={() => setVoiceNote(false)}>
-                Dismiss
+                Закрыть
               </button>
             </div>
           )}
@@ -274,8 +274,8 @@ export default function TutorPage() {
               type="button"
               variant="ghost"
               size="icon-sm"
-              aria-label="Voice input (coming soon)"
-              title="Voice input — coming soon"
+              aria-label="Голосовой ввод (скоро)"
+              title="Голосовой ввод — скоро"
               onClick={() => setVoiceNote((v) => !v)}
             >
               <Mic />
@@ -292,28 +292,28 @@ export default function TutorPage() {
               }}
               rows={1}
               maxLength={8000}
-              placeholder={`Message ${mode.name}…`}
-              aria-label="Message"
+              placeholder={`Напиши: ${mode.name}…`}
+              aria-label="Сообщение"
               className="max-h-[180px] min-h-8 flex-1 resize-none bg-transparent py-1.5 text-[16px] text-fg placeholder:text-subtle focus:outline-none focus-visible:outline-none sm:text-[14px]"
             />
-            <Button type="submit" size="icon-sm" aria-label="Send" disabled={!input.trim() || sending}>
+            <Button type="submit" size="icon-sm" aria-label="Отправить" disabled={!input.trim() || sending}>
               {sending ? <Loader2 className="animate-spin" /> : <ArrowUp />}
             </Button>
           </form>
-          <p className="mx-auto mt-2 max-w-2xl text-center text-[11px] text-subtle">Enter to send · Shift+Enter for a new line</p>
+          <p className="mx-auto mt-2 max-w-2xl text-center text-[11px] text-subtle">Enter — отправить, Shift+Enter — новая строка</p>
         </div>
       </section>
 
       {/* Context */}
       <aside className="hidden min-h-0 overflow-y-auto border-l border-line bg-surface p-5 xl:block">
-        <h2 className="text-[14px] font-semibold text-fg">What the tutor knows</h2>
+        <h2 className="text-[14px] font-semibold text-fg">Что знает репетитор</h2>
         <dl className="mt-3 space-y-3 text-[13px]">
           {[
-            ["Level", state.settings.currentLevel ?? "Not set"],
-            ["Teaching language", state.settings.teachingLanguage === "ru+en" ? "Russian + English" : "English only"],
-            ["Daily time", `${state.settings.dailyMinutes} min`],
-            ["Goal", state.settings.mainGoal],
-            ["Exam", state.settings.targetExam === "none" ? "None yet" : state.settings.targetExam.toUpperCase()],
+            ["Уровень", state.settings.currentLevel ?? "Не задан"],
+            ["Язык объяснений", state.settings.teachingLanguage === "ru+en" ? "Русский + английский" : "Только английский"],
+            ["Время в день", `${state.settings.dailyMinutes} min`],
+            ["Цель", state.settings.mainGoal],
+            ["Экзамен", state.settings.targetExam === "none" ? "Пока нет" : state.settings.targetExam.toUpperCase()],
           ].map(([k, v]) => (
             <div key={k}>
               <dt className="text-[12px] text-subtle">{k}</dt>
@@ -323,13 +323,13 @@ export default function TutorPage() {
         </dl>
         <div className="mt-5 flex items-center justify-between gap-3 rounded-md border border-line bg-card px-3 py-2.5">
           <div>
-            <div className="text-[13px] text-fg">Share my stats</div>
-            <div className="text-[11.5px] text-subtle">Real progress only, never sample data</div>
+            <div className="text-[13px] text-fg">Делиться статистикой</div>
+            <div className="text-[11.5px] text-subtle">Только реальный прогресс, без демо-данных</div>
           </div>
-          <Switch checked={shareStats} onChange={setShareStats} label="Share my stats with the tutor" />
+          <Switch checked={shareStats} onChange={setShareStats} label="Делиться статистикой с репетитором" />
         </div>
 
-        <h2 className="mt-8 text-[14px] font-semibold text-fg">Try asking</h2>
+        <h2 className="mt-8 text-[14px] font-semibold text-fg">Можно спросить</h2>
         <div className="mt-3 space-y-1.5">
           {mode.suggestions.map((s) => (
             <button
@@ -343,13 +343,13 @@ export default function TutorPage() {
           ))}
         </div>
 
-        <h2 className="mt-8 text-[14px] font-semibold text-fg">Model</h2>
+        <h2 className="mt-8 text-[14px] font-semibold text-fg">Модель</h2>
         <p className="mt-2 text-[12.5px] leading-relaxed text-muted">
           {connected
             ? `${status?.provider} · ${status?.model}`
             : statusError
-              ? "Could not reach the tutor API."
-              : "Not connected. Set GROQ_API_KEY or ANTHROPIC_API_KEY on the server. Mode instructions live in content/ai/."}
+              ? "Не удалось связаться с репетитором."
+              : "Не подключён. Нужен ключ GROQ_API_KEY или ANTHROPIC_API_KEY на сервере."}
         </p>
       </aside>
     </div>

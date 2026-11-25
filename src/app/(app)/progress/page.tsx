@@ -46,7 +46,7 @@ function vocabGrowth(state: LinguaState) {
     const end = new Date();
     end.setDate(end.getDate() - w * 7);
     weeks.push({
-      week: w === 0 ? "This wk" : `−${w} wk`,
+      week: w === 0 ? "Эта нед." : `−${w} нед.`,
       words: learned.filter((v) => new Date(v.lastReviewed!).getTime() <= end.getTime()).length,
     });
   }
@@ -57,7 +57,7 @@ function NoData({ text, href, cta }: { text: string; href?: string; cta?: string
   return (
     <EmptyState
       icon={BarChart3}
-      title="Not enough data yet"
+      title="Пока мало данных"
       description={text}
       action={href && cta ? <Link href={href} className={buttonVariants({ variant: "secondary", size: "sm" })}>{cta}</Link> : undefined}
       className="py-10"
@@ -107,8 +107,8 @@ export default function ProgressPage() {
     <div className="space-y-8">
       <SamplePreviewBanner />
       <PageHeader
-        title="Progress"
-        description="Your learning analytics. Everything here is computed from your own activity and assessments."
+        title="Прогресс"
+        description="Твоя аналитика. Всё здесь считается по твоим занятиям и тестам."
         actions={
           <button
             type="button"
@@ -116,7 +116,7 @@ export default function ProgressPage() {
             aria-pressed={showTable}
             className={buttonVariants({ variant: "secondary", size: "sm" })}
           >
-            <Table2 /> {showTable ? "Show charts" : "Table view"}
+            <Table2 /> {showTable ? "Показать графики" : "Таблицей"}
           </button>
         }
       />
@@ -128,34 +128,34 @@ export default function ProgressPage() {
               <span className="tabular text-[18px] font-semibold">{kpi.overall}%</span>
             </ProgressRing>
             <div>
-              <div className="text-[12px] text-muted">Overall course progress</div>
+              <div className="text-[12px] text-muted">Прогресс по программе</div>
               <div className="mt-1 text-[13px] text-subtle">
-                {kpi.lessons} {sample ? "lessons" : `of ${allLessons.length} lessons`} completed
+                Пройдено уроков: {kpi.lessons}{sample ? "" : ` из ${allLessons.length}`}
               </div>
               {badge && <div className="mt-2">{badge}</div>}
             </div>
           </CardContent>
         </Card>
-        <StatCard label="Study time · 7 days" icon={Clock} value={`${kpi.minutes} min`} hint={sample ? "Sample figure" : `${totalStudyMinutes(state)} min all-time`} />
-        <StatCard label="Study streak" icon={Flame} value={`${kpi.streak} d`} hint="Consecutive days" />
-        <StatCard label="Words learned" icon={BookA} value={kpi.words} hint={sample ? "Sample figure" : `of ${vocabularyFile.words.length}`} />
+        <StatCard label="Время занятий за 7 дней" icon={Clock} value={`${kpi.minutes} мин`} hint={sample ? "Пример" : `${totalStudyMinutes(state)} мин за всё время`} />
+        <StatCard label="Дней подряд" icon={Flame} value={`${kpi.streak} дн.`} hint="Дней подряд" />
+        <StatCard label="Слов выучено" icon={BookA} value={kpi.words} hint={sample ? "Пример" : `из ${vocabularyFile.words.length}`} />
       </div>
 
       {showTable ? (
         <Card>
-          <CardHeader><CardTitle>Data table</CardTitle>{badge}</CardHeader>
+          <CardHeader><CardTitle>Таблица данных</CardTitle>{badge}</CardHeader>
           <CardContent className="space-y-6 overflow-x-auto text-[13px]">
             <table className="w-full min-w-[420px] text-left">
-              <thead className="text-[13px] font-medium text-subtle"><tr><th className="py-2">Skill</th><th>Initial</th><th>Current</th><th>Change</th></tr></thead>
+              <thead className="text-[13px] font-medium text-subtle"><tr><th className="py-2">Навык</th><th>Начало</th><th>Сейчас</th><th>Изменение</th></tr></thead>
               <tbody className="divide-y divide-line">
                 {skills.map((s) => (
                   <tr key={s.skill}><td className="py-2">{s.skill}</td><td className="tabular">{s.initial}%</td><td className="tabular">{s.current}%</td><td className="tabular">{s.current - s.initial >= 0 ? "+" : ""}{s.current - s.initial}</td></tr>
                 ))}
-                {!skills.length && <tr><td colSpan={4} className="py-3 text-subtle">No assessment data.</td></tr>}
+                {!skills.length && <tr><td colSpan={4} className="py-3 text-subtle">Нет данных тестов.</td></tr>}
               </tbody>
             </table>
             <table className="w-full min-w-[420px] text-left">
-              <thead className="text-[13px] font-medium text-subtle"><tr><th className="py-2">Day</th><th>Minutes</th></tr></thead>
+              <thead className="text-[13px] font-medium text-subtle"><tr><th className="py-2">День</th><th>Минуты</th></tr></thead>
               <tbody className="divide-y divide-line">
                 {weekly.map((d) => <tr key={d.day}><td className="py-2">{d.day}</td><td className="tabular">{d.minutes}</td></tr>)}
               </tbody>
@@ -168,8 +168,8 @@ export default function ProgressPage() {
             <Card>
               <CardHeader>
                 <div>
-                  <CardTitle>Weekly activity</CardTitle>
-                  <CardDescription>Minutes from completed daily-plan blocks</CardDescription>
+                  <CardTitle>Активность за неделю</CardTitle>
+                  <CardDescription>Минуты из выполненных блоков плана</CardDescription>
                 </div>
                 <div className="flex items-center gap-2">
                   {badge}
@@ -178,9 +178,9 @@ export default function ProgressPage() {
               </CardHeader>
               <CardContent>
                 {hasWeekly || sample ? (
-                  <ColumnChart data={range === "all" && !sample ? allTime : weekly} x="day" y="minutes" name="Study time" unit=" min" />
+                  <ColumnChart data={range === "all" && !sample ? allTime : weekly} x="day" y="minutes" name="Время занятий" unit=" мин" />
                 ) : (
-                  <NoData text="Complete blocks in your daily plan to build this chart." href="/daily-plan" cta="Open daily plan" />
+                  <NoData text="Выполняй блоки плана на день — и здесь появится график." href="/daily-plan" cta="Открыть план на день" />
                 )}
               </CardContent>
             </Card>
@@ -188,19 +188,19 @@ export default function ProgressPage() {
             <Card>
               <CardHeader>
                 <div>
-                  <CardTitle>Skill development</CardTitle>
-                  <CardDescription>First vs most recent assessment, % correct</CardDescription>
+                  <CardTitle>Развитие навыков</CardTitle>
+                  <CardDescription>Первый и последний тест, % верных ответов</CardDescription>
                 </div>
                 {badge}
               </CardHeader>
               <CardContent className="space-y-3">
                 {skills.length ? (
                   <>
-                    <Legend items={[{ label: "Initial", color: CHART.baseline }, { label: "Current", color: CHART.accent }]} />
-                    <CompareBars data={skills} category="skill" a="initial" b="current" aName="Initial" bName="Current" />
+                    <Legend items={[{ label: "Начало", color: CHART.baseline }, { label: "Сейчас", color: CHART.accent }]} />
+                    <CompareBars data={skills} category="skill" a="initial" b="current" aName="Начало" bName="Сейчас" />
                   </>
                 ) : (
-                  <NoData text="Take the Initial Assessment, then a later one, to compare." href="/assessments" cta="Go to assessments" />
+                  <NoData text="Пройди входной тест, а потом ещё один — и сравни." href="/assessments" cta="К тестам" />
                 )}
               </CardContent>
             </Card>
@@ -210,36 +210,36 @@ export default function ProgressPage() {
             <Card>
               <CardHeader>
                 <div>
-                  <CardTitle>Grammar progress</CardTitle>
-                  <CardDescription>Accuracy by topic</CardDescription>
+                  <CardTitle>Грамматика</CardTitle>
+                  <CardDescription>Точность по темам</CardDescription>
                 </div>
                 {badge}
               </CardHeader>
               <CardContent>
-                {topics.length ? <RankedBars unit="%" data={topics.map((t) => ({ label: t.topic, value: t.mastery }))} /> : <NoData text="Grammar accuracy appears after an assessment." />}
+                {topics.length ? <RankedBars unit="%" data={topics.map((t) => ({ label: t.topic, value: t.mastery }))} /> : <NoData text="Точность по грамматике появится после теста." />}
               </CardContent>
             </Card>
             <Card>
               <CardHeader>
                 <div>
-                  <CardTitle>Vocabulary progress</CardTitle>
-                  <CardDescription>Cumulative words learned</CardDescription>
+                  <CardTitle>Словарный запас</CardTitle>
+                  <CardDescription>Выучено слов всего</CardDescription>
                 </div>
                 {badge}
               </CardHeader>
               <CardContent>
                 {growth.some((g) => g.words > 0) ? (
-                  <GrowthArea data={growth} x="week" y="words" name="Words learned" height={200} />
+                  <GrowthArea data={growth} x="week" y="words" name="Слов выучено" height={200} />
                 ) : (
-                  <NoData text="Mark words as learned in flashcard reviews." href="/vocabulary" cta="Review words" />
+                  <NoData text="Отмечай слова выученными при повторении карточек." href="/vocabulary" cta="Повторить слова" />
                 )}
               </CardContent>
             </Card>
             <Card>
               <CardHeader>
                 <div>
-                  <CardTitle>Mistake statistics</CardTitle>
-                  <CardDescription>Most frequent error areas</CardDescription>
+                  <CardTitle>Частые ошибки</CardTitle>
+                  <CardDescription>Где ошибок больше всего</CardDescription>
                 </div>
                 {badge}
               </CardHeader>
@@ -247,7 +247,7 @@ export default function ProgressPage() {
                 {mistakes.length ? (
                   <RankedBars data={mistakes.slice(0, 6).map((m) => ({ label: m.category.replace(/-/g, " "), value: m.count }))} />
                 ) : (
-                  <NoData text="Mistakes from assessments are grouped here." />
+                  <NoData text="Здесь соберутся ошибки из тестов." />
                 )}
               </CardContent>
             </Card>
@@ -256,23 +256,23 @@ export default function ProgressPage() {
           <Card>
             <CardHeader>
               <div>
-                <CardTitle>Assessment history</CardTitle>
-                <CardDescription>Overall score per attempt</CardDescription>
+                <CardTitle>История тестов</CardTitle>
+                <CardDescription>Общий результат по попыткам</CardDescription>
               </div>
               {badge}
             </CardHeader>
             <CardContent>
               {history.length >= 2 ? (
-                <TrendLine data={history} x="date" y="score" name="Score" unit="%" domain={[0, 100]} />
+                <TrendLine data={history} x="date" y="score" name="Результат" unit="%" domain={[0, 100]} />
               ) : history.length === 1 ? (
                 <div className="flex items-center gap-4 rounded-md border border-line bg-surface p-4 text-[13px]">
                   <ClipboardList className="size-5 text-accent-soft" />
                   <span>
-                    Baseline recorded: <strong className="tabular font-medium">{history[0].score}%</strong> on {history[0].date}. Take the 14-Day Progress Assessment to see a trend.
+                    Точка отсчёта: <strong className="tabular font-medium">{history[0].score}%</strong> — {history[0].date}. Пройди тест прогресса через 14 дней, чтобы увидеть динамику.
                   </span>
                 </div>
               ) : (
-                <NoData text="Your assessment scores will be plotted over time." href="/assessments" cta="Start initial assessment" />
+                <NoData text="Здесь появится график результатов тестов." href="/assessments" cta="Пройти входной тест" />
               )}
             </CardContent>
           </Card>
@@ -281,7 +281,7 @@ export default function ProgressPage() {
 
       {!sample && (
         <p className="flex items-center gap-2 text-[12px] text-subtle">
-          <GraduationCap className="size-3.5" /> Data stored locally in this browser. Connect Supabase to sync across devices.
+          <GraduationCap className="size-3.5" /> Данные хранятся в этом браузере.
         </p>
       )}
     </div>

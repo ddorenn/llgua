@@ -1,19 +1,74 @@
 {
-  "meta": { "sample": false, "source": "Default LINGUA routine (configurable)", "version": 1 },
+  "meta": {
+    "sample": false,
+    "source": "Default LINGUA routine (configurable)",
+    "version": 1
+  },
   "id": "default-60",
-  "title": "Balanced daily practice",
+  "title": "Сбалансированная практика",
   "totalMinutes": 60,
   "blocks": [
-    { "id": "vocabulary", "title": "Vocabulary", "skill": "vocabulary", "minutes": 10, "description": "Review due words, then learn 5–8 new ones in context.", "href": "/vocabulary" },
-    { "id": "grammar", "title": "Grammar", "skill": "grammar", "minutes": 15, "description": "Work through the next grammar lesson on your learning path.", "href": "/learning" },
-    { "id": "receptive", "title": "Reading or Listening", "skill": "rotation", "minutes": 15, "description": "Alternates daily between a reading text and a listening exercise.", "rotation": [
-      { "skill": "reading", "title": "Reading", "href": "/practice/reading" },
-      { "skill": "listening", "title": "Listening", "href": "/practice/listening" }
-    ] },
-    { "id": "productive", "title": "Speaking or Writing", "skill": "rotation", "minutes": 15, "description": "Alternates daily between a speaking task and a writing task.", "rotation": [
-      { "skill": "speaking", "title": "Speaking", "href": "/practice/speaking" },
-      { "skill": "writing", "title": "Writing", "href": "/practice/writing" }
-    ] },
-    { "id": "review", "title": "Review", "skill": "review", "minutes": 5, "description": "Revisit today's mistakes and note one thing you learned.", "href": "/progress" }
+    {
+      "id": "vocabulary",
+      "title": "Словарь",
+      "skill": "vocabulary",
+      "minutes": 10,
+      "description": "Повтори слова, которые пора освежить, и выучи 5–8 новых в контексте.",
+      "href": "/vocabulary"
+    },
+    {
+      "id": "grammar",
+      "title": "Грамматика",
+      "skill": "grammar",
+      "minutes": 15,
+      "description": "Пройди следующий урок грамматики в своей программе.",
+      "href": "/learning"
+    },
+    {
+      "id": "receptive",
+      "title": "Чтение или аудирование",
+      "skill": "rotation",
+      "minutes": 15,
+      "description": "Через день: текст для чтения или упражнение на аудирование.",
+      "rotation": [
+        {
+          "skill": "reading",
+          "title": "Чтение",
+          "href": "/practice/reading"
+        },
+        {
+          "skill": "listening",
+          "title": "Аудирование",
+          "href": "/practice/listening"
+        }
+      ]
+    },
+    {
+      "id": "productive",
+      "title": "Речь или письмо",
+      "skill": "rotation",
+      "minutes": 15,
+      "description": "Через день: задание на говорение или на письмо.",
+      "rotation": [
+        {
+          "skill": "speaking",
+          "title": "Разговорная практика",
+          "href": "/practice/speaking"
+        },
+        {
+          "skill": "writing",
+          "title": "Письмо",
+          "href": "/practice/writing"
+        }
+      ]
+    },
+    {
+      "id": "review",
+      "title": "Повторение",
+      "skill": "review",
+      "minutes": 5,
+      "description": "Вернись к сегодняшним ошибкам и запиши одну вещь, которую узнал.",
+      "href": "/progress"
+    }
   ]
 }

@@ -1,12 +1,35 @@
 {
-  "meta": { "sample": true, "source": "Generic demonstration rubric written for LINGUA. Replace with your own evaluation criteria.", "version": 1 },
+  "meta": {
+    "sample": true,
+    "source": "Generic demonstration rubric written for LINGUA. Replace with your own evaluation criteria.",
+    "version": 1
+  },
   "id": "writing-general",
-  "title": "General writing rubric",
-  "scale": { "min": 0, "max": 5 },
+  "title": "Общие критерии письма",
+  "scale": {
+    "min": 0,
+    "max": 5
+  },
   "criteria": [
-    { "id": "task", "title": "Task completion", "description": "Covers every part of the task with relevant, developed ideas." },
-    { "id": "organisation", "title": "Organisation", "description": "Clear paragraphs, logical order and appropriate linking words." },
-    { "id": "vocabulary", "title": "Vocabulary range", "description": "Uses varied and accurate vocabulary suited to the topic." },
-    { "id": "grammar", "title": "Grammatical accuracy", "description": "Uses a range of structures with few errors that affect meaning." }
+    {
+      "id": "task",
+      "title": "Выполнение задачи",
+      "description": "Раскрыты все части задания, мысли развёрнуты и по теме."
+    },
+    {
+      "id": "organisation",
+      "title": "Структура",
+      "description": "Понятные абзацы, логичный порядок, уместные связки."
+    },
+    {
+      "id": "vocabulary",
+      "title": "Словарный запас",
+      "description": "Разнообразная и точная лексика по теме."
+    },
+    {
+      "id": "grammar",
+      "title": "Грамматическая точность",
+      "description": "Разные конструкции, ошибки не мешают пониманию."
+    }
   ]
 }

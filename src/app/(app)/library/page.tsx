@@ -43,7 +43,7 @@ export default function LibraryPage() {
 
   return (
     <div className="space-y-8">
-      <PageHeader title="Library" description="Your educational materials, organised by skill. Ready to receive textbooks, notes, audio and metadata." />
+      <PageHeader title="Библиотека" description="Учебные материалы по навыкам. Сюда добавятся учебники, конспекты и аудио." />
 
       <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6">
         {library.categories.map((c) => {
@@ -76,7 +76,7 @@ export default function LibraryPage() {
 
       <div className="relative">
         <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-subtle" />
-        <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search titles, authors, tags" className="pl-9" aria-label="Search library" />
+        <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Название, автор или тег" className="pl-9" aria-label="Поиск по библиотеке" />
       </div>
 
       {filtered.length ? (
@@ -93,7 +93,7 @@ export default function LibraryPage() {
                 {r.description && <p className="text-[13px] text-muted">{r.description}</p>}
                 {r.url && (
                   <a href={r.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-[12.5px] text-accent-soft hover:text-fg">
-                    Open <ExternalLink className="size-3" />
+                    Открыть <ExternalLink className="size-3" />
                   </a>
                 )}
               </CardContent>
@@ -104,23 +104,23 @@ export default function LibraryPage() {
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_1.1fr]">
           <EmptyState
             icon={FolderPlus}
-            title={resources.length ? "No resources match" : "Your library is empty"}
+            title={resources.length ? "Ничего не найдено" : "Библиотека пока пуста"}
             description={
               resources.length
-                ? "Try another category or search term."
-                : "Materials you add will appear here, grouped by skill and level. Nothing has been downloaded or scraped — the library only holds what you provide."
+                ? "Попробуй другую категорию или запрос."
+                : "Здесь появятся добавленные материалы, по навыкам и уровням. Ничего не скачивается автоматически — библиотека хранит только то, что ты добавишь."
             }
             className="h-full"
           />
           <Card>
             <CardHeader>
-              <CardTitle>How to add materials</CardTitle>
+              <CardTitle>Как добавить материалы</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3 text-[13px] leading-relaxed text-muted">
               <ol className="list-decimal space-y-1.5 pl-4">
-                <li>Add an entry to <code className="font-mono text-fg/80">content/library/resources.json</code>.</li>
-                <li>Put files you have the rights to use in <code className="font-mono text-fg/80">public/files/</code> (local) or Supabase Storage.</li>
-                <li>Set <code className="font-mono text-fg/80">rights</code> so it’s clear how each item may be used.</li>
+                <li>Добавь запись в <code className="font-mono text-fg/80">content/library/resources.json</code>.</li>
+                <li>Файлы, на которые у тебя есть права, положи в <code className="font-mono text-fg/80">public/files/</code> или в Supabase Storage.</li>
+                <li>Укажи <code className="font-mono text-fg/80">rights</code>, чтобы было понятно, как можно использовать материал.</li>
               </ol>
               <pre className="overflow-x-auto rounded-md border border-line bg-surface p-3 font-mono text-[11.5px] leading-relaxed text-fg/80">{EXAMPLE}</pre>
             </CardContent>

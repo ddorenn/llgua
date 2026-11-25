@@ -50,12 +50,12 @@ function SidebarContent({ user, onNavigate }: { user: ShellUser; onNavigate?: ()
   return (
     <div className="flex h-full flex-col">
       <div className="flex h-16 items-center px-4">
-        <Link href="/dashboard" onClick={onNavigate} aria-label="LINGUA home">
+        <Link href="/dashboard" onClick={onNavigate} aria-label="LINGUA — главная">
           <Logo />
         </Link>
       </div>
 
-      <nav className="flex-1 space-y-6 overflow-y-auto px-3 py-2" aria-label="Main">
+      <nav className="flex-1 space-y-6 overflow-y-auto px-3 py-2" aria-label="Основное">
         {NAVIGATION.map((section) => (
           <div key={section.key}>
             <div className="mb-1 px-2.5 text-[12.5px] text-subtle">{t.nav[section.key]}</div>
@@ -77,7 +77,7 @@ function SidebarContent({ user, onNavigate }: { user: ShellUser; onNavigate?: ()
           <div className="min-w-0 flex-1">
             <div className="truncate text-[13px] font-medium text-fg">{state.settings.displayName || user.name}</div>
             <div className={cn("truncate text-[11px]", user.mode === "demo" ? "text-warning" : "text-subtle")}>
-              {user.mode === "demo" ? "Demo mode · not secure" : user.mode === "supabase" ? "Supabase account" : "Private account"}
+              {user.mode === "demo" ? "Демо-режим, не защищён" : user.mode === "supabase" ? "Аккаунт Supabase" : "Личный аккаунт"}
             </div>
           </div>
           <form action={logoutAction}>
@@ -99,12 +99,12 @@ function SidebarContent({ user, onNavigate }: { user: ShellUser; onNavigate?: ()
 function SyncIndicator() {
   const { syncStatus } = useStore();
   const meta = {
-    local: { icon: HardDrive, label: "This browser", title: "Progress is stored in this browser only", tone: "text-subtle" },
-    loading: { icon: Loader2, label: "Loading", title: "Loading your progress", tone: "text-subtle" },
-    saving: { icon: Loader2, label: "Saving", title: "Saving to your account", tone: "text-muted" },
-    synced: { icon: Cloud, label: "Saved", title: "All progress is saved to your account", tone: "text-success" },
-    offline: { icon: CloudOff, label: "Offline", title: "No connection — changes are kept on this device and will sync automatically", tone: "text-warning" },
-    error: { icon: CloudOff, label: "Not saved", title: "Your session expired — sign in again to sync", tone: "text-danger" },
+    local: { icon: HardDrive, label: "Этот браузер", title: "Прогресс хранится только в этом браузере", tone: "text-subtle" },
+    loading: { icon: Loader2, label: "Загрузка", title: "Загружаем прогресс", tone: "text-subtle" },
+    saving: { icon: Loader2, label: "Сохраняем", title: "Сохраняем в аккаунт", tone: "text-muted" },
+    synced: { icon: Cloud, label: "Сохранено", title: "Весь прогресс сохранён в аккаунте", tone: "text-success" },
+    offline: { icon: CloudOff, label: "Офлайн", title: "Нет связи — изменения сохранены на устройстве и синхронизируются автоматически", tone: "text-warning" },
+    error: { icon: CloudOff, label: "Не сохранено", title: "Сессия истекла — войди снова для синхронизации", tone: "text-danger" },
   }[syncStatus];
   const Icon = meta.icon;
   return (
@@ -118,13 +118,13 @@ function SyncIndicator() {
 function SampleToggle() {
   const { state, actions, ready } = useStore();
   return (
-    <label className="flex cursor-pointer items-center gap-2 text-[12px] text-muted" title="Show labelled demonstration analytics">
+    <label className="flex cursor-pointer items-center gap-2 text-[12px] text-muted" title="Показывать демонстрационную аналитику с пометкой">
       <FlaskConical className={cn("size-3.5", state.settings.samplePreview ? "text-warning" : "text-subtle")} />
-      <span className="hidden xl:inline">Sample data</span>
+      <span className="hidden xl:inline">Демо-данные</span>
       <Switch
         checked={state.settings.samplePreview}
         onChange={(v) => actions.updateSettings({ samplePreview: v })}
-        label="Sample preview"
+        label="Демо-данные"
         disabled={!ready}
       />
     </label>
@@ -154,7 +154,7 @@ export function AppShell({ user, children }: { user: ShellUser; children: React.
   return (
     <div className="min-h-dvh lg:pl-[248px]">
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-accent focus:px-3 focus:py-2">
-        Skip to content
+        Перейти к содержимому
       </a>
 
       {/* Desktop sidebar */}
@@ -175,12 +175,12 @@ export function AppShell({ user, children }: { user: ShellUser; children: React.
           )}
           role="dialog"
           aria-modal="true"
-          aria-label="Navigation"
+          aria-label="Навигация"
         >
           <button
             type="button"
             onClick={() => setOpen(false)}
-            aria-label="Close navigation"
+            aria-label="Закрыть меню"
             className="absolute right-3 top-4 inline-flex size-8 cursor-pointer items-center justify-center rounded-md text-muted hover:bg-card hover:text-fg"
           >
             <X className="size-4" />
@@ -194,26 +194,26 @@ export function AppShell({ user, children }: { user: ShellUser; children: React.
         <button
           type="button"
           onClick={() => setOpen(true)}
-          aria-label="Open navigation"
+          aria-label="Открыть меню"
           className="-ml-1 inline-flex size-9 cursor-pointer items-center justify-center rounded-md text-muted hover:bg-card hover:text-fg lg:hidden"
         >
           <Menu className="size-[18px]" />
         </button>
-        <Link href="/dashboard" className="lg:hidden" aria-label="LINGUA home">
+        <Link href="/dashboard" className="lg:hidden" aria-label="LINGUA — главная">
           <Logo compact />
         </Link>
         <div className="flex-1" />
         {user.mode === "demo" && (
           <span className="hidden items-center rounded-full bg-warning/14 px-2 py-0.5 text-[11.5px] font-medium text-warning md:inline-flex">
-            Demo sign-in
+            Демо-вход
           </span>
         )}
         <Link
           href={level ? "/learning" : "/assessments"}
           className="inline-flex h-8 items-center gap-1.5 rounded-md px-2 text-[13px] text-muted transition-colors hover:bg-elevated hover:text-fg"
-          title={level ? "Current level (self-reported)" : "Level not set yet"}
+          title={level ? "Текущий уровень (указан вручную)" : "Уровень пока не задан"}
         >
-          <span className="text-subtle">Level</span>
+          <span className="text-subtle">Уровень</span>
           <span className="font-semibold text-accent-soft">{level ?? "—"}</span>
         </Link>
         <SyncIndicator />
@@ -227,7 +227,7 @@ export function AppShell({ user, children }: { user: ShellUser; children: React.
 
       {/* Mobile bottom tabs */}
       <nav
-        aria-label="Quick navigation"
+        aria-label="Быстрая навигация"
         className="fixed inset-x-0 bottom-0 z-20 grid grid-cols-5 border-t border-line bg-surface pb-[env(safe-area-inset-bottom)] lg:hidden"
       >
         {MOBILE_TABS.map((item) => {
@@ -250,7 +250,7 @@ export function AppShell({ user, children }: { user: ShellUser; children: React.
           className="flex h-14 cursor-pointer flex-col items-center justify-center gap-1 text-[10.5px] text-subtle"
         >
           <Menu className="size-[18px]" />
-          More
+          Ещё
         </button>
       </nav>
     </div>

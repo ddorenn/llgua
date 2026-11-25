@@ -1,11 +1,39 @@
 {
-  "meta": { "sample": false, "source": "Level names follow the Council of Europe CEFR. Descriptions are short paraphrases written for this app, not official descriptors.", "version": 1 },
+  "meta": {
+    "sample": false,
+    "source": "Названия уровней — по шкале CEFR (Совет Европы). Описания — краткие пересказы для LINGUA, не официальные дескрипторы.",
+    "version": 1
+  },
   "levels": [
-    { "id": "A1", "name": "Beginner", "summary": "Understand and use familiar everyday expressions and very basic phrases." },
-    { "id": "A2", "name": "Elementary", "summary": "Communicate in simple, routine tasks on familiar topics." },
-    { "id": "B1", "name": "Intermediate", "summary": "Deal with most everyday situations and describe experiences and plans." },
-    { "id": "B2", "name": "Upper-Intermediate", "summary": "Interact with fluency on a wide range of topics and argue a viewpoint." },
-    { "id": "C1", "name": "Advanced", "summary": "Use language flexibly for social, academic and professional purposes." },
-    { "id": "C2", "name": "Proficient", "summary": "Understand virtually everything and express yourself with precision." }
+    {
+      "id": "A1",
+      "name": "Начальный",
+      "summary": "Понимаешь и используешь знакомые фразы и простые выражения."
+    },
+    {
+      "id": "A2",
+      "name": "Элементарный",
+      "summary": "Общаешься в простых бытовых ситуациях на знакомые темы."
+    },
+    {
+      "id": "B1",
+      "name": "Средний",
+      "summary": "Справляешься с большинством повседневных ситуаций, рассказываешь об опыте и планах."
+    },
+    {
+      "id": "B2",
+      "name": "Выше среднего",
+      "summary": "Свободно общаешься на широкий круг тем и аргументируешь свою позицию."
+    },
+    {
+      "id": "C1",
+      "name": "Продвинутый",
+      "summary": "Гибко используешь язык в учёбе, работе и общении."
+    },
+    {
+      "id": "C2",
+      "name": "Владение в совершенстве",
+      "summary": "Понимаешь практически всё и выражаешь мысли точно и тонко."
+    }
   ]
 }

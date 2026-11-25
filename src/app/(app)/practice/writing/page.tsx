@@ -48,8 +48,8 @@ export default function WritingPage() {
   const inRange = words >= task.minWords && !over;
 
   function submit() {
-    if (words < task.minWords) return setError(`Write at least ${task.minWords} words (currently ${words}).`);
-    if (over) return setError(`Keep it under ${task.maxWords} words (currently ${words}).`);
+    if (words < task.minWords) return setError(`Напиши не меньше ${task.minWords} слов (сейчас ${words}).`);
+    if (over) return setError(`Уложись в ${task.maxWords} слов (сейчас ${words}).`);
     setError(undefined);
     actions.submitWriting(id, task.title, text.trim());
   }
@@ -57,14 +57,14 @@ export default function WritingPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Writing"
-        description="Plan, write and submit. Drafts save automatically in your browser."
+        title="Письмо"
+        description="Продумай, напиши и сдай. Черновик сохраняется автоматически."
         actions={writingFile.meta.sample ? <SampleBadge kind="content" /> : undefined}
       />
       <ExercisePicker
         value={id}
         onChange={setId}
-        items={tasks.map((t) => ({ ...t, done: state.writing[t.id]?.submittedAt ? "Submitted" : undefined }))}
+        items={tasks.map((t) => ({ ...t, done: state.writing[t.id]?.submittedAt ? "Сдано" : undefined }))}
       />
 
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.45fr_1fr]">
@@ -72,43 +72,43 @@ export default function WritingPage() {
           <CardHeader>
             <div>
               <div className="mb-2 flex flex-wrap gap-2">
-                <Badge variant="accent">Level {task.level}</Badge>
+                <Badge variant="accent">Уровень {task.level}</Badge>
                 <Badge variant="outline" className="capitalize">{task.type}</Badge>
-                <Badge variant="outline"><Clock /> {task.minutes} min</Badge>
+                <Badge variant="outline"><Clock /> {task.minutes} мин</Badge>
               </div>
               <CardTitle className="text-[20px] font-semibold">{task.title}</CardTitle>
-              <p className="mt-2 text-[14.5px] leading-relaxed text-fg/85">{task.instructions}</p>
+              <p className="lang mt-2 text-[17px] leading-relaxed text-fg">{task.instructions}</p>
             </div>
           </CardHeader>
           <CardContent className="flex flex-1 flex-col">
             <textarea
               value={text}
               onChange={(e) => setText(e.target.value)}
-              aria-label="Your text"
+              aria-label="Твой текст"
               aria-invalid={Boolean(error)}
               spellCheck
-              placeholder="Start writing…"
+              placeholder="Начни писать…"
               className="lang min-h-[340px] w-full flex-1 resize-y rounded-md border border-line bg-surface px-5 py-4 text-[17px] leading-[1.8] text-fg placeholder:text-subtle focus:border-accent focus:outline-none focus:ring-3 focus:ring-accent-muted"
             />
             <div className="mt-3 space-y-2">
               <div className="flex flex-wrap items-center justify-between gap-2 text-[12px]">
                 <span className={cn("tabular", over ? "text-danger" : inRange ? "text-success" : "text-muted")}>
-                  {words} words · target {task.minWords}–{task.maxWords}
+                  {words} слов, цель {task.minWords}–{task.maxWords}
                 </span>
                 <span className="text-subtle">
-                  {saved === "saving" ? "Saving…" : saved === "saved" ? "Draft saved" : entry?.updatedAt ? `Draft from ${formatDate(entry.updatedAt)}` : ""}
+                  {saved === "saving" ? "Сохраняем…" : saved === "saved" ? "Черновик сохранён" : entry?.updatedAt ? `Черновик от ${formatDate(entry.updatedAt)}` : ""}
                 </span>
               </div>
-              <Progress value={ratio} barClassName={over ? "bg-danger" : inRange ? "bg-success" : undefined} label="Word target" />
+              <Progress value={ratio} barClassName={over ? "bg-danger" : inRange ? "bg-success" : undefined} label="Цель по словам" />
             </div>
             <FieldError>{error}</FieldError>
             <div className="mt-4 flex flex-wrap items-center gap-3">
               <Button onClick={submit} disabled={!text.trim()}>
-                <Send /> {entry?.submittedAt ? "Resubmit" : "Submit"}
+                <Send /> {entry?.submittedAt ? "Сдать снова" : "Сдать"}
               </Button>
               {entry?.submittedAt && (
                 <span className="flex items-center gap-1.5 text-[12.5px] text-success">
-                  <CheckCircle2 className="size-3.5" /> Submitted {formatDate(entry.submittedAt, { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}
+                  <CheckCircle2 className="size-3.5" /> Сдано {formatDate(entry.submittedAt, { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}
                 </span>
               )}
             </div>
@@ -118,15 +118,15 @@ export default function WritingPage() {
         <div className="space-y-5">
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2"><Sparkles className="size-4 text-accent-soft" /> AI feedback</CardTitle>
+              <CardTitle className="flex items-center gap-2"><Sparkles className="size-4 text-accent-soft" /> Отзыв AI</CardTitle>
             </CardHeader>
             <CardContent>
               {entry?.submittedAt ? (
-                <Notice icon={Sparkles} title="Submission received — awaiting AI review">
-                  Automatic feedback (corrections, rubric scores, suggestions) will appear here once an AI provider is connected. Your text is saved.
+                <Notice icon={Sparkles} title="Текст получен — ждёт проверки AI">
+                  Автоматический отзыв (исправления, оценки по критериям, советы) появится здесь, когда подключим проверку. Текст сохранён.
                 </Notice>
               ) : (
-                <p className="text-[13px] leading-relaxed text-muted">Submit your text to request feedback. The AI Examiner will evaluate it against the rubric below.</p>
+                <p className="text-[13px] leading-relaxed text-muted">Сдай текст, чтобы получить отзыв. Проверка AI-экзаменатором по критериям ниже подключится позже.</p>
               )}
             </CardContent>
           </Card>
@@ -135,7 +135,7 @@ export default function WritingPage() {
               <CardHeader>
                 <div>
                   <CardTitle className="flex items-center gap-2"><FileText className="size-4 text-muted" /> {rubric.title}</CardTitle>
-                  <p className="mt-1 text-[12px] text-subtle">Scale {rubric.scale.min}–{rubric.scale.max} per criterion · editable in content/rubrics</p>
+                  <p className="mt-1 text-[12px] text-subtle">Шкала {rubric.scale.min}–{rubric.scale.max} по каждому критерию</p>
                 </div>
                 {rubric.meta.sample && <SampleBadge kind="content" />}
               </CardHeader>

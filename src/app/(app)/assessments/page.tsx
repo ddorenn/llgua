@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowRight, CalendarDays, ClipboardList, Clock, History, ListChecks, ShieldAlert } from "lucide-react";
 import { assessments } from "@/lib/content";
 import { useStore } from "@/lib/store/store";
-import { formatDate, pct } from "@/lib/utils";
+import { formatDate, pct, plural } from "@/lib/utils";
 import { PageHeader, EmptyState, Notice, SectionTitle, SKILL_LABEL } from "@/components/shared/page";
 import { SampleBadge } from "@/components/shared/sample";
 import { Badge } from "@/components/ui/badge";
@@ -21,13 +21,13 @@ export default function AssessmentsPage() {
   return (
     <div className="space-y-8">
       <PageHeader
-        title="Assessments"
-        description="Snapshots of your skills over time. Results compare your own attempts with each other."
+        title="Тестирование"
+        description="Срезы твоих навыков во времени. Результаты сравниваются только с твоими же прошлыми попытками."
       />
 
-      <Notice icon={ShieldAlert} title="Not a validated placement test" tone="warning">
-        These assessments use demonstration items and simple raw scoring. They give a useful starting snapshot but do not determine your
-        CEFR level. A validated item bank and scoring model will replace them later.
+      <Notice icon={ShieldAlert} title="Это не валидированный тест уровня" tone="warning">
+        Сейчас тесты построены на демонстрационных заданиях и простом подсчёте баллов. Они дают полезный стартовый срез, но не определяют
+        уровень CEFR. Позже их заменит валидированная база заданий и модель оценки.
       </Notice>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -46,7 +46,7 @@ export default function AssessmentsPage() {
                   </div>
                   <div className="flex gap-1.5">
                     {a.meta.sample && <SampleBadge kind="content" />}
-                    {recommended && <Badge variant="accent">Recommended</Badge>}
+                    {recommended && <Badge variant="accent">Рекомендуем</Badge>}
                   </div>
                 </div>
                 <div>
@@ -54,16 +54,16 @@ export default function AssessmentsPage() {
                   <p className="mt-1 text-[13px] leading-relaxed text-muted">{a.description}</p>
                 </div>
                 <div className="flex flex-wrap gap-x-4 gap-y-1 text-[12px] text-subtle">
-                  <span className="inline-flex items-center gap-1"><Clock className="size-3" /> ~{a.minutes} min</span>
-                  <span>{qCount} questions</span>
+                  <span className="inline-flex items-center gap-1"><Clock className="size-3" /> ~{a.minutes} мин</span>
+                  <span>{qCount} {plural(qCount, "вопрос", "вопроса", "вопросов")}</span>
                   <span>{a.sections.map((s) => SKILL_LABEL[s.skill]).join(" · ")}</span>
                 </div>
                 <div className="mt-auto flex items-center justify-between border-t border-line pt-4">
                   <span className="text-[12px] text-muted">
-                    {last ? <>Last: <span className="tabular text-fg">{pct(last.score, last.total)}%</span> · {formatDate(last.completedAt)}</> : "Not taken yet"}
+                    {last ? <>Последний: <span className="tabular text-fg">{pct(last.score, last.total)}%</span> · {formatDate(last.completedAt)}</> : "Ещё не проходили"}
                   </span>
                   <Link href={`/assessments/${a.id}`} className={buttonVariants({ size: "sm", variant: recommended ? "primary" : "secondary" })}>
-                    {last ? "Retake" : "Start"} <ArrowRight />
+                    {last ? "Пройти снова" : "Начать"} <ArrowRight />
                   </Link>
                 </div>
               </CardContent>
@@ -73,20 +73,20 @@ export default function AssessmentsPage() {
       </div>
 
       <section>
-        <SectionTitle action={history.length ? <Link href="/progress" className="text-[12px] text-accent-soft hover:text-fg">Compare in Progress →</Link> : undefined}>
-          Assessment history
+        <SectionTitle action={history.length ? <Link href="/progress" className="text-[12px] text-accent-soft hover:text-fg">Сравнить в «Прогрессе»</Link> : undefined}>
+          История тестов
         </SectionTitle>
         {history.length === 0 ? (
-          <EmptyState icon={ClipboardList} title="No results yet" description="Start with the Initial Assessment to create your baseline." />
+          <EmptyState icon={ClipboardList} title="Результатов пока нет" description="Начни с входного теста — он станет точкой отсчёта." />
         ) : (
           <div className="overflow-x-auto rounded-lg border border-line">
             <table className="w-full min-w-[560px] text-left text-[13px]">
               <thead className="border-b border-line bg-surface text-[13px] font-medium text-subtle">
                 <tr>
-                  <th className="px-4 py-2.5 font-medium">Date</th>
-                  <th className="px-4 py-2.5 font-medium">Assessment</th>
-                  <th className="px-4 py-2.5 font-medium">Score</th>
-                  <th className="px-4 py-2.5 font-medium">By skill</th>
+                  <th className="px-4 py-2.5 font-medium">Дата</th>
+                  <th className="px-4 py-2.5 font-medium">Тест</th>
+                  <th className="px-4 py-2.5 font-medium">Результат</th>
+                  <th className="px-4 py-2.5 font-medium">По навыкам</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-line bg-card">

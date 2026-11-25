@@ -10,16 +10,16 @@ export const APP = {
 } as const;
 
 export const DEFAULT_SETTINGS: Settings = {
-  displayName: "Student",
+  displayName: "Ученик",
   email: "",
   currentLevel: null,
   targetLevel: "C1",
-  mainGoal: "Balanced development of all English skills",
+  mainGoal: "Сбалансированное развитие всех навыков английского",
   focusSkills: ["grammar", "vocabulary", "reading", "listening", "speaking", "writing"],
   targetExam: "none",
   dailyMinutes: 60,
   teachingLanguage: "ru+en",
-  interfaceLanguage: "en",
+  interfaceLanguage: "ru",
   notifications: {
     dailyReminder: true,
     reminderTime: "19:00",

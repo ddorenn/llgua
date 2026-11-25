@@ -8,7 +8,7 @@ import { useStore } from "@/lib/store/store";
 import { vocabCounts } from "@/lib/store/selectors";
 import type { VocabStatus } from "@/lib/store/types";
 import { reviewQueue, STATUS_LABEL, toCard } from "@/lib/vocab";
-import { cn } from "@/lib/utils";
+import { cn, plural } from "@/lib/utils";
 import { PageHeader, EmptyState } from "@/components/shared/page";
 import { SampleBadge } from "@/components/shared/sample";
 import { ExampleSentence, PronounceButton, StrengthMeter, WordCard } from "@/components/vocab/word-card";
@@ -61,17 +61,17 @@ function ReviewSession({ queue, onExit }: { queue: VocabWord[]; onExit: () => vo
   if (done) {
     return (
       <div className="mx-auto max-w-lg py-10">
-        <p className="text-[14px] text-muted">Session complete</p>
+        <p className="text-[14px] text-muted">Повторение завершено</p>
         <h2 className="mt-2 text-[34px] font-semibold tracking-[-0.03em] text-fg">
-          {results.knew} of {queue.length} remembered
+          Помню {results.knew} из {queue.length}
         </h2>
         <p className="mt-3 text-[15px] leading-relaxed text-muted">
           {results.missed
-            ? `${results.missed} word${results.missed === 1 ? "" : "s"} will come back sooner in your next review.`
-            : "Every word stuck. They will still return now and then, so they stay."}
+            ? `${results.missed} ${plural(results.missed, "слово вернётся", "слова вернутся", "слов вернутся")} раньше при следующем повторении.`
+            : "Все слова запомнились. Они будут иногда возвращаться, чтобы не забылись."}
         </p>
         <div className="mt-8 flex gap-3">
-          <Button onClick={onExit}>Back to vocabulary</Button>
+          <Button onClick={onExit}>К словарю</Button>
         </div>
       </div>
     );
@@ -81,11 +81,11 @@ function ReviewSession({ queue, onExit }: { queue: VocabWord[]; onExit: () => vo
     <div className="mx-auto max-w-xl space-y-6">
       <div className="flex items-center gap-4">
         <Button variant="ghost" size="sm" onClick={onExit}>
-          <X /> End
+          <X /> Завершить
         </Button>
         <Progress value={(i / queue.length) * 100} />
         <span className="tabular shrink-0 text-[13px] text-muted">
-          {i + 1} of {queue.length}
+          {i + 1} из {queue.length}
         </span>
       </div>
 
@@ -94,7 +94,7 @@ function ReviewSession({ queue, onExit }: { queue: VocabWord[]; onExit: () => vo
           key={w.id}
           type="button"
           onClick={() => setFlipped((f) => !f)}
-          aria-label={flipped ? "Hide answer" : "Show answer"}
+          aria-label={flipped ? "Скрыть ответ" : "Показать ответ"}
           initial={reduce ? false : { opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0, rotateY: reduce ? 0 : flipped ? 180 : 0 }}
           transition={{ duration: 0.45, ease: [0.2, 0.7, 0.2, 1] }}
@@ -115,7 +115,7 @@ function ReviewSession({ queue, onExit }: { queue: VocabWord[]; onExit: () => vo
               <span className="lang block text-[44px] font-semibold leading-none text-fg">{card!.word}</span>
               {card!.pronunciation && <span className="lang mt-3 block text-[18px] text-muted">{card!.pronunciation}</span>}
             </span>
-            <span className="text-[13px] text-subtle">Recall the meaning, then tap or press Space</span>
+            <span className="text-[13px] text-subtle">Вспомни значение и нажми на карточку или пробел</span>
           </span>
           {/* back */}
           <span
@@ -143,15 +143,15 @@ function ReviewSession({ queue, onExit }: { queue: VocabWord[]; onExit: () => vo
         {flipped && (
           <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="grid grid-cols-2 gap-3">
             <Button variant="secondary" size="lg" onClick={() => answer(false)}>
-              <X /> Not yet
+              <X /> Не помню
             </Button>
             <Button size="lg" onClick={() => answer(true)}>
-              <Check /> I knew it
+              <Check /> Помню
             </Button>
           </motion.div>
         )}
       </AnimatePresence>
-      <p className="text-center text-[12.5px] text-subtle">Keyboard: Space flips the card, ← not yet, → I knew it</p>
+      <p className="text-center text-[12.5px] text-subtle">Клавиши: пробел переворачивает карточку, ← не помню, → помню</p>
     </div>
   );
 }
@@ -180,21 +180,21 @@ export default function VocabularyPage() {
   return (
     <div className="space-y-10">
       <PageHeader
-        title="Vocabulary"
-        description="Your word bank. Each correct answer in review makes a word stronger; five in a row and it counts as learned."
+        title="Словарь"
+        description="Твой банк слов. Каждый верный ответ при повторении укрепляет слово; пять подряд — и оно выучено."
         actions={vocabularyFile.meta.sample ? <SampleBadge kind="content" /> : undefined}
       />
 
       {/* Review prompt + status counts */}
       <section className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] lg:items-end">
         <div className="rounded-xl border border-line bg-card p-6 shadow-lift">
-          <p className="text-[13.5px] text-muted">{queue.length ? "Ready to review" : "Nothing to review"}</p>
+          <p className="text-[13.5px] text-muted">{queue.length ? "Готово к повторению" : "Повторять нечего"}</p>
           <p className="mt-1 text-[28px] font-semibold tracking-[-0.03em] text-fg">
-            {queue.length} {queue.length === 1 ? "word" : "words"}
+            {queue.length} {plural(queue.length, "слово", "слова", "слов")}
           </p>
           <p className="lang mt-2 truncate text-[16px] italic text-muted">{queue.slice(0, 4).map((w) => w.word).join(", ")}</p>
           <Button className="mt-5" onClick={() => setReviewList(queue)} disabled={!queue.length}>
-            Start review
+            Начать повторение
           </Button>
         </div>
         <div className="grid grid-cols-4 gap-4">
@@ -221,12 +221,12 @@ export default function VocabularyPage() {
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
           <div className="relative flex-1">
             <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-subtle" />
-            <Input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search words, translations or topics" className="pl-9" aria-label="Search vocabulary" />
+            <Input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Слово, перевод или тема" className="pl-9" aria-label="Поиск по словарю" />
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <Tabs size="sm" value={level} onChange={setLevel} items={[{ value: "all", label: "All levels" }, ...CEFR.map((l) => ({ value: l, label: l }))]} />
+            <Tabs size="sm" value={level} onChange={setLevel} items={[{ value: "all", label: "Все уровни" }, ...CEFR.map((l) => ({ value: l, label: l }))]} />
             <Button variant="ghost" size="sm" onClick={() => setHide((h) => !h)} aria-pressed={hide}>
-              {hide ? <Eye /> : <EyeOff />} {hide ? "Show" : "Hide"} translations
+              {hide ? <Eye /> : <EyeOff />} {hide ? "Показать" : "Скрыть"} translations
             </Button>
           </div>
         </div>
@@ -234,11 +234,11 @@ export default function VocabularyPage() {
         {filtered.length === 0 ? (
           <EmptyState
             icon={Search}
-            title="No words match"
-            description="Try a different search or filter."
+            title="Слов не найдено"
+            description="Попробуй другой запрос или фильтр."
             action={
               <Button variant="secondary" size="sm" onClick={() => { setQuery(""); setLevel("all"); setStatus("all"); }}>
-                <RotateCcw /> Reset filters
+                <RotateCcw /> Сбросить фильтры
               </Button>
             }
           />
@@ -255,12 +255,12 @@ export default function VocabularyPage() {
                     <div className="flex flex-wrap gap-2">
                       {card.status !== "learned" && (
                         <Button variant="ghost" size="sm" className="-ml-3" onClick={() => actions.setWordStatus(w.id, "learned")}>
-                          <Check /> I know this word
+                          <Check /> Знаю это слово
                         </Button>
                       )}
                       {card.status !== "new" && (
                         <Button variant="ghost" size="sm" className={card.status === "learned" ? "-ml-3" : ""} onClick={() => actions.setWordStatus(w.id, "new")}>
-                          <RotateCcw /> Reset
+                          <RotateCcw /> Сбросить
                         </Button>
                       )}
                     </div>

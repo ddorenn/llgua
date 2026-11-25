@@ -1,74 +1,200 @@
 {
   "meta": {
     "sample": true,
-    "source": "Demonstration structure written for LINGUA. Not a validated curriculum — replace with your textbook-based programme.",
+    "source": "Демонстрационная структура LINGUA. Не валидированная программа — замени её программой по учебникам.",
     "version": 1
   },
   "id": "general-english",
-  "title": "General English (A1–C2)",
+  "title": "Общий английский (A1–C2)",
   "unlockRule": "sequential",
   "modules": [
     {
       "id": "a1-foundations",
       "level": "A1",
-      "title": "Foundations",
+      "title": "Основы",
       "skill": "grammar",
-      "description": "The verb to be, personal pronouns and simple questions.",
+      "description": "Глагол to be, личные местоимения и простые вопросы.",
       "lessons": [
         {
           "id": "a1-to-be",
-          "title": "The verb “to be”",
+          "title": "Глагол to be",
           "skill": "grammar",
           "minutes": 15,
-          "objectives": ["Use am / is / are correctly", "Form negatives and yes/no questions"],
+          "objectives": [
+            "Правильно использовать am / is / are",
+            "Строить отрицания и общие вопросы"
+          ],
           "blocks": [
-            { "type": "text", "title": "Explanation", "body": "We use **to be** to talk about identity, age, origin, jobs and feelings. Its forms change with the subject: *I am*, *you/we/they are*, *he/she/it is*.\n\nВ русском языке глагол «быть» в настоящем времени обычно опускается («Я студент»), но в английском он обязателен: **I am a student.**" },
-            { "type": "examples", "title": "Examples", "items": [
-              { "en": "I am from Moscow.", "ru": "Я из Москвы." },
-              { "en": "She isn't at home.", "ru": "Её нет дома." },
-              { "en": "Are you ready?", "ru": "Ты готов?" }
-            ] },
-            { "type": "tip", "body": "Contractions (I'm, you're, isn't) are normal in speech and informal writing." },
-            { "type": "quiz", "title": "Check yourself", "questions": [
-              { "id": "q1", "prompt": "They ___ my friends.", "options": ["is", "am", "are"], "answer": 2, "explanation": "Plural subject *they* takes *are*." },
-              { "id": "q2", "prompt": "___ he a doctor?", "options": ["Is", "Are", "Am"], "answer": 0, "explanation": "Questions invert the verb: *Is he…?*" },
-              { "id": "q3", "prompt": "I ___ not tired.", "options": ["is", "am", "are"], "answer": 1, "explanation": "*I* always takes *am*." }
-            ] }
+            {
+              "type": "text",
+              "title": "Объяснение",
+              "body": "We use **to be** to talk about identity, age, origin, jobs and feelings. Its forms change with the subject: *I am*, *you/we/they are*, *he/she/it is*.\n\nВ русском языке глагол «быть» в настоящем времени обычно опускается («Я студент»), но в английском он обязателен: **I am a student.**"
+            },
+            {
+              "type": "examples",
+              "title": "Примеры",
+              "items": [
+                {
+                  "en": "I am from Moscow.",
+                  "ru": "Я из Москвы."
+                },
+                {
+                  "en": "She isn't at home.",
+                  "ru": "Её нет дома."
+                },
+                {
+                  "en": "Are you ready?",
+                  "ru": "Ты готов?"
+                }
+              ]
+            },
+            {
+              "type": "tip",
+              "body": "Сокращения (I'm, you're, isn't) — норма в устной речи и неформальном письме."
+            },
+            {
+              "type": "quiz",
+              "title": "Проверь себя",
+              "questions": [
+                {
+                  "id": "q1",
+                  "prompt": "They ___ my friends.",
+                  "options": [
+                    "is",
+                    "am",
+                    "are"
+                  ],
+                  "answer": 2,
+                  "explanation": "Plural subject *they* takes *are*."
+                },
+                {
+                  "id": "q2",
+                  "prompt": "___ he a doctor?",
+                  "options": [
+                    "Is",
+                    "Are",
+                    "Am"
+                  ],
+                  "answer": 0,
+                  "explanation": "Questions invert the verb: *Is he…?*"
+                },
+                {
+                  "id": "q3",
+                  "prompt": "I ___ not tired.",
+                  "options": [
+                    "is",
+                    "am",
+                    "are"
+                  ],
+                  "answer": 1,
+                  "explanation": "*I* always takes *am*."
+                }
+              ]
+            }
           ]
         },
         {
           "id": "a1-present-simple",
-          "title": "Present Simple: routines",
+          "title": "Present Simple: распорядок дня",
           "skill": "grammar",
           "minutes": 15,
-          "objectives": ["Describe daily routines", "Use -s/-es with he/she/it"],
+          "objectives": [
+            "Рассказывать о своём распорядке",
+            "Использовать окончание -s/-es с he/she/it"
+          ],
           "blocks": [
-            { "type": "text", "title": "Explanation", "body": "Use the **Present Simple** for habits, routines and facts. Add **-s/-es** for *he, she, it*: *She works*, *He watches*.\n\nNegatives and questions use **do/does**: *I don't drink coffee. Does she live here?*" },
-            { "type": "examples", "title": "Examples", "items": [
-              { "en": "I get up at seven.", "ru": "Я встаю в семь." },
-              { "en": "He doesn't work on Sundays.", "ru": "Он не работает по воскресеньям." }
-            ] },
-            { "type": "quiz", "title": "Check yourself", "questions": [
-              { "id": "q1", "prompt": "My sister ___ in a bank.", "options": ["work", "works", "working"], "answer": 1, "explanation": "Third person singular adds -s." },
-              { "id": "q2", "prompt": "___ you like tea?", "options": ["Does", "Are", "Do"], "answer": 2, "explanation": "*you* takes *do* in questions." }
-            ] }
+            {
+              "type": "text",
+              "title": "Объяснение",
+              "body": "Use the **Present Simple** for habits, routines and facts. Add **-s/-es** for *he, she, it*: *She works*, *He watches*.\n\nNegatives and questions use **do/does**: *I don't drink coffee. Does she live here?*"
+            },
+            {
+              "type": "examples",
+              "title": "Примеры",
+              "items": [
+                {
+                  "en": "I get up at seven.",
+                  "ru": "Я встаю в семь."
+                },
+                {
+                  "en": "He doesn't work on Sundays.",
+                  "ru": "Он не работает по воскресеньям."
+                }
+              ]
+            },
+            {
+              "type": "quiz",
+              "title": "Проверь себя",
+              "questions": [
+                {
+                  "id": "q1",
+                  "prompt": "My sister ___ in a bank.",
+                  "options": [
+                    "work",
+                    "works",
+                    "working"
+                  ],
+                  "answer": 1,
+                  "explanation": "Third person singular adds -s."
+                },
+                {
+                  "id": "q2",
+                  "prompt": "___ you like tea?",
+                  "options": [
+                    "Does",
+                    "Are",
+                    "Do"
+                  ],
+                  "answer": 2,
+                  "explanation": "*you* takes *do* in questions."
+                }
+              ]
+            }
           ]
         },
         {
           "id": "a1-everyday-words",
-          "title": "Everyday vocabulary: home & family",
+          "title": "Слова на каждый день: дом и семья",
           "skill": "vocabulary",
           "minutes": 10,
-          "objectives": ["Name family members and rooms"],
+          "objectives": [
+            "Называть членов семьи и комнаты"
+          ],
           "blocks": [
-            { "type": "examples", "title": "Key words", "items": [
-              { "en": "parents", "ru": "родители" },
-              { "en": "kitchen", "ru": "кухня" },
-              { "en": "neighbour", "ru": "сосед" }
-            ] },
-            { "type": "quiz", "title": "Check yourself", "questions": [
-              { "id": "q1", "prompt": "The room where you cook is the ___.", "options": ["bedroom", "kitchen", "hall"], "answer": 1 }
-            ] }
+            {
+              "type": "examples",
+              "title": "Ключевые слова",
+              "items": [
+                {
+                  "en": "parents",
+                  "ru": "родители"
+                },
+                {
+                  "en": "kitchen",
+                  "ru": "кухня"
+                },
+                {
+                  "en": "neighbour",
+                  "ru": "сосед"
+                }
+              ]
+            },
+            {
+              "type": "quiz",
+              "title": "Проверь себя",
+              "questions": [
+                {
+                  "id": "q1",
+                  "prompt": "The room where you cook is the ___.",
+                  "options": [
+                    "bedroom",
+                    "kitchen",
+                    "hall"
+                  ],
+                  "answer": 1
+                }
+              ]
+            }
           ]
         }
       ]
@@ -76,35 +202,84 @@
     {
       "id": "a2-past-and-plans",
       "level": "A2",
-      "title": "Past events & plans",
+      "title": "Прошлое и планы",
       "skill": "grammar",
-      "description": "Past Simple, going to, and talking about experiences.",
+      "description": "Past Simple, конструкция going to и рассказ об опыте.",
       "lessons": [
         {
           "id": "a2-past-simple",
-          "title": "Past Simple: regular & irregular",
+          "title": "Past Simple: правильные и неправильные глаголы",
           "skill": "grammar",
           "minutes": 15,
-          "objectives": ["Talk about finished past actions", "Use common irregular verbs"],
+          "objectives": [
+            "Говорить о завершённых действиях в прошлом",
+            "Использовать частые неправильные глаголы"
+          ],
           "blocks": [
-            { "type": "text", "title": "Explanation", "body": "The **Past Simple** describes finished actions at a specific time. Regular verbs add **-ed** (*worked*); irregular verbs have their own forms (*go → went*, *see → saw*).\n\nNegatives and questions use **did** + base form: *I didn't go. Did you see it?*" },
-            { "type": "quiz", "title": "Check yourself", "questions": [
-              { "id": "q1", "prompt": "We ___ to Spain last summer.", "options": ["go", "went", "gone"], "answer": 1 },
-              { "id": "q2", "prompt": "Did she ___ the email?", "options": ["send", "sent", "sends"], "answer": 0, "explanation": "After *did*, use the base form." }
-            ] }
+            {
+              "type": "text",
+              "title": "Объяснение",
+              "body": "The **Past Simple** describes finished actions at a specific time. Regular verbs add **-ed** (*worked*); irregular verbs have their own forms (*go → went*, *see → saw*).\n\nNegatives and questions use **did** + base form: *I didn't go. Did you see it?*"
+            },
+            {
+              "type": "quiz",
+              "title": "Проверь себя",
+              "questions": [
+                {
+                  "id": "q1",
+                  "prompt": "We ___ to Spain last summer.",
+                  "options": [
+                    "go",
+                    "went",
+                    "gone"
+                  ],
+                  "answer": 1
+                },
+                {
+                  "id": "q2",
+                  "prompt": "Did she ___ the email?",
+                  "options": [
+                    "send",
+                    "sent",
+                    "sends"
+                  ],
+                  "answer": 0,
+                  "explanation": "After *did*, use the base form."
+                }
+              ]
+            }
           ]
         },
         {
           "id": "a2-going-to",
-          "title": "Future plans with “going to”",
+          "title": "Планы с going to",
           "skill": "grammar",
           "minutes": 15,
-          "objectives": ["Describe intentions and plans"],
+          "objectives": [
+            "Рассказывать о намерениях и планах"
+          ],
           "blocks": [
-            { "type": "text", "title": "Explanation", "body": "Use **be going to + verb** for plans and intentions decided before the moment of speaking: *I'm going to study tonight.*" },
-            { "type": "quiz", "title": "Check yourself", "questions": [
-              { "id": "q1", "prompt": "They ___ going to move next year.", "options": ["is", "are", "be"], "answer": 1 }
-            ] }
+            {
+              "type": "text",
+              "title": "Объяснение",
+              "body": "Use **be going to + verb** for plans and intentions decided before the moment of speaking: *I'm going to study tonight.*"
+            },
+            {
+              "type": "quiz",
+              "title": "Проверь себя",
+              "questions": [
+                {
+                  "id": "q1",
+                  "prompt": "They ___ going to move next year.",
+                  "options": [
+                    "is",
+                    "are",
+                    "be"
+                  ],
+                  "answer": 1
+                }
+              ]
+            }
           ]
         }
       ]
@@ -112,51 +287,126 @@
     {
       "id": "b1-experience",
       "level": "B1",
-      "title": "Experience & opinion",
+      "title": "Опыт и мнение",
       "skill": "grammar",
-      "description": "Present Perfect vs Past Simple, giving opinions, linking ideas.",
+      "description": "Present Perfect и Past Simple, выражение мнения, связки.",
       "lessons": [
         {
           "id": "b1-present-perfect",
-          "title": "Present Perfect vs Past Simple",
+          "title": "Present Perfect или Past Simple",
           "skill": "grammar",
           "minutes": 15,
-          "objectives": ["Choose between Present Perfect and Past Simple", "Use ever / never / already / yet"],
+          "objectives": [
+            "Выбирать между Present Perfect и Past Simple",
+            "Использовать ever / never / already / yet"
+          ],
           "blocks": [
-            { "type": "text", "title": "Explanation", "body": "**Present Perfect** (*have/has + past participle*) connects the past with now: life experience, recent results, unfinished time periods.\n\n**Past Simple** is for finished time: *yesterday, in 2019, last week*.\n\nТипичная ошибка русскоязычных студентов — *I have seen him yesterday*. Если время указано и закончилось, используйте Past Simple: **I saw him yesterday.**" },
-            { "type": "examples", "title": "Examples", "items": [
-              { "en": "I've never been to Japan.", "ru": "Я никогда не был в Японии." },
-              { "en": "She has already finished.", "ru": "Она уже закончила." },
-              { "en": "We met in 2020.", "ru": "Мы познакомились в 2020 году." }
-            ] },
-            { "type": "quiz", "title": "Check yourself", "questions": [
-              { "id": "q1", "prompt": "I ___ this film three times.", "options": ["saw", "have seen", "see"], "answer": 1, "explanation": "Life experience, no finished time → Present Perfect." },
-              { "id": "q2", "prompt": "He ___ the report yesterday.", "options": ["has sent", "sent", "sends"], "answer": 1, "explanation": "*yesterday* is a finished time → Past Simple." },
-              { "id": "q3", "prompt": "Have you finished ___?", "options": ["already", "yet", "ever"], "answer": 1, "explanation": "*yet* goes at the end of questions and negatives." }
-            ] }
+            {
+              "type": "text",
+              "title": "Объяснение",
+              "body": "**Present Perfect** (*have/has + past participle*) connects the past with now: life experience, recent results, unfinished time periods.\n\n**Past Simple** is for finished time: *yesterday, in 2019, last week*.\n\nТипичная ошибка русскоязычных студентов — *I have seen him yesterday*. Если время указано и закончилось, используйте Past Simple: **I saw him yesterday.**"
+            },
+            {
+              "type": "examples",
+              "title": "Примеры",
+              "items": [
+                {
+                  "en": "I've never been to Japan.",
+                  "ru": "Я никогда не был в Японии."
+                },
+                {
+                  "en": "She has already finished.",
+                  "ru": "Она уже закончила."
+                },
+                {
+                  "en": "We met in 2020.",
+                  "ru": "Мы познакомились в 2020 году."
+                }
+              ]
+            },
+            {
+              "type": "quiz",
+              "title": "Проверь себя",
+              "questions": [
+                {
+                  "id": "q1",
+                  "prompt": "I ___ this film three times.",
+                  "options": [
+                    "saw",
+                    "have seen",
+                    "see"
+                  ],
+                  "answer": 1,
+                  "explanation": "Life experience, no finished time → Present Perfect."
+                },
+                {
+                  "id": "q2",
+                  "prompt": "He ___ the report yesterday.",
+                  "options": [
+                    "has sent",
+                    "sent",
+                    "sends"
+                  ],
+                  "answer": 1,
+                  "explanation": "*yesterday* is a finished time → Past Simple."
+                },
+                {
+                  "id": "q3",
+                  "prompt": "Have you finished ___?",
+                  "options": [
+                    "already",
+                    "yet",
+                    "ever"
+                  ],
+                  "answer": 1,
+                  "explanation": "*yet* goes at the end of questions and negatives."
+                }
+              ]
+            }
           ]
         },
         {
           "id": "b1-opinions",
-          "title": "Giving and supporting opinions",
+          "title": "Как выражать и аргументировать мнение",
           "skill": "speaking",
           "minutes": 15,
-          "objectives": ["Use opinion phrases", "Support a view with a reason and example"],
+          "objectives": [
+            "Использовать фразы для мнения",
+            "Подкреплять мнение причиной и примером"
+          ],
           "blocks": [
-            { "type": "examples", "title": "Useful phrases", "items": [
-              { "en": "In my view, …", "ru": "На мой взгляд, …" },
-              { "en": "The main reason is that …", "ru": "Главная причина в том, что …" },
-              { "en": "For instance, …", "ru": "Например, …" }
-            ] },
-            { "type": "tip", "body": "A strong answer = opinion + reason + example. Practise this pattern on the Speaking page." }
+            {
+              "type": "examples",
+              "title": "Полезные фразы",
+              "items": [
+                {
+                  "en": "In my view, …",
+                  "ru": "На мой взгляд, …"
+                },
+                {
+                  "en": "The main reason is that …",
+                  "ru": "Главная причина в том, что …"
+                },
+                {
+                  "en": "For instance, …",
+                  "ru": "Например, …"
+                }
+              ]
+            },
+            {
+              "type": "tip",
+              "body": "Сильный ответ = мнение + причина + пример. Потренируй эту схему на странице «Разговорная практика»."
+            }
           ]
         },
         {
           "id": "b1-linking",
-          "title": "Linking words for writing",
+          "title": "Слова-связки в письме",
           "skill": "writing",
           "minutes": 15,
-          "objectives": ["Connect ideas with however, although, therefore"],
+          "objectives": [
+            "Связывать мысли с помощью however, although, therefore"
+          ],
           "blocks": []
         }
       ]
@@ -164,32 +414,60 @@
     {
       "id": "b2-argument",
       "level": "B2",
-      "title": "Argument & nuance",
+      "title": "Аргументация и нюансы",
       "skill": "grammar",
-      "description": "Conditionals, passive structures and hedging. Content pending.",
+      "description": "Условные предложения, пассив и смягчение высказываний. Материалы готовятся.",
       "lessons": [
-        { "id": "b2-conditionals", "title": "Second & third conditionals", "skill": "grammar", "minutes": 15, "objectives": [], "blocks": [] },
-        { "id": "b2-passive", "title": "Passive voice in context", "skill": "grammar", "minutes": 15, "objectives": [], "blocks": [] }
+        {
+          "id": "b2-conditionals",
+          "title": "Второй и третий тип условных предложений",
+          "skill": "grammar",
+          "minutes": 15,
+          "objectives": [],
+          "blocks": []
+        },
+        {
+          "id": "b2-passive",
+          "title": "Пассивный залог в контексте",
+          "skill": "grammar",
+          "minutes": 15,
+          "objectives": [],
+          "blocks": []
+        }
       ]
     },
     {
       "id": "c1-precision",
       "level": "C1",
-      "title": "Precision & register",
+      "title": "Точность и стиль",
       "skill": "vocabulary",
-      "description": "Collocations, inversion and formal register. Content pending.",
+      "description": "Коллокации, инверсия и формальный стиль. Материалы готовятся.",
       "lessons": [
-        { "id": "c1-inversion", "title": "Inversion for emphasis", "skill": "grammar", "minutes": 15, "objectives": [], "blocks": [] }
+        {
+          "id": "c1-inversion",
+          "title": "Инверсия для усиления",
+          "skill": "grammar",
+          "minutes": 15,
+          "objectives": [],
+          "blocks": []
+        }
       ]
     },
     {
       "id": "c2-mastery",
       "level": "C2",
-      "title": "Mastery",
+      "title": "Мастерство",
       "skill": "writing",
-      "description": "Idiomatic and stylistic control. Content pending.",
+      "description": "Идиоматика и стилистический контроль. Материалы готовятся.",
       "lessons": [
-        { "id": "c2-style", "title": "Style and tone shifts", "skill": "writing", "minutes": 15, "objectives": [], "blocks": [] }
+        {
+          "id": "c2-style",
+          "title": "Смена стиля и тона",
+          "skill": "writing",
+          "minutes": 15,
+          "objectives": [],
+          "blocks": []
+        }
       ]
     }
   ]

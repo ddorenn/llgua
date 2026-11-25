@@ -1,28 +1,26 @@
 import { cn } from "@/lib/utils";
 
-/** Brand mark: a serif italic "L" with the proof-reader's insertion caret — the product corrects and adds. */
+/** Compact brand mark: a heavy "L" on a charcoal tile (for small spaces and app icons). */
 export function LogoMark({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 32 32" className={cn("size-7", className)} aria-hidden>
-      <rect width="32" height="32" rx="8" fill="var(--c-accent)" />
-      <text
-        x="11.5"
-        y="23"
-        fill="var(--c-on-accent)"
-        style={{ font: "italic 600 19px var(--font-literata), Georgia, serif" }}
-      >
-        L
-      </text>
-      <path d="M20.5 12.5 23 8.5l2.5 4" fill="none" stroke="var(--c-on-accent)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <span
+      aria-hidden
+      className={cn(
+        "inline-flex size-7 shrink-0 items-center justify-center rounded-[7px] bg-[#1c1b19] font-[family-name:var(--font-display)] text-[16px] font-bold leading-none text-[#e9e4da] dark:bg-[#e9e4da] dark:text-[#111110]",
+        className,
+      )}
+    >
+      L
+    </span>
   );
 }
 
+/** The LINGUA wordmark. */
 export function Logo({ className, compact }: { className?: string; compact?: boolean }) {
+  if (compact) return <LogoMark className={className} />;
   return (
-    <span className={cn("inline-flex items-center gap-2.5", className)}>
-      <LogoMark />
-      {!compact && <span className="text-[17px] font-semibold tracking-[-0.02em] text-fg">Lingua</span>}
+    <span className={cn("inline-flex items-baseline font-[family-name:var(--font-display)] text-[19px] font-bold leading-none tracking-[-0.04em] text-fg", className)}>
+      LINGUA
     </span>
   );
 }

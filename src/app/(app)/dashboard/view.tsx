@@ -9,7 +9,7 @@ import {
   lessonsCompleted, mistakeStats, resolveBlock, skillSnapshot, studyStreak, todayProgress, vocabCounts,
 } from "@/lib/store/selectors";
 import type { LinguaState } from "@/lib/store/types";
-import { cn, formatDate, pct } from "@/lib/utils";
+import { cn, formatDate, pct, plural } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { EmptyState, SectionTitle, SKILL_LABEL, StatCard } from "@/components/shared/page";
 import { SampleBadge, SamplePreviewBanner } from "@/components/shared/sample";
@@ -38,35 +38,35 @@ const PRACTICE_HREF: Record<string, string> = {
 function nextStep(state: LinguaState, skills: { skill: string; value: number }[]) {
   if (!state.assessments.length)
     return {
-      title: "Take the initial assessment",
-      body: "Twenty minutes across grammar, vocabulary and reading gives you a baseline to compare with later.",
+      title: "Пройди входной тест",
+      body: "Двадцать минут на грамматику, словарь и чтение — и у тебя будет точка отсчёта для сравнения.",
       href: "/assessments/initial",
-      cta: "Start assessment",
+      cta: "Начать тест",
     };
   const weakest = [...skills].sort((a, b) => a.value - b.value)[0];
   if (weakest && weakest.value < 70) {
     const key = Object.keys(SKILL_LABEL).find((k) => SKILL_LABEL[k] === weakest.skill) ?? "grammar";
     return {
-      title: `Give ${weakest.skill.toLowerCase()} a little extra time`,
-      body: `It is your lowest score in the latest assessment (${weakest.value}%). One extra practice block this week will help.`,
+      title: `Удели больше времени: ${weakest.skill.toLowerCase()}`,
+      body: `Это самый низкий результат в последнем тесте (${weakest.value}%). Один дополнительный блок практики на этой неделе поможет.`,
       href: PRACTICE_HREF[key] ?? "/learning",
-      cta: `Practise ${weakest.skill.toLowerCase()}`,
+      cta: `Потренировать: ${weakest.skill.toLowerCase()}`,
     };
   }
   const last = state.assessments[0];
   const days = (Date.now() - new Date(last.completedAt).getTime()) / 86_400_000;
   if (days >= 7)
     return {
-      title: "Time for a weekly check",
-      body: "A short assessment shows what the last week of practice changed.",
+      title: "Пора проверить неделю",
+      body: "Короткий тест покажет, что изменила неделя практики.",
       href: "/assessments/weekly",
-      cta: "Start weekly check",
+      cta: "Пройти недельный тест",
     };
   return {
-    title: "Keep the rhythm",
-    body: "Your results are balanced. Continue with the next lesson on your path.",
+    title: "Сохраняй ритм",
+    body: "Результаты ровные. Продолжай со следующего урока программы.",
     href: "/learning",
-    cta: "Open my learning",
+    cta: "Открыть «Моё обучение»",
   };
 }
 
@@ -92,8 +92,8 @@ export function DashboardView() {
     ? sampleData.assessments.slice().reverse().map((a) => ({ id: a.date + a.title, title: a.title, when: formatDate(a.date), score: a.score }))
     : [
         ...state.assessments.map((a) => ({ id: a.id, title: a.title, at: a.completedAt, score: pct(a.score, a.total) })),
-        ...Object.entries(state.reading).map(([id, r]) => ({ id: "r" + id, title: "Reading practice", at: r.completedAt, score: pct(r.score, r.total) })),
-        ...Object.entries(state.listening).map(([id, r]) => ({ id: "l" + id, title: "Listening practice", at: r.completedAt, score: pct(r.score, r.total) })),
+        ...Object.entries(state.reading).map(([id, r]) => ({ id: "r" + id, title: "Чтение", at: r.completedAt, score: pct(r.score, r.total) })),
+        ...Object.entries(state.listening).map(([id, r]) => ({ id: "l" + id, title: "Аудирование", at: r.completedAt, score: pct(r.score, r.total) })),
       ]
         .sort((a, b) => b.at.localeCompare(a.at))
         .slice(0, 5)
@@ -113,16 +113,16 @@ export function DashboardView() {
     const skill = firstOpenR?.resolvedSkill ?? "grammar";
     if (skill === "vocabulary") {
       const w = vocabularyFile.words.find((x) => (state.vocabulary[x.id]?.status ?? "new") !== "learned");
-      return w ? { title: "Vocabulary review", line: w.word, sub: `${w.ipa ?? ""}  ${w.translation}`.trim() } : null;
+      return w ? { title: "Повторение слов", line: w.word, sub: `${w.ipa ?? ""}  ${w.translation}`.trim() } : null;
     }
     if (skill === "reading") return { title: readingFile.exercises[0].title, line: readingFile.exercises[0].text.split(". ")[0] + ".", sub: undefined };
-    if (skill === "listening") return { title: listeningFile.exercises[0].title, line: undefined, sub: "Listen first, then answer the questions." };
+    if (skill === "listening") return { title: listeningFile.exercises[0].title, line: undefined, sub: "Сначала послушай, потом ответь на вопросы." };
     if (skill === "speaking") return { title: speakingFile.tasks[0].title, line: speakingFile.tasks[0].prompt, sub: undefined };
     if (skill === "writing") return { title: writingFile.tasks[0].title, line: writingFile.tasks[0].instructions, sub: undefined };
-    if (skill === "review") return { title: "Review", line: undefined, sub: "Look back at today's mistakes and note one thing you learned." };
+    if (skill === "review") return { title: "Повторение", line: undefined, sub: "Вспомни сегодняшние ошибки и запиши одну вещь, которую узнал." };
     return nextLesson ? { title: nextLesson.title, line: lessonExample(nextLesson), sub: undefined } : null;
   })();
-  const continueTitle = teaser?.title ?? "Your learning path";
+  const continueTitle = teaser?.title ?? "Твоя программа";
 
   return (
     <div className="space-y-12">
@@ -130,13 +130,13 @@ export function DashboardView() {
 
       {/* Greeting */}
       <header>
-        <p className="text-[14px] text-muted">{new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" })}</p>
+        <p className="text-[14px] text-muted">{new Date().toLocaleDateString("ru-RU", { weekday: "long", day: "numeric", month: "long" })}</p>
         <h1 className="mt-2 text-[34px] font-semibold leading-[1.08] tracking-[-0.035em] text-fg sm:text-[44px]">
-          {greeting(t)}, {state.settings.displayName || "Student"}.
+          {greeting(t)}, {state.settings.displayName || "Ученик"}.
         </h1>
         <p className="mt-3 max-w-[60ch] text-[15.5px] leading-relaxed text-muted">
           {state.settings.mainGoal}
-          {level ? `. Now at ${level}${levelInfo ? ` (${levelInfo.name.toLowerCase()})` : ""}, aiming for ${state.settings.targetLevel}.` : `. Aiming for ${state.settings.targetLevel}.`}
+          {level ? `. Сейчас ${level}${levelInfo ? ` (${levelInfo.name.toLowerCase()})` : ""}, цель — ${state.settings.targetLevel}.` : `. Цель — ${state.settings.targetLevel}.`}
           {sample && <SampleBadge className="ml-2 align-middle" />}
         </p>
       </header>
@@ -145,26 +145,26 @@ export function DashboardView() {
       <section className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:gap-12">
         <div className="rounded-xl border border-line bg-card p-6 shadow-lift sm:p-8">
           <p className="text-[13.5px] text-muted">
-            {firstOpenR ? `Next up: ${firstOpenR.title}, ${firstOpen!.minutes} min` : today.blocks.length ? "Today's plan is done" : "Next up"}
+            {firstOpenR ? `Дальше: ${firstOpenR.title}, ${firstOpen!.minutes} мин` : today.blocks.length ? "План на сегодня выполнен" : "Дальше"}
           </p>
           <h2 className="mt-2 text-[24px] font-semibold leading-tight tracking-[-0.025em] text-fg sm:text-[28px]">{continueTitle}</h2>
           {teaser?.line && <p className="lang mt-5 line-clamp-2 max-w-[48ch] text-[19px] italic leading-relaxed text-fg/80">{teaser.line}</p>}
           {teaser?.sub && <p className="mt-2 text-[14px] text-muted">{teaser.sub}</p>}
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Link href={continueHref} className={buttonVariants({ size: "lg" })}>
-              Continue learning
+              Продолжить обучение
             </Link>
             <Link href="/daily-plan" className={buttonVariants({ variant: "ghost", size: "lg" })}>
-              Today&apos;s plan
+              План на день
             </Link>
           </div>
         </div>
 
         <div>
           <div className="flex items-baseline justify-between">
-            <h2 className="text-[16px] font-semibold text-fg">Today</h2>
+            <h2 className="text-[16px] font-semibold text-fg">Сегодня</h2>
             <span className="tabular text-[14px] text-muted">
-              {today.minutesDone} of {today.total} min
+              {today.minutesDone} из {today.total} мин
             </span>
           </div>
           <div className="mt-3 flex h-2 gap-[3px]" aria-hidden>
@@ -189,7 +189,7 @@ export function DashboardView() {
                     type="button"
                     role="checkbox"
                     aria-checked={done}
-                    aria-label={`Mark ${r.title} as ${done ? "not done" : "done"}`}
+                    aria-label={`${done ? "Снять отметку" : "Отметить выполненным"}: ${r.title}`}
                     onClick={() => actions.togglePlanBlock(b.id, r.title)}
                     className={cn(
                       "flex size-5 shrink-0 cursor-pointer items-center justify-center rounded-full border transition-colors",
@@ -201,7 +201,7 @@ export function DashboardView() {
                   <Link href={r.href ?? "/daily-plan"} className={cn("flex-1 text-[14.5px] hover:underline hover:underline-offset-4", done ? "text-muted line-through decoration-line-strong" : "text-fg")}>
                     {r.title}
                   </Link>
-                  <span className="tabular text-[13px] text-subtle">{b.minutes} min</span>
+                  <span className="tabular text-[13px] text-subtle">{b.minutes} мин</span>
                 </li>
               );
             })}
@@ -211,16 +211,16 @@ export function DashboardView() {
 
       {/* Figures */}
       <section className="grid grid-cols-3 gap-6 sm:gap-10">
-        <StatCard label="Study streak" value={`${figures.streak} ${figures.streak === 1 ? "day" : "days"}`} />
-        <StatCard label="Words learned" value={figures.words} hint={sample ? undefined : `of ${vocabularyFile.words.length}`} />
-        <StatCard label="Lessons done" value={figures.lessons} hint={sample ? undefined : `of ${allLessons.length}`} />
+        <StatCard label="Дней подряд" value={`${figures.streak} ${plural(figures.streak, "день", "дня", "дней")}`} />
+        <StatCard label="Слов выучено" value={figures.words} hint={sample ? undefined : `из ${vocabularyFile.words.length}`} />
+        <StatCard label="Уроков пройдено" value={figures.lessons} hint={sample ? undefined : `из ${allLessons.length}`} />
       </section>
 
       {/* Skills + results */}
       <section className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-14">
         <div>
-          <SectionTitle action={sample ? <SampleBadge /> : <Link href="/progress" className="text-accent-soft hover:text-fg">Progress</Link>}>
-            Your skills
+          <SectionTitle action={sample ? <SampleBadge /> : <Link href="/progress" className="text-accent-soft hover:text-fg">Прогресс</Link>}>
+            Твои навыки
           </SectionTitle>
           {skills.length ? (
             <ul className="space-y-3.5">
@@ -242,16 +242,16 @@ export function DashboardView() {
           ) : (
             <EmptyState
               icon={ClipboardList}
-              title="No skill scores yet"
-              description="They appear after your first assessment."
-              action={<Link href="/assessments/initial" className={buttonVariants({ variant: "secondary", size: "sm" })}>Take the assessment</Link>}
+              title="Оценок по навыкам пока нет"
+              description="Они появятся после первого теста."
+              action={<Link href="/assessments/initial" className={buttonVariants({ variant: "secondary", size: "sm" })}>Пройти тест</Link>}
             />
           )}
         </div>
 
         <div>
-          <SectionTitle action={sample ? <SampleBadge /> : <Link href="/assessments" className="text-accent-soft hover:text-fg">All results</Link>}>
-            Recent results
+          <SectionTitle action={sample ? <SampleBadge /> : <Link href="/assessments" className="text-accent-soft hover:text-fg">Все результаты</Link>}>
+            Последние результаты
           </SectionTitle>
           {results.length ? (
             <ul className="divide-y divide-line">
@@ -266,7 +266,7 @@ export function DashboardView() {
               ))}
             </ul>
           ) : (
-            <p className="text-[14px] leading-relaxed text-muted">Assessment and practice scores will be listed here.</p>
+            <p className="text-[14px] leading-relaxed text-muted">Здесь появятся результаты тестов и практики.</p>
           )}
         </div>
       </section>
@@ -274,7 +274,7 @@ export function DashboardView() {
       {/* Next step + tutor note */}
       <section className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-14">
         <div className="border-l-2 border-accent pl-5">
-          <p className="text-[13px] text-muted">Suggested next step, from your results</p>
+          <p className="text-[13px] text-muted">Следующий шаг — по твоим результатам</p>
           <h3 className="mt-1.5 text-[19px] font-semibold tracking-[-0.02em] text-fg">{step.title}</h3>
           <p className="mt-2 max-w-[52ch] text-[14.5px] leading-relaxed text-muted">{step.body}</p>
           <Link href={step.href} className={buttonVariants({ variant: "secondary", size: "sm", className: "mt-4" })}>
@@ -282,14 +282,14 @@ export function DashboardView() {
           </Link>
           {weak.length > 0 && (
             <p className="mt-5 text-[13.5px] text-muted">
-              Frequent mistakes: <span className="text-fg">{weak.join(", ")}</span>
+              Частые ошибки: <span className="text-fg">{weak.join(", ")}</span>
             </p>
           )}
         </div>
 
         <div className="border-l-2 border-line-strong pl-5">
           <p className="flex items-center gap-1.5 text-[13px] text-muted">
-            <Sparkles className="size-3.5" /> Tutor&apos;s weekly note
+            <Sparkles className="size-3.5" /> Записка репетитора за неделю
             {sample && <SampleBadge className="ml-1" />}
           </p>
           {sample ? (
@@ -303,7 +303,7 @@ export function DashboardView() {
             </>
           ) : (
             <p className="mt-2 max-w-[52ch] text-[14.5px] leading-relaxed text-muted">
-              Weekly notes are not generated yet. The tutor will write them from your activity once reports are switched on.
+              Записки пока не формируются. Репетитор начнёт писать их по твоим занятиям, когда включим отчёты.
             </p>
           )}
         </div>

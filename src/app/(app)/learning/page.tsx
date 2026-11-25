@@ -14,11 +14,11 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs } from "@/components/ui/tabs";
 
 const STATE_META: Record<LessonState, { label: string; icon: typeof Circle; tone: string; badge: "success" | "accent" | "default" | "outline" }> = {
-  completed: { label: "Completed", icon: CheckCircle2, tone: "text-success", badge: "success" },
-  in_progress: { label: "In progress", icon: PlayCircle, tone: "text-accent-soft", badge: "accent" },
-  available: { label: "Available", icon: Circle, tone: "text-fg", badge: "default" },
-  locked: { label: "Locked", icon: Lock, tone: "text-subtle", badge: "outline" },
-  pending: { label: "Content pending", icon: Hourglass, tone: "text-subtle", badge: "outline" },
+  completed: { label: "Выполнено", icon: CheckCircle2, tone: "text-success", badge: "success" },
+  in_progress: { label: "В процессе", icon: PlayCircle, tone: "text-accent-soft", badge: "accent" },
+  available: { label: "Доступен", icon: Circle, tone: "text-fg", badge: "default" },
+  locked: { label: "Закрыт", icon: Lock, tone: "text-subtle", badge: "outline" },
+  pending: { label: "Готовится", icon: Hourglass, tone: "text-subtle", badge: "outline" },
 };
 
 export default function LearningPage() {
@@ -33,8 +33,8 @@ export default function LearningPage() {
   return (
     <div className="space-y-8">
       <PageHeader
-        title="My Learning"
-        description="Your structured path from A1 to C2. Lessons unlock in order as you complete them."
+        title="Моё обучение"
+        description="Программа от A1 до C2. Уроки открываются по порядку, по мере прохождения."
         actions={course.meta.sample ? <SampleBadge kind="content" /> : undefined}
       />
 
@@ -57,12 +57,12 @@ export default function LearningPage() {
             >
               <div className="flex items-center justify-between">
                 <span className={cn("text-[18px] font-semibold tracking-tight", active ? "text-fg" : "text-fg/90")}>{id}</span>
-                {isCurrent && <span className="size-1.5 rounded-full bg-accent-soft" title="Your current level" />}
+                {isCurrent && <span className="size-1.5 rounded-full bg-accent-soft" title="Твой текущий уровень" />}
               </div>
               <div className="mt-0.5 truncate text-[11px] text-muted">{levels.find((l) => l.id === id)?.name}</div>
               <Progress value={p.percent} className="mt-3 h-1" />
               <div className="tabular mt-1.5 text-[11px] text-subtle">
-                {p.done}/{p.total} lessons
+                {p.done}/{p.total} уроков
               </div>
             </button>
           );
@@ -80,12 +80,12 @@ export default function LearningPage() {
           size="sm"
           value={skill}
           onChange={setSkill}
-          items={[{ value: "all", label: "All skills" }, ...SKILLS.map((s) => ({ value: s, label: SKILL_LABEL[s] }))]}
+          items={[{ value: "all", label: "Все навыки" }, ...SKILLS.map((s) => ({ value: s, label: SKILL_LABEL[s] }))]}
         />
       </div>
 
       {modules.length === 0 ? (
-        <EmptyState icon={Hourglass} title={`No ${level} modules yet`} description="Add modules for this level in content/curriculum/course.json." />
+        <EmptyState icon={Hourglass} title={`Модулей уровня ${level} пока нет`} description="Модули для этого уровня добавляются в content/curriculum/course.json." />
       ) : (
         <div className="space-y-5">
           {modules.map((m, mi) => {
@@ -95,7 +95,7 @@ export default function LearningPage() {
               <section key={m.id} className="rounded-lg border border-line bg-card">
                 <header className="flex flex-col gap-3 border-b border-line px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
                   <div className="min-w-0">
-                    <div className="text-[13px] font-medium text-subtle">Module {mi + 1}</div>
+                    <div className="text-[13px] font-medium text-subtle">Модуль {mi + 1}</div>
                     <h3 className="mt-0.5 text-[15px] font-medium">{m.title}</h3>
                     <p className="mt-0.5 text-[13px] text-muted">{m.description}</p>
                   </div>
@@ -107,7 +107,7 @@ export default function LearningPage() {
                   </div>
                 </header>
                 {lessons.length === 0 ? (
-                  <p className="px-5 py-5 text-[13px] text-subtle">No {SKILL_LABEL[skill]?.toLowerCase()} lessons in this module.</p>
+                  <p className="px-5 py-5 text-[13px] text-subtle">В этом модуле нет уроков по навыку «{SKILL_LABEL[skill]?.toLowerCase()}».</p>
                 ) : (
                   <ul className="grid gap-px bg-line sm:grid-cols-2 xl:grid-cols-3">
                     {lessons.map((l) => {
@@ -126,7 +126,7 @@ export default function LearningPage() {
                           </div>
                           <div className="mt-auto flex items-center justify-between text-[12px] text-subtle">
                             <span className="inline-flex items-center gap-1">
-                              <Clock className="size-3" /> {l.minutes} min
+                              <Clock className="size-3" /> {l.minutes} мин
                             </span>
                             <Badge variant={meta.badge}>{meta.label}</Badge>
                           </div>
@@ -139,7 +139,7 @@ export default function LearningPage() {
                               {inner}
                             </Link>
                           ) : (
-                            <div title={ls === "locked" ? "Complete the previous lesson to unlock" : "Lesson content has not been added yet"} className="h-full">
+                            <div title={ls === "locked" ? "Пройди предыдущий урок, чтобы открыть" : "Материалы урока ещё не добавлены"} className="h-full">
                               {inner}
                             </div>
                           )}

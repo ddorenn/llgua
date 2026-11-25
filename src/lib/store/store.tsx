@@ -41,7 +41,7 @@ function makeActions(update: (fn: Updater) => void) {
         const done = day.completed.includes(blockId);
         const completed = done ? day.completed.filter((b) => b !== blockId) : [...day.completed, blockId];
         const next = { ...s, dailyPlans: { ...s.dailyPlans, [date]: { completed } } };
-        return done ? next : logActivity(next, "plan", `Completed daily block: ${label}`);
+        return done ? next : logActivity(next, "plan", `Выполнен блок плана: ${label}`);
       });
     },
     resetPlanDay(date = todayKey()) {
@@ -52,7 +52,7 @@ function makeActions(update: (fn: Updater) => void) {
         logActivity(
           { ...s, lessons: { ...s.lessons, [lessonId]: { status: "completed", score, total, updatedAt: new Date().toISOString() } } },
           "lesson",
-          `Completed lesson “${title}”`,
+          `Пройден урок «${title}»`,
         ),
       );
     },
@@ -78,14 +78,14 @@ function makeActions(update: (fn: Updater) => void) {
       update((s) => ({ ...s, vocabulary: { ...s.vocabulary, [wordId]: applyStatus(s.vocabulary[wordId], status) } }));
     },
     logReviewSession(count: number) {
-      if (count > 0) update((s) => logActivity(s, "vocabulary", `Reviewed ${count} vocabulary card${count === 1 ? "" : "s"}`));
+      if (count > 0) update((s) => logActivity(s, "vocabulary", `Повторено карточек: ${count}`));
     },
     submitHomework(id: string, title: string, text: string) {
       update((s) =>
         logActivity(
           { ...s, homework: { ...s.homework, [id]: { text, submittedAt: new Date().toISOString(), status: "submitted" } } },
           "homework",
-          `Submitted homework “${title}”`,
+          `Сдано задание «${title}»`,
         ),
       );
     },
@@ -101,7 +101,7 @@ function makeActions(update: (fn: Updater) => void) {
         logActivity(
           { ...s, [kind]: { ...s[kind], [id]: result } },
           "practice",
-          `${kind === "reading" ? "Reading" : "Listening"}: “${title}” — ${result.score}/${result.total}`,
+          `${kind === "reading" ? "Чтение" : "Аудирование"}: «${title}» — ${result.score}/${result.total}`,
         ),
       );
     },
@@ -122,7 +122,7 @@ function makeActions(update: (fn: Updater) => void) {
             },
           },
           "practice",
-          `Writing submitted: “${title}”`,
+          `Сдан текст «${title}»`,
         ),
       );
     },
@@ -136,7 +136,7 @@ function makeActions(update: (fn: Updater) => void) {
           lastRecordedAt: patch.recorded ? new Date().toISOString() : prev.lastRecordedAt,
         };
         const st = { ...s, speaking: { ...s.speaking, [id]: next } };
-        return patch.recorded && title ? logActivity(st, "practice", `Speaking practice: “${title}”`) : st;
+        return patch.recorded && title ? logActivity(st, "practice", `Разговорная практика: «${title}»`) : st;
       });
     },
     saveAssessment(result: AssessmentResult) {

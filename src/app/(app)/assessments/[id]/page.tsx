@@ -9,7 +9,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
-  return { title: getAssessment(id)?.title ?? "Assessment" };
+  return { title: getAssessment(id)?.title ?? "Тест" };
 }
 
 export default async function AssessmentPage({ params }: { params: Promise<{ id: string }> }) {

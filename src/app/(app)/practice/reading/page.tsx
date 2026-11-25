@@ -25,8 +25,8 @@ export default function ReadingPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Reading"
-        description="Read the text carefully, then answer the questions. Your best attempt is saved."
+        title="Чтение"
+        description="Внимательно прочитай текст и ответь на вопросы. Лучшая попытка сохраняется."
         actions={readingFile.meta.sample ? <SampleBadge kind="content" /> : undefined}
       />
       <ExercisePicker
@@ -39,12 +39,12 @@ export default function ReadingPage() {
           <CardHeader className="items-center">
             <div className="min-w-0">
               <div className="mb-2 flex flex-wrap items-center gap-2">
-                <Badge variant="accent">Level {ex.level}</Badge>
-                <span className="text-[12px] text-subtle">{words} words · ~{Math.max(1, Math.round(words / 150))} min read</span>
+                <Badge variant="accent">Уровень {ex.level}</Badge>
+                <span className="text-[12px] text-subtle">{words} слов, ~{Math.max(1, Math.round(words / 150))} мин чтения</span>
               </div>
               <CardTitle className="text-[20px] font-semibold">{ex.title}</CardTitle>
             </div>
-            <Button variant="ghost" size="icon-sm" aria-pressed={large} aria-label="Toggle large text" title="Text size" onClick={() => setLarge((l) => !l)}>
+            <Button variant="ghost" size="icon-sm" aria-pressed={large} aria-label="Крупный текст" title="Размер текста" onClick={() => setLarge((l) => !l)}>
               <Type />
             </Button>
           </CardHeader>
@@ -58,7 +58,7 @@ export default function ReadingPage() {
         </Card>
         <Card className="self-start lg:sticky lg:top-20">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2"><BookOpen className="size-4 text-accent-soft" /> Questions</CardTitle>
+            <CardTitle className="flex items-center gap-2"><BookOpen className="size-4 text-accent-soft" /> Вопросы</CardTitle>
           </CardHeader>
           <CardContent>
             <QuestionSet key={id} questions={ex.questions} previous={prev} onSubmit={(r) => actions.savePractice("reading", id, ex.title, r)} />

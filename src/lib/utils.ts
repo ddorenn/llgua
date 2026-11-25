@@ -27,5 +27,15 @@ export function uid(prefix = "id"): string {
 }
 
 export function formatDate(iso: string, opts: Intl.DateTimeFormatOptions = { month: "short", day: "numeric" }) {
-  return new Date(iso).toLocaleDateString("en-GB", opts);
+  return new Date(iso).toLocaleDateString("ru-RU", opts);
+}
+
+/** Russian plural form: plural(5, "день", "дня", "дней") → "дней". */
+export function plural(n: number, one: string, few: string, many: string) {
+  const a = Math.abs(n) % 100;
+  const b = a % 10;
+  if (a > 10 && a < 20) return many;
+  if (b > 1 && b < 5) return few;
+  if (b === 1) return one;
+  return many;
 }

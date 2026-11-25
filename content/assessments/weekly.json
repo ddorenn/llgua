@@ -1,29 +1,94 @@
 {
-  "meta": { "sample": true, "source": "Demonstration items written for LINGUA.", "version": 1 },
+  "meta": {
+    "sample": true,
+    "source": "Demonstration items written for LINGUA.",
+    "version": 1
+  },
   "id": "weekly",
   "type": "weekly",
-  "title": "Weekly Assessment",
-  "description": "A quick check of the grammar and vocabulary practised this week.",
+  "title": "Еженедельный тест",
+  "description": "Быстрая проверка грамматики и слов, пройденных за неделю.",
   "minutes": 10,
   "validated": false,
   "sections": [
     {
       "id": "grammar",
-      "title": "Grammar",
+      "title": "Грамматика",
       "skill": "grammar",
       "questions": [
-        { "id": "w1", "type": "mcq", "level": "B1", "prompt": "Have you ___ been to London?", "options": ["ever", "yet", "already", "since"], "answer": 0, "tag": "present-perfect" },
-        { "id": "w2", "type": "mcq", "level": "B1", "prompt": "I ___ him two days ago.", "options": ["have met", "met", "meet", "am meeting"], "answer": 1, "tag": "past-simple" },
-        { "id": "w3", "type": "gap", "level": "B1", "prompt": "She has worked here ___ five years. (for / since)", "accepted": ["for"], "tag": "present-perfect" }
+        {
+          "id": "w1",
+          "type": "mcq",
+          "level": "B1",
+          "prompt": "Have you ___ been to London?",
+          "options": [
+            "ever",
+            "yet",
+            "already",
+            "since"
+          ],
+          "answer": 0,
+          "tag": "present-perfect"
+        },
+        {
+          "id": "w2",
+          "type": "mcq",
+          "level": "B1",
+          "prompt": "I ___ him two days ago.",
+          "options": [
+            "have met",
+            "met",
+            "meet",
+            "am meeting"
+          ],
+          "answer": 1,
+          "tag": "past-simple"
+        },
+        {
+          "id": "w3",
+          "type": "gap",
+          "level": "B1",
+          "prompt": "She has worked here ___ five years. (for / since)",
+          "accepted": [
+            "for"
+          ],
+          "tag": "present-perfect"
+        }
       ]
     },
     {
       "id": "vocabulary",
-      "title": "Vocabulary",
+      "title": "Словарь",
       "skill": "vocabulary",
       "questions": [
-        { "id": "w4", "type": "mcq", "level": "B1", "prompt": "A person you can always trust is…", "options": ["reliable", "awkward", "reluctant", "thorough"], "answer": 0, "tag": "character" },
-        { "id": "w5", "type": "mcq", "level": "B1", "prompt": "___ it was late, we kept working.", "options": ["Because", "Although", "So", "Unless"], "answer": 1, "tag": "linking" }
+        {
+          "id": "w4",
+          "type": "mcq",
+          "level": "B1",
+          "prompt": "A person you can always trust is…",
+          "options": [
+            "reliable",
+            "awkward",
+            "reluctant",
+            "thorough"
+          ],
+          "answer": 0,
+          "tag": "character"
+        },
+        {
+          "id": "w5",
+          "type": "mcq",
+          "level": "B1",
+          "prompt": "___ it was late, we kept working.",
+          "options": [
+            "Because",
+            "Although",
+            "So",
+            "Unless"
+          ],
+          "answer": 1,
+          "tag": "linking"
+        }
       ]
     }
   ]

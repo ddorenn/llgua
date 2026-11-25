@@ -54,7 +54,7 @@ function AudioPanel({ ex }: { ex: ListeningExercise }) {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-4 rounded-lg border border-line bg-surface p-4">
-        <Button size="icon" className="size-12 shrink-0 rounded-full" onClick={toggle} disabled={!supported} aria-label={playing ? "Stop" : "Play"}>
+        <Button size="icon" className="size-12 shrink-0 rounded-full" onClick={toggle} disabled={!supported} aria-label={playing ? "Стоп" : "Слушать"}>
           {playing ? <Pause className="size-5" /> : <Play className="size-5 translate-x-px" />}
         </Button>
         <div className="flex h-12 flex-1 items-center gap-[3px]" aria-hidden>
@@ -70,12 +70,12 @@ function AudioPanel({ ex }: { ex: ListeningExercise }) {
       </div>
       <div className="flex flex-wrap items-center justify-between gap-3">
         <Tabs size="sm" value={rate} onChange={setRate} items={[{ value: "0.75", label: "0.75×" }, { value: "0.9", label: "0.9×" }, { value: "1.05", label: "1×" }]} />
-        <span className="text-[12px] text-subtle">Played {plays}×</span>
+        <span className="text-[12px] text-subtle">Прослушано: {plays}</span>
       </div>
-      <Notice icon={Headphones} title="Audio placeholder" tone="warning">
+      <Notice icon={Headphones} title="Временная озвучка" tone="warning">
         {supported
-          ? "No recording has been added for this exercise yet, so your browser’s text-to-speech voice reads the script. Add an audioUrl in the content file to use real audio."
-          : "Your browser does not support text-to-speech, and no recording has been added yet. Use the transcript for now."}
+          ? "Запись для этого упражнения ещё не добавлена, поэтому текст читает синтезатор речи браузера."
+          : "Браузер не поддерживает синтез речи, а запись ещё не добавлена. Пока используй расшифровку."}
       </Notice>
     </div>
   );
@@ -94,8 +94,8 @@ export default function ListeningPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Listening"
-        description="Listen first without the transcript, answer the questions, then check the script."
+        title="Аудирование"
+        description="Сначала слушай без текста, ответь на вопросы, а потом сверься с расшифровкой."
         actions={listeningFile.meta.sample ? <SampleBadge kind="content" /> : undefined}
       />
       <ExercisePicker
@@ -108,7 +108,7 @@ export default function ListeningPage() {
           <Card>
             <CardHeader>
               <div>
-                <Badge variant="accent" className="mb-2">Level {ex.level}</Badge>
+                <Badge variant="accent" className="mb-2">Уровень {ex.level}</Badge>
                 <CardTitle className="text-[20px] font-semibold">{ex.title}</CardTitle>
               </div>
             </CardHeader>
@@ -118,9 +118,9 @@ export default function ListeningPage() {
           </Card>
           <Card>
             <CardHeader className="items-center">
-              <CardTitle>Transcript</CardTitle>
+              <CardTitle>Расшифровка</CardTitle>
               <Button variant="secondary" size="sm" onClick={() => setShowScript((s) => !s)} aria-expanded={showScript}>
-                {showScript ? <EyeOff /> : <Eye />} {showScript ? "Hide" : "Show"}
+                {showScript ? <EyeOff /> : <Eye />} {showScript ? "Скрыть" : "Показать"}
               </Button>
             </CardHeader>
             <CardContent>
@@ -136,16 +136,16 @@ export default function ListeningPage() {
                   })}
                 </div>
               ) : (
-                <p className="text-[13px] text-subtle">Hidden. Try answering first{prev ? "" : " — you can reveal it any time"}.</p>
+                <p className="text-[13px] text-subtle">Скрыта. Сначала попробуй ответить{prev ? "" : " — открыть можно в любой момент"}.</p>
               )}
             </CardContent>
           </Card>
         </div>
         <Card className="self-start lg:sticky lg:top-20">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2"><Headphones className="size-4 text-accent-soft" /> Questions</CardTitle>
+            <CardTitle className="flex items-center gap-2"><Headphones className="size-4 text-accent-soft" /> Вопросы</CardTitle>
             {prev && (
-              <span className="flex items-center gap-1 text-[12px] text-subtle"><RotateCcw className="size-3" /> Last attempt saved</span>
+              <span className="flex items-center gap-1 text-[12px] text-subtle"><RotateCcw className="size-3" /> Последняя попытка сохранена</span>
             )}
           </CardHeader>
           <CardContent>

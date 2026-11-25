@@ -59,7 +59,7 @@ export function last7Days(state: LinguaState) {
     const d = new Date();
     d.setDate(d.getDate() - i);
     const key = todayKey(d);
-    out.push({ day: d.toLocaleDateString("en-GB", { weekday: "short" }), date: key, minutes: minutesForDay(state, key) });
+    out.push({ day: d.toLocaleDateString("ru-RU", { weekday: "short" }), date: key, minutes: minutesForDay(state, key) });
   }
   return out;
 }

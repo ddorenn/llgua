@@ -7,7 +7,7 @@ import { Check, Pause, Play, RotateCcw } from "lucide-react";
 import { dailyPlan } from "@/lib/content";
 import { useStore } from "@/lib/store/store";
 import { last7Days, resolveBlock, todayProgress } from "@/lib/store/selectors";
-import { cn } from "@/lib/utils";
+import { cn, plural } from "@/lib/utils";
 import { PageHeader } from "@/components/shared/page";
 import { Button, buttonVariants } from "@/components/ui/button";
 
@@ -20,7 +20,7 @@ interface TimerState {
   running: boolean;
 }
 
-const STATE_LABEL: Record<BlockState, string> = { completed: "Completed", in_progress: "In progress", upcoming: "Upcoming" };
+const STATE_LABEL: Record<BlockState, string> = { completed: "Выполнено", in_progress: "В процессе", upcoming: "Впереди" };
 
 function fmt(sec: number) {
   return `${String(Math.floor(sec / 60)).padStart(2, "0")}:${String(sec % 60).padStart(2, "0")}`;
@@ -102,26 +102,26 @@ export default function DailyPlanPage() {
   return (
     <div className="space-y-10">
       <PageHeader
-        eyebrow={new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" })}
-        title="Daily plan"
-        description={`${today.total} minutes in ${today.blocks.length} blocks. ${dailyPlan.title}.`}
+        eyebrow={new Date().toLocaleDateString("ru-RU", { weekday: "long", day: "numeric", month: "long" })}
+        title="План на день"
+        description={`${today.total} минут, ${today.blocks.length} ${plural(today.blocks.length, "блок", "блока", "блоков")}. ${dailyPlan.title}.`}
         actions={
           <>
             <Button variant="ghost" size="sm" onClick={() => { actions.resetPlanDay(); setTimer(null); }} disabled={!today.done.length}>
-              <RotateCcw /> Reset today
+              <RotateCcw /> Сбросить день
             </Button>
             <Link href="/settings#goals" className={buttonVariants({ variant: "secondary", size: "sm" })}>
-              Change duration
+              Изменить время
             </Link>
           </>
         }
       />
 
       {/* The hour, as a timeline */}
-      <section aria-label="Today's hour">
+      <section aria-label="Час сегодня">
         <div className="flex items-baseline justify-between text-[14px]">
           <span className="font-medium text-fg">
-            {today.minutesDone} of {today.total} minutes
+            {today.minutesDone} из {today.total} минут
           </span>
           <span className="tabular text-muted">{today.percent}%</span>
         </div>
@@ -137,7 +137,7 @@ export default function DailyPlanPage() {
                 onClick={() => setSelectedId(b.id)}
                 style={{ flexGrow: b.minutes, flexBasis: 0 }}
                 className="group min-w-0 cursor-pointer text-left"
-                aria-label={`${r.title}, ${b.minutes} minutes, ${STATE_LABEL[st]}`}
+                aria-label={`${r.title}, ${b.minutes} мин, ${STATE_LABEL[st]}`}
               >
                 <span className="relative block h-3 overflow-hidden rounded-sm bg-elevated">
                   <motion.span
@@ -148,7 +148,7 @@ export default function DailyPlanPage() {
                   />
                 </span>
                 <span className={cn("mt-2 hidden truncate text-[12.5px] sm:block", selected.id === b.id ? "font-semibold text-fg" : "text-muted group-hover:text-fg")}>{r.title}</span>
-                <span className="tabular hidden text-[12px] text-subtle sm:block">{b.minutes} min</span>
+                <span className="tabular hidden text-[12px] text-subtle sm:block">{b.minutes} мин</span>
               </button>
             );
           })}
@@ -173,7 +173,7 @@ export default function DailyPlanPage() {
                 <button
                   type="button"
                   onClick={() => (st === "completed" ? actions.togglePlanBlock(b.id, r.title) : complete(b.id, r.title))}
-                  aria-label={st === "completed" ? `Mark ${r.title} as not done` : `Mark ${r.title} as done`}
+                  aria-label={st === "completed" ? `Снять отметку: ${r.title}` : `Отметить выполненным: ${r.title}`}
                   className="mt-0.5 shrink-0 cursor-pointer rounded-full"
                 >
                   <StateMark state={st} />
@@ -185,19 +185,19 @@ export default function DailyPlanPage() {
                   <p className="mt-1 max-w-[56ch] text-[14px] leading-relaxed text-muted">{b.description}</p>
                   <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-[13px]">
                     <span className={cn(st === "completed" ? "text-success" : st === "in_progress" ? "text-accent-soft" : "text-subtle")}>{STATE_LABEL[st]}</span>
-                    <span className="tabular text-subtle">{b.minutes} min</span>
-                    {r.alt.length > 0 && <span className="text-subtle">Tomorrow: {r.alt.map((a) => a.title).join(" or ")}</span>}
+                    <span className="tabular text-subtle">{b.minutes} мин</span>
+                    {r.alt.length > 0 && <span className="text-subtle">Завтра: {r.alt.map((a) => a.title).join(" или ")}</span>}
                   </div>
                 </div>
                 <div className="flex shrink-0 flex-col items-end gap-2 sm:flex-row sm:items-center">
                   {r.href && (
                     <Link href={r.href} className={buttonVariants({ variant: "ghost", size: "sm" })}>
-                      Open
+                      Открыть
                     </Link>
                   )}
                   {st !== "completed" && (
                     <Button variant={st === "in_progress" ? "secondary" : "outline"} size="sm" onClick={() => start(b.id)}>
-                      <Play /> {st === "in_progress" ? "Resume" : "Start"}
+                      <Play /> {st === "in_progress" ? "Продолжить" : "Начать"}
                     </Button>
                   )}
                 </div>
@@ -212,11 +212,11 @@ export default function DailyPlanPage() {
             <div className="flex items-baseline justify-between">
               <span className="text-[14px] font-medium text-fg">{selectedR.title}</span>
               <span className={cn("text-[13px]", selectedDone ? "text-success" : activeTimer ? "text-accent-soft" : "text-subtle")}>
-                {selectedDone ? "Completed" : activeTimer ? (activeTimer.running ? "In progress" : "Paused") : "Not started"}
+                {selectedDone ? "Выполнено" : activeTimer ? (activeTimer.running ? "В процессе" : "На паузе") : "Не начато"}
               </span>
             </div>
-            <div className="tabular mt-6 text-[64px] font-semibold leading-none tracking-[-0.04em] text-fg" aria-live="polite" aria-label={`${Math.ceil(remaining / 60)} minutes left`}>
-              {selectedDone ? "Done" : fmt(remaining)}
+            <div className="tabular mt-6 text-[64px] font-semibold leading-none tracking-[-0.04em] text-fg" aria-live="polite" aria-label={`Осталось минут: ${Math.ceil(remaining / 60)}`}>
+              {selectedDone ? "Готово" : fmt(remaining)}
             </div>
             <div className="mt-6 h-1.5 overflow-hidden rounded-full bg-elevated">
               <motion.div
@@ -228,30 +228,30 @@ export default function DailyPlanPage() {
             </div>
             <div className="tabular mt-2 flex justify-between text-[12.5px] text-subtle">
               <span>{fmt(total - remaining)}</span>
-              <span>{selected.minutes} min</span>
+              <span>{selected.minutes} мин</span>
             </div>
 
             <div className="mt-6 flex flex-wrap gap-2">
               {selectedDone ? (
                 <Button variant="secondary" onClick={() => actions.togglePlanBlock(selected.id, selectedR.title)}>
-                  <RotateCcw /> Mark as not done
+                  <RotateCcw /> Снять отметку
                 </Button>
               ) : (
                 <>
                   {activeTimer?.running ? (
                     <Button onClick={() => setTimer((t) => (t ? { ...t, running: false } : t))}>
-                      <Pause /> Pause
+                      <Pause /> Пауза
                     </Button>
                   ) : (
                     <Button onClick={() => start(selected.id)}>
-                      <Play /> {activeTimer ? "Resume" : "Start block"}
+                      <Play /> {activeTimer ? "Продолжить" : "Начать блок"}
                     </Button>
                   )}
                   <Button variant="secondary" onClick={() => complete(selected.id, selectedR.title)}>
-                    <Check /> Mark done
+                    <Check /> Готово
                   </Button>
                   {activeTimer && (
-                    <Button variant="ghost" size="icon" aria-label="Reset timer" onClick={() => setTimer(null)}>
+                    <Button variant="ghost" size="icon" aria-label="Сбросить таймер" onClick={() => setTimer(null)}>
                       <RotateCcw />
                     </Button>
                   )}
@@ -262,20 +262,20 @@ export default function DailyPlanPage() {
             <AnimatePresence initial={false}>
               {nextAfter && (
                 <motion.p key={nextAfter.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="mt-6 border-t border-line pt-4 text-[13.5px] text-muted">
-                  After this: <span className="text-fg">{resolveBlock(nextAfter).title}</span>, {nextAfter.minutes} min
+                  Дальше: <span className="text-fg">{resolveBlock(nextAfter).title}</span>, {nextAfter.minutes} мин
                 </motion.p>
               )}
             </AnimatePresence>
-            <p className="mt-3 text-[12.5px] text-subtle">The block is marked done when the timer reaches zero.</p>
+            <p className="mt-3 text-[12.5px] text-subtle">Когда таймер дойдёт до нуля, блок отметится выполненным.</p>
           </div>
 
           <div className="mt-8">
-            <h2 className="text-[14px] font-medium text-fg">Last 7 days</h2>
+            <h2 className="text-[14px] font-medium text-fg">Последние 7 дней</h2>
             <div className="mt-3 grid grid-cols-7 gap-1.5">
               {week.map((d) => {
                 const ratio = Math.min(1, d.minutes / today.total);
                 return (
-                  <div key={d.date} className="flex flex-col items-center gap-1.5" title={`${d.date}: ${d.minutes} min`}>
+                  <div key={d.date} className="flex flex-col items-center gap-1.5" title={`${d.date}: ${d.minutes} мин`}>
                     <div className="flex h-14 w-full items-end overflow-hidden rounded-sm bg-elevated">
                       <div className="w-full bg-accent transition-[height] duration-500" style={{ height: `${ratio * 100}%` }} />
                     </div>

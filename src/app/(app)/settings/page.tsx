@@ -57,15 +57,15 @@ export default function SettingsPage() {
 
   const set = (patch: Partial<Settings>) => {
     actions.updateSettings(patch);
-    setSavedAt(new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }));
+    setSavedAt(new Date().toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" }));
   };
 
   function saveProfile(e: React.FormEvent) {
     e.preventDefault();
     const next: typeof errors = {};
-    if (!profile.displayName.trim()) next.displayName = "Name is required.";
-    else if (profile.displayName.length > 40) next.displayName = "Keep it under 40 characters.";
-    if (profile.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(profile.email)) next.email = "Enter a valid email address.";
+    if (!profile.displayName.trim()) next.displayName = "Укажи имя.";
+    else if (profile.displayName.length > 40) next.displayName = "Не длиннее 40 символов.";
+    if (profile.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(profile.email)) next.email = "Введи корректный email.";
     setErrors(next);
     if (Object.keys(next).length) return;
     set({ displayName: profile.displayName.trim(), email: profile.email.trim() });
@@ -90,18 +90,18 @@ export default function SettingsPage() {
   return (
     <div className="mx-auto max-w-4xl space-y-10">
       <PageHeader
-        title="Settings"
-        description="Personalise your learning. Changes save automatically."
-        actions={savedAt ? <span className="inline-flex items-center gap-1.5 text-[12px] text-success"><Check className="size-3.5" /> Saved {savedAt}</span> : undefined}
+        title="Настройки"
+        description="Настрой обучение под себя. Изменения сохраняются автоматически."
+        actions={savedAt ? <span className="inline-flex items-center gap-1.5 text-[12px] text-success"><Check className="size-3.5" /> Сохранено в {savedAt}</span> : undefined}
       />
 
-      <nav className="flex gap-1.5 overflow-x-auto" aria-label="Settings sections">
-        {[["appearance", "Appearance"], ["profile", "Profile"], ["goals", "Daily goal"], ["language", "Language"], ["notifications", "Notifications"], ["account", "Account"]].map(([id, label]) => (
+      <nav className="flex gap-1.5 overflow-x-auto" aria-label="Разделы настроек">
+        {[["appearance", "Оформление"], ["profile", "Профиль"], ["goals", "Цель на день"], ["language", "Язык"], ["notifications", "Уведомления"], ["account", "Аккаунт"]].map(([id, label]) => (
           <a key={id} href={`#${id}`} className="shrink-0 rounded-full bg-elevated px-3 py-1.5 text-[13px] text-muted transition-colors hover:text-fg">{label}</a>
         ))}
       </nav>
 
-      <Section id="appearance" icon={Palette} title="Appearance" description="Choose how Lingua looks on this device. System follows your device setting.">
+      <Section id="appearance" icon={Palette} title="Оформление" description="Как LINGUA выглядит на этом устройстве. «Системная» следует настройкам устройства.">
         <ThemePicker />
       </Section>
 
@@ -109,38 +109,38 @@ export default function SettingsPage() {
         <Section
           id="profile"
           icon={User}
-          title="Profile"
-          description="How LINGUA addresses you."
-          footer={<Button type="submit" size="sm">Save profile</Button>}
+          title="Профиль"
+          description="Как LINGUA к тебе обращается."
+          footer={<Button type="submit" size="sm">Сохранить профиль</Button>}
         >
-          <Row label="Display name" htmlFor="displayName">
+          <Row label="Имя" htmlFor="displayName">
             <Input id="displayName" value={profile.displayName} aria-invalid={Boolean(errors.displayName)} onChange={(e) => setProfile((p) => ({ ...p, displayName: e.target.value }))} />
             <FieldError>{errors.displayName}</FieldError>
           </Row>
-          <Row label="Email" hint="Optional · used for future reports" htmlFor="email">
+          <Row label="Email" hint="Необязательно, для будущих отчётов" htmlFor="email">
             <Input id="email" type="email" value={profile.email} aria-invalid={Boolean(errors.email)} onChange={(e) => setProfile((p) => ({ ...p, email: e.target.value }))} placeholder="you@example.com" />
             <FieldError>{errors.email}</FieldError>
           </Row>
         </Section>
       </form>
 
-      <Section id="goals" icon={Target} title="Daily goal and learning preferences" description="Your level, target, daily study time and focus.">
-        <Row label="Current level" hint="Self-reported until a validated assessment exists" htmlFor="currentLevel">
+      <Section id="goals" icon={Target} title="Цель на день и предпочтения" description="Уровень, цель, время занятий и приоритеты.">
+        <Row label="Текущий уровень" hint="Указывается вручную, пока нет валидированного теста" htmlFor="currentLevel">
           <Select id="currentLevel" value={s.currentLevel ?? ""} onChange={(e) => set({ currentLevel: (e.target.value || null) as Cefr | null })}>
-            <option value="">Not set</option>
+            <option value="">Не задан</option>
             {CEFR.map((l) => <option key={l} value={l}>{l}</option>)}
           </Select>
         </Row>
-        <Row label="Target level" htmlFor="targetLevel">
+        <Row label="Целевой уровень" htmlFor="targetLevel">
           <Select id="targetLevel" value={s.targetLevel} onChange={(e) => set({ targetLevel: e.target.value as Cefr })}>
             {CEFR.map((l) => <option key={l} value={l}>{l}</option>)}
           </Select>
         </Row>
-        <Row label="Main goal" htmlFor="mainGoal">
-          <Input id="mainGoal" value={s.mainGoal} maxLength={120} onChange={(e) => actions.updateSettings({ mainGoal: e.target.value })} onBlur={() => set({ mainGoal: s.mainGoal.trim() || "Balanced development of all English skills" })} />
+        <Row label="Главная цель" htmlFor="mainGoal">
+          <Input id="mainGoal" value={s.mainGoal} maxLength={120} onChange={(e) => actions.updateSettings({ mainGoal: e.target.value })} onBlur={() => set({ mainGoal: s.mainGoal.trim() || "Сбалансированное развитие всех навыков английского" })} />
         </Row>
-        <Row label="Daily study duration" hint="Daily Plan blocks scale proportionally">
-          <div className="flex flex-wrap gap-1.5" role="radiogroup" aria-label="Daily study duration">
+        <Row label="Время занятий в день" hint="Блоки плана масштабируются пропорционально">
+          <div className="flex flex-wrap gap-1.5" role="radiogroup" aria-label="Время занятий в день">
             {DURATIONS.map((d) => (
               <button
                 key={d}
@@ -153,12 +153,12 @@ export default function SettingsPage() {
                   s.dailyMinutes === d ? "border-accent bg-accent-muted text-fg" : "border-line bg-surface text-muted hover:border-line-strong",
                 )}
               >
-                {d} min
+                {d} мин
               </button>
             ))}
           </div>
         </Row>
-        <Row label="Focus skills" hint="At least one">
+        <Row label="Приоритетные навыки" hint="Хотя бы один">
           <div className="flex flex-wrap gap-1.5">
             {SKILLS.map((sk) => {
               const on = s.focusSkills.includes(sk);
@@ -179,70 +179,70 @@ export default function SettingsPage() {
             })}
           </div>
         </Row>
-        <Row label="Exam preparation" hint="IELTS and TOEFL modules are planned" htmlFor="exam">
+        <Row label="Подготовка к экзамену" hint="Модули IELTS и TOEFL в планах" htmlFor="exam">
           <Select id="exam" value={s.targetExam} onChange={(e) => set({ targetExam: e.target.value as TargetExam })}>
-            <option value="none">None for now</option>
-            <option value="ielts">IELTS (future module)</option>
-            <option value="toefl">TOEFL (future module)</option>
+            <option value="none">Пока нет</option>
+            <option value="ielts">IELTS (модуль в планах)</option>
+            <option value="toefl">TOEFL (модуль в планах)</option>
           </Select>
         </Row>
       </Section>
 
-      <Section id="language" icon={Globe2} title="Language" description="Interface and teaching languages.">
-        <Row label="Interface language" hint="Navigation and common labels" htmlFor="ui-lang">
+      <Section id="language" icon={Globe2} title="Язык" description="Язык интерфейса и объяснений.">
+        <Row label="Язык интерфейса" hint="Меню и общие подписи" htmlFor="ui-lang">
           <Select id="ui-lang" value={s.interfaceLanguage} onChange={(e) => set({ interfaceLanguage: e.target.value as Locale })}>
             {Object.entries(LOCALES).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
           </Select>
         </Row>
-        <Row label="Teaching language" hint="How the AI tutor explains" htmlFor="teach-lang">
+        <Row label="Язык объяснений" hint="На каком языке объясняет AI-репетитор" htmlFor="teach-lang">
           <Select id="teach-lang" value={s.teachingLanguage} onChange={(e) => set({ teachingLanguage: e.target.value as TeachingLanguage })}>
-            <option value="ru+en">Russian + English</option>
-            <option value="en">English only</option>
+            <option value="ru+en">Русский + английский</option>
+            <option value="en">Только английский</option>
           </Select>
         </Row>
       </Section>
 
-      <Section id="notifications" icon={Bell} title="Notifications" description="Preferences are saved now; delivery (email/push) is not implemented yet.">
+      <Section id="notifications" icon={Bell} title="Уведомления" description="Настройки сохраняются, но сами уведомления пока не отправляются.">
         {([
-          ["dailyReminder", "Daily study reminder", "A nudge at your chosen time"],
-          ["homeworkDue", "Homework due", "When an assignment is due within 24 h"],
-          ["weeklyReport", "Weekly progress report", "Summary from the AI Analyst"],
+          ["dailyReminder", "Напоминание о занятии", "Напоминание в выбранное время"],
+          ["homeworkDue", "Срок домашнего задания", "Когда до срока задания меньше суток"],
+          ["weeklyReport", "Недельный отчёт о прогрессе", "Сводка от AI-аналитика"],
         ] as const).map(([key, label, hint]) => (
           <Row key={key} label={label} hint={hint}>
             <Switch checked={s.notifications[key]} onChange={(v) => set({ notifications: { ...s.notifications, [key]: v } })} label={label} />
           </Row>
         ))}
-        <Row label="Reminder time" htmlFor="reminderTime">
+        <Row label="Время напоминания" htmlFor="reminderTime">
           <Input id="reminderTime" type="time" className="w-36" value={s.notifications.reminderTime} disabled={!s.notifications.dailyReminder} onChange={(e) => set({ notifications: { ...s.notifications, reminderTime: e.target.value } })} />
         </Row>
       </Section>
 
-      <Section id="account" icon={KeyRound} title="Account & data" description="Sign-in, data storage and export.">
+      <Section id="account" icon={KeyRound} title="Аккаунт и данные" description="Вход, хранение данных и экспорт.">
         {syncMode === "remote" ? (
-          <Notice icon={Database} title="Progress syncs to your account" tone="accent">
-            Everything you do is saved to Supabase and available on every device where you sign in. A copy is kept on this device,
-            so you can keep studying offline — changes upload automatically when the connection returns.
+          <Notice icon={Database} title="Прогресс синхронизируется с аккаунтом" tone="accent">
+            Всё, что ты делаешь, сохраняется в Supabase и доступно на любом устройстве после входа. Копия хранится на этом устройстве,
+            поэтому заниматься можно и без интернета — изменения отправятся, когда связь вернётся.
           </Notice>
         ) : (
-          <Notice icon={Database} title="Data is stored in this browser">
-            Progress is saved locally (localStorage). Sign in with Supabase to sync across devices.
+          <Notice icon={Database} title="Данные хранятся в этом браузере">
+            Прогресс сохраняется локально. Войди через Supabase, чтобы синхронизировать устройства.
           </Notice>
         )}
-        <Row label="Sample preview" hint="Show labelled demonstration analytics">
-          <Switch checked={s.samplePreview} onChange={(v) => set({ samplePreview: v })} label="Sample preview" />
+        <Row label="Демо-данные" hint="Показывать демонстрационную аналитику с пометкой">
+          <Switch checked={s.samplePreview} onChange={(v) => set({ samplePreview: v })} label="Демо-данные" />
         </Row>
-        <Row label="Export data" hint="Download everything as JSON">
-          <Button variant="secondary" size="sm" onClick={exportData}><Download /> Export</Button>
+        <Row label="Экспорт данных" hint="Скачать всё в JSON">
+          <Button variant="secondary" size="sm" onClick={exportData}><Download /> Скачать</Button>
         </Row>
-        <Row label="Reset progress" hint="Deletes all local learning data">
+        <Row label="Сбросить прогресс" hint="Удаляет все учебные данные">
           {confirmReset ? (
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-[12.5px] text-danger">This cannot be undone.</span>
-              <Button variant="danger" size="sm" onClick={() => { actions.resetAll(); setConfirmReset(false); }}>Yes, reset everything</Button>
-              <Button variant="ghost" size="sm" onClick={() => setConfirmReset(false)}>Cancel</Button>
+              <span className="text-[12.5px] text-danger">Это нельзя отменить.</span>
+              <Button variant="danger" size="sm" onClick={() => { actions.resetAll(); setConfirmReset(false); }}>Да, сбросить всё</Button>
+              <Button variant="ghost" size="sm" onClick={() => setConfirmReset(false)}>Отмена</Button>
             </div>
           ) : (
-            <Button variant="danger" size="sm" onClick={() => setConfirmReset(true)}><Trash2 /> Reset</Button>
+            <Button variant="danger" size="sm" onClick={() => setConfirmReset(true)}><Trash2 /> Сбросить</Button>
           )}
         </Row>
       </Section>
