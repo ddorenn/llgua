@@ -22,7 +22,7 @@ export function Progress({
       className={cn("h-1.5 w-full overflow-hidden rounded-full bg-elevated", className)}
     >
       <div
-        className={cn("h-full rounded-full bg-accent transition-[width] duration-500 ease-out", barClassName)}
+        className={cn("h-full rounded-full bg-accent transition-[width] duration-700 ease-[cubic-bezier(0.2,0.7,0.2,1)]", barClassName)}
         style={{ width: `${v}%` }}
       />
     </div>

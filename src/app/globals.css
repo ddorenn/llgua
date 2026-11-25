@@ -1,46 +1,126 @@
 @import "tailwindcss";
 
 /*
- * LINGUA design tokens.
- * All colors are defined once here and consumed through Tailwind utilities
- * (bg-bg, bg-surface, bg-card, text-fg, text-muted, border-line, text-accent …).
+ * LINGUA design tokens — the "annotated page" system.
+ * Every colour is a CSS variable that changes with [data-theme]. Tailwind utilities
+ * (bg-bg, bg-card, text-fg, text-muted, border-line, bg-accent, text-accent-soft …)
+ * read these variables, so every component follows the active theme automatically.
+ *
+ * Naming kept for compatibility:
+ *   accent        — fill for primary actions and progress
+ *   accent-soft   — accent *ink*: accent-coloured text/icons, readable on the page
+ *   accent-muted  — accent wash: subtle tinted background for selected/focused states
  */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+  --c-bg: #f1eff3;
+  --c-surface: #f7f6f9;
+  --c-card: #fbfafc;
+  --c-card-hover: #f4f2f7;
+  --c-elevated: #ebe8ef;
+  --c-line: #e2dee7;
+  --c-line-strong: #cfc9d7;
+
+  --c-fg: #23212a;
+  --c-muted: #6b6577;
+  --c-subtle: #8f899b;
+
+  --c-accent: #5e45b8;
+  --c-accent-hover: #5039a6;
+  --c-accent-soft: #5a41b0;
+  --c-accent-muted: #e7e1f6;
+  --c-accent-line: #cbbff0;
+  --c-on-accent: #fbfaff;
+
+  --c-success: #2f7d5b;
+  --c-warning: #9a6a12;
+  --c-danger: #b23a52;
+  --c-info: #33679f;
+
+  --c-chart-baseline: #c9c3d2;
+  --shadow-lift: 0 1px 2px rgb(35 33 42 / 0.05), 0 8px 24px -12px rgb(35 33 42 / 0.12);
+  --shadow-pop: 0 2px 4px rgb(35 33 42 / 0.06), 0 18px 40px -16px rgb(35 33 42 / 0.22);
+  --overlay: rgb(35 33 42 / 0.35);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --c-bg: #18171c;
+  --c-surface: #1f1d24;
+  --c-card: #24222a;
+  --c-card-hover: #2a2731;
+  --c-elevated: #2e2b35;
+  --c-line: #302d37;
+  --c-line-strong: #423e4b;
+
+  --c-fg: #ece9f1;
+  --c-muted: #a59fb0;
+  --c-subtle: #7c7687;
+
+  --c-accent: #8c6ee6;
+  --c-accent-hover: #9a7ff0;
+  --c-accent-soft: #b8a3f5;
+  --c-accent-muted: rgb(140 110 230 / 0.16);
+  --c-accent-line: rgb(184 163 245 / 0.35);
+  --c-on-accent: #ffffff;
+
+  --c-success: #6cc29a;
+  --c-warning: #e0b261;
+  --c-danger: #ec8a9c;
+  --c-info: #8db7ea;
+
+  --c-chart-baseline: #4a4654;
+  --shadow-lift: none;
+  --shadow-pop: 0 18px 40px -16px rgb(0 0 0 / 0.55);
+  --overlay: rgb(10 9 12 / 0.6);
+}
+
+@theme inline {
+  --color-bg: var(--c-bg);
+  --color-surface: var(--c-surface);
+  --color-card: var(--c-card);
+  --color-card-hover: var(--c-card-hover);
+  --color-elevated: var(--c-elevated);
+  --color-line: var(--c-line);
+  --color-line-strong: var(--c-line-strong);
+
+  --color-fg: var(--c-fg);
+  --color-muted: var(--c-muted);
+  --color-subtle: var(--c-subtle);
+
+  --color-accent: var(--c-accent);
+  --color-accent-hover: var(--c-accent-hover);
+  --color-accent-soft: var(--c-accent-soft);
+  --color-accent-muted: var(--c-accent-muted);
+  --color-accent-line: var(--c-accent-line);
+  --color-on-accent: var(--c-on-accent);
+
+  --color-success: var(--c-success);
+  --color-warning: var(--c-warning);
+  --color-danger: var(--c-danger);
+  --color-info: var(--c-info);
+
+  --shadow-lift: var(--shadow-lift);
+  --shadow-pop: var(--shadow-pop);
+
+  --font-sans: var(--font-onest), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-literata), ui-serif, Georgia, serif;
+}
+
 @theme {
-  --color-bg: #0b0a10;
-  --color-surface: #14121c;
-  --color-card: #1b1825;
-  --color-card-hover: #211d2d;
-  --color-elevated: #242031;
-  --color-line: #2a2636;
-  --color-line-strong: #3a3449;
-
-  --color-accent: #8855d9;
-  --color-accent-hover: #9563e3;
-  --color-accent-soft: #b28aff;
-  --color-accent-muted: rgb(136 85 217 / 0.14);
-
-  --color-fg: #ffffff;
-  --color-muted: #a49caf;
-  --color-subtle: #6f6879;
-
-  --color-success: #4fb286;
-  --color-warning: #d9a548;
-  --color-danger: #e0637a;
-  --color-info: #6f9fe0;
-
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
-
   --radius-sm: 6px;
   --radius-md: 8px;
-  --radius-lg: 10px;
-  --radius-xl: 12px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
 
-  --animate-fade-in: fade-in 0.35s ease-out both;
+  --animate-fade-in: fade-in 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   --animate-pulse-dot: pulse-dot 1.4s ease-in-out infinite;
 
   @keyframes fade-in {
-    from { opacity: 0; transform: translateY(4px); }
+    from { opacity: 0; transform: translateY(6px); }
     to { opacity: 1; transform: none; }
   }
   @keyframes pulse-dot {
@@ -49,40 +129,62 @@
   }
 }
 
-:root {
-  color-scheme: dark;
+html {
+  scroll-behavior: smooth;
 }
 
 html,
 body {
-  background: var(--color-bg);
-  color: var(--color-fg);
+  background: var(--c-bg);
+  color: var(--c-fg);
 }
 
 body {
   font-family: var(--font-sans);
-  font-feature-settings: "cv11", "ss01";
+  font-feature-settings: "ss01", "cv05";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Theme change: a short cross-fade of colours (skipped when View Transitions handle it). */
+html.theme-fade,
+html.theme-fade *,
+html.theme-fade *::before,
+html.theme-fade *::after {
+  transition: background-color 280ms ease, border-color 280ms ease, color 200ms ease, fill 200ms ease !important;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 320ms;
+  animation-timing-function: ease;
 }
 
 ::selection {
-  background: rgb(136 85 217 / 0.45);
-  color: #fff;
+  background: var(--c-accent-muted);
+  color: var(--c-fg);
 }
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--color-line-strong) transparent;
+  scrollbar-color: var(--c-line-strong) transparent;
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-accent-soft);
+  outline: 2px solid var(--c-accent);
   outline-offset: 2px;
+  border-radius: 4px;
 }
 
 .tabular {
   font-variant-numeric: tabular-nums;
+}
+
+/* The language being learned is set in the serif. */
+.lang {
+  font-family: var(--font-serif);
+  font-feature-settings: "kern", "liga";
 }
 
 /* iOS/iPadOS Safari zooms into any focused field smaller than 16px — keep fields at 16px on phones and touch screens. */
@@ -100,5 +202,10 @@ body {
   *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
   }
 }

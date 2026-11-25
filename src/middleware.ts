@@ -7,7 +7,8 @@ const PUBLIC_PATHS = ["/login"];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const isPublic = PUBLIC_PATHS.some((p) => pathname === p || pathname.startsWith(`${p}/`));
+  const isLanding = pathname === "/";
+  const isPublic = isLanding || PUBLIC_PATHS.some((p) => pathname === p || pathname.startsWith(`${p}/`));
   const isApi = pathname.startsWith("/api/");
   const mode = getAuthMode();
 
@@ -37,11 +38,12 @@ export async function middleware(request: NextRequest) {
     if (isApi) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
     const url = request.nextUrl.clone();
     url.pathname = "/login";
-    url.search = pathname === "/" ? "" : `?next=${encodeURIComponent(pathname)}`;
+    url.search = `?next=${encodeURIComponent(pathname)}`;
     return NextResponse.redirect(url);
   }
 
-  if (authed && isPublic) {
+  // Signed-in users skip the login page; the landing page stays available to everyone.
+  if (authed && isPublic && !isLanding) {
     const url = request.nextUrl.clone();
     url.pathname = "/dashboard";
     url.search = "";

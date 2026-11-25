@@ -35,7 +35,7 @@ export function Tabs<T extends string>({
     <div
       role="tablist"
       className={cn(
-        "inline-flex max-w-full items-center gap-0.5 overflow-x-auto rounded-md border border-line bg-surface p-0.5",
+        "inline-flex max-w-full items-center gap-0.5 overflow-x-auto rounded-lg bg-elevated/70 p-1",
         className,
       )}
     >
@@ -54,9 +54,9 @@ export function Tabs<T extends string>({
             onKeyDown={(e) => onKey(e, i)}
             onClick={() => onChange(item.value)}
             className={cn(
-              "inline-flex shrink-0 items-center gap-1.5 rounded-[5px] font-medium transition-colors",
+              "inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md font-medium transition-[background-color,color,box-shadow] duration-150",
               size === "sm" ? "h-7 px-2.5 text-[12px]" : "h-8 px-3 text-[13px]",
-              active ? "bg-elevated text-fg shadow-[0_0_0_1px_var(--color-line-strong)]" : "text-muted hover:text-fg",
+              active ? "bg-card text-fg shadow-lift dark:bg-card-hover" : "text-muted hover:text-fg",
             )}
           >
             {item.label}

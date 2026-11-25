@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import { getAuthMode, DEMO_CREDENTIALS } from "@/lib/auth/config";
 import { LoginForm } from "./login-form";
 import { Logo } from "@/components/shared/logo";
+import { ThemeToggle } from "@/components/shared/theme-toggle";
 
-export const metadata: Metadata = { title: "Sign in" };
+export const metadata: Metadata = { title: "Log in" };
 export const dynamic = "force-dynamic";
 
 export default async function LoginPage({ searchParams }: { searchParams: Promise<{ next?: string }> }) {
@@ -11,29 +14,37 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
   const mode = getAuthMode();
 
   return (
-    <main className="relative flex min-h-dvh flex-col">
-      {/* restrained backdrop: one soft accent glow + hairline grid */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute left-1/2 top-[-20%] h-[520px] w-[820px] -translate-x-1/2 rounded-full bg-accent/10 blur-[120px]" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgb(255_255_255/0.025)_1px,transparent_1px),linear-gradient(to_bottom,rgb(255_255_255/0.025)_1px,transparent_1px)] bg-[size:56px_56px] [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_70%)]" />
+    <main className="grid min-h-dvh lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
+      {/* Left: a quiet page from the product */}
+      <aside className="relative hidden flex-col justify-between bg-surface px-12 py-10 lg:flex">
+        <Link href="/" aria-label="Lingua home">
+          <Logo />
+        </Link>
+        <div className="max-w-[420px]">
+          <p className="lang text-[30px] leading-[1.9] text-fg">
+            She <span className="text-muted line-through decoration-accent decoration-2">don&apos;t</span>{" "}
+            <span className="italic text-accent-soft">doesn&apos;t</span> like coffee.
+          </p>
+          <p className="mt-4 border-l-2 border-accent pl-3 text-[14px] leading-relaxed text-muted">
+            Third person singular takes <span className="lang italic text-fg">does</span>. Your tutor explains every correction like
+            this, in English and Russian.
+          </p>
+        </div>
+        <p className="text-[13px] text-subtle">© {new Date().getFullYear()} Lingua</p>
+      </aside>
+
+      {/* Right: the form */}
+      <div className="flex min-h-dvh flex-col px-5 py-6 sm:px-10">
+        <header className="flex items-center justify-between">
+          <Link href="/" className="inline-flex items-center gap-1.5 rounded-md py-2 pr-2 text-[14px] text-muted transition-colors hover:text-fg">
+            <ArrowLeft className="size-4" /> Back to site
+          </Link>
+          <ThemeToggle />
+        </header>
+        <div className="flex flex-1 items-center justify-center py-10">
+          <LoginForm mode={mode} next={next ?? ""} demo={mode === "demo" ? { ...DEMO_CREDENTIALS } : undefined} />
+        </div>
       </div>
-
-      <header className="relative z-10 flex items-center justify-between px-6 py-6 sm:px-10">
-        <Logo />
-        <span className="hidden text-[12px] text-subtle sm:block">Your Personal AI English Tutor</span>
-      </header>
-
-      <div className="relative z-10 flex flex-1 items-center justify-center px-4 pb-16">
-        <LoginForm
-          mode={mode}
-          next={next ?? ""}
-          demo={mode === "demo" ? { ...DEMO_CREDENTIALS } : undefined}
-        />
-      </div>
-
-      <footer className="relative z-10 px-6 pb-6 text-center text-[12px] text-subtle sm:px-10">
-        © {new Date().getFullYear()} LINGUA · Personal edition
-      </footer>
     </main>
   );
 }

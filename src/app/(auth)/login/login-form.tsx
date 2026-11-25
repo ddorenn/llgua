@@ -8,6 +8,7 @@ import type { AuthMode } from "@/lib/auth/config";
 import { Button } from "@/components/ui/button";
 import { FieldError, Input, Label } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { Logo } from "@/components/shared/logo";
 
 const MODE_LABEL: Record<AuthMode, string> = {
   supabase: "Supabase Auth",
@@ -51,19 +52,22 @@ export function LoginForm({
   }
 
   return (
-    <div className="w-full max-w-[400px] animate-fade-in">
-      <div className="mb-8 text-center">
-        <h1 className="text-[28px] font-semibold tracking-[-0.025em]">Welcome back</h1>
-        <p className="mt-2 text-sm text-muted">Sign in to your private learning space.</p>
+    <div className="w-full max-w-[380px] animate-fade-in">
+      <div className="mb-8">
+        <div className="mb-6 lg:hidden">
+          <Logo />
+        </div>
+        <h1 className="text-[32px] font-semibold leading-tight tracking-[-0.035em]">Welcome back</h1>
+        <p className="mt-2 text-[15px] text-muted">Log in to continue where you left off.</p>
       </div>
 
-      <div className="rounded-xl border border-line bg-surface/80 p-6 shadow-[0_24px_80px_-24px_rgb(0_0_0/0.7)] backdrop-blur sm:p-7">
+      <div>
         {mode === "demo" && (
-          <div className="mb-5 rounded-md border border-warning/30 bg-warning/[0.07] p-3 text-[12.5px] leading-relaxed text-warning">
+          <div className="mb-6 rounded-r-md border-l-2 border-warning bg-surface px-4 py-3 text-[13px] leading-relaxed text-warning">
             <div className="flex items-center gap-2 font-medium">
               <FlaskConical className="size-3.5" /> Development demo mode — not secure
             </div>
-            <p className="mt-1 text-warning/80">
+            <p className="mt-1 text-muted">
               No authentication backend is configured. Use the demo account to preview the app. Configure Supabase or a
               private account before deploying (see README).
             </p>
@@ -78,7 +82,7 @@ export function LoginForm({
         )}
 
         {mode === "disabled" && (
-          <div className="mb-5 flex gap-2 rounded-md border border-danger/30 bg-danger/[0.07] p-3 text-[12.5px] text-danger">
+          <div className="mb-6 flex gap-2 rounded-r-md border-l-2 border-danger bg-surface px-4 py-3 text-[13px] text-danger">
             <AlertCircle className="mt-0.5 size-4 shrink-0" />
             Sign-in is not configured on this server. Set Supabase or private-account environment variables.
           </div>
@@ -135,33 +139,33 @@ export function LoginForm({
               type="checkbox"
               name="remember"
               defaultChecked={state.values?.remember ?? true}
-              className="size-4 cursor-pointer appearance-none rounded-[4px] border border-line-strong bg-surface bg-center bg-no-repeat checked:border-accent checked:bg-accent checked:bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22white%22 stroke-width=%223.5%22><path d=%22M5 12l5 5L20 7%22/></svg>')] bg-[length:11px]"
+              className="size-4 cursor-pointer appearance-none rounded-[4px] border border-line-strong bg-card bg-center bg-no-repeat checked:border-accent checked:bg-accent checked:bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22white%22 stroke-width=%223.5%22><path d=%22M5 12l5 5L20 7%22/></svg>')] bg-[length:11px]"
             />
             Keep me signed in for 30 days
           </label>
 
           {state.error && (
-            <div role="alert" className="flex items-start gap-2 rounded-md border border-danger/30 bg-danger/[0.07] px-3 py-2.5 text-[13px] text-danger">
+            <div role="alert" className="flex items-start gap-2 rounded-r-md border-l-2 border-danger bg-surface px-3 py-2.5 text-[13.5px] text-danger">
               <AlertCircle className="mt-0.5 size-4 shrink-0" />
               {state.error}
             </div>
           )}
 
-          <Button type="submit" size="lg" className="w-full" disabled={pending || mode === "disabled"}>
+          <Button type="submit" size="lg" className="mt-2 w-full" disabled={pending || mode === "disabled"}>
             {pending ? (
               <>
-                <Loader2 className="animate-spin" /> Signing in…
+                <Loader2 className="animate-spin" /> Logging in…
               </>
             ) : (
-              "Sign in"
+              "Log in"
             )}
           </Button>
         </form>
       </div>
 
-      <div className="mt-5 flex items-center justify-center gap-4 text-[12px] text-subtle">
+      <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-line pt-5 text-[12.5px] text-subtle">
         <span className="inline-flex items-center gap-1.5">
-          <Lock className="size-3" /> Private workspace · No public registration
+          <Lock className="size-3" /> Accounts are created by invitation
         </span>
         <span className={cn("inline-flex items-center gap-1.5", mode === "demo" && "text-warning/80")}>
           <ShieldCheck className="size-3" /> {MODE_LABEL[mode]}
