@@ -1,0 +1,1255 @@
+{
+ "section": "grammar",
+ "version": 1,
+ "status": "draft",
+ "note": "Original LINGUA items for the pilot bank. Bands follow EGP only as a reference point (docs/curriculum/14 §3); not calibrated yet.",
+ "topics": {
+  "be-present": {
+   "ru": "глагол be: am / is / are",
+   "module": "A1-M1"
+  },
+  "possessive-adj": {
+   "ru": "притяжательные слова my / your / his / her",
+   "module": "A1-M1"
+  },
+  "articles-a-an": {
+   "ru": "артикли a / an",
+   "module": "A1-M2"
+  },
+  "plural-nouns": {
+   "ru": "множественное число существительных",
+   "module": "A1-M2"
+  },
+  "this-these": {
+   "ru": "this / that / these / those",
+   "module": "A1-M2"
+  },
+  "present-simple": {
+   "ru": "present simple: окончание -s",
+   "module": "A1-M3"
+  },
+  "do-questions": {
+   "ru": "вопросы и отрицания с do / does",
+   "module": "A1-M3"
+  },
+  "can-ability": {
+   "ru": "can / can't: умения",
+   "module": "A1-M5"
+  },
+  "present-continuous": {
+   "ru": "present continuous",
+   "module": "A1-M5"
+  },
+  "past-simple": {
+   "ru": "past simple: правильные и неправильные глаголы",
+   "module": "A1-M7"
+  },
+  "comparatives": {
+   "ru": "сравнительная и превосходная степень",
+   "module": "A2-M1"
+  },
+  "going-to": {
+   "ru": "be going to: планы",
+   "module": "A2-M2"
+  },
+  "present-perfect-experience": {
+   "ru": "present perfect: опыт (ever / never)",
+   "module": "A2-M3"
+  },
+  "past-continuous": {
+   "ru": "past continuous",
+   "module": "A2-M5"
+  },
+  "quantifiers": {
+   "ru": "much / many / a lot of / some / any",
+   "module": "A2-M6"
+  },
+  "present-perfect-yet": {
+   "ru": "present perfect: yet / already / just",
+   "module": "A2-M7"
+  },
+  "will-predictions": {
+   "ru": "will: прогнозы и обещания",
+   "module": "A2-M8"
+  },
+  "should-advice": {
+   "ru": "should: советы",
+   "module": "A2-M10"
+  },
+  "relative-who-which": {
+   "ru": "придаточные с who / which / that",
+   "module": "A2-M11"
+  },
+  "first-conditional": {
+   "ru": "условные предложения: first conditional",
+   "module": "A2-M12"
+  },
+  "present-perfect-for-since": {
+   "ru": "present perfect: for / since",
+   "module": "B1-M1"
+  },
+  "used-to": {
+   "ru": "used to",
+   "module": "B1-M2"
+  },
+  "second-conditional": {
+   "ru": "second conditional",
+   "module": "B1-M3"
+  },
+  "passive-basic": {
+   "ru": "пассивный залог: present и past",
+   "module": "B1-M4"
+  },
+  "past-perfect": {
+   "ru": "past perfect",
+   "module": "B1-M5"
+  },
+  "reported-speech": {
+   "ru": "косвенная речь",
+   "module": "B1-M6"
+  },
+  "indirect-questions": {
+   "ru": "косвенные вопросы",
+   "module": "B1-M6"
+  },
+  "gerund-infinitive": {
+   "ru": "герундий и инфинитив после глаголов",
+   "module": "B1-M7"
+  },
+  "modals-deduction-present": {
+   "ru": "предположения: must / might / can't (настоящее)",
+   "module": "B1-M11"
+  },
+  "non-defining-relative": {
+   "ru": "неопределительные придаточные",
+   "module": "B1-M12"
+  },
+  "subject-questions-tags": {
+   "ru": "вопросы к подлежащему и разделительные вопросы",
+   "module": "B2-M1"
+  },
+  "have-something-done": {
+   "ru": "have something done",
+   "module": "B2-M2"
+  },
+  "past-perfect-continuous": {
+   "ru": "past perfect continuous",
+   "module": "B2-M3"
+  },
+  "future-continuous-perfect": {
+   "ru": "future continuous и future perfect",
+   "module": "B2-M5"
+  },
+  "third-conditional": {
+   "ru": "third conditional",
+   "module": "B2-M6"
+  },
+  "wish-if-only": {
+   "ru": "wish / if only",
+   "module": "B2-M7"
+  },
+  "mixed-conditionals": {
+   "ru": "смешанные условные предложения",
+   "module": "B2-M7"
+  },
+  "used-to-be-get": {
+   "ru": "be used to / get used to",
+   "module": "B2-M8"
+  },
+  "modals-deduction-past": {
+   "ru": "предположения о прошлом: must have / might have / can't have",
+   "module": "B2-M9"
+  },
+  "passive-reporting": {
+   "ru": "пассивные конструкции it is said / is believed to",
+   "module": "B2-M10"
+  }
+ },
+ "items": [
+  {
+   "id": "g-pa1-01",
+   "band": "Pre-A1",
+   "block": 1,
+   "type": "choice",
+   "topic": "be-present",
+   "prompt": "I ___ from Kazan.",
+   "options": [
+    "am",
+    "is",
+    "are",
+    "be"
+   ],
+   "answer": 0
+  },
+  {
+   "id": "g-pa1-02",
+   "band": "Pre-A1",
+   "block": 1,
+   "type": "input",
+   "topic": "be-present",
+   "prompt": "My sisters ___ (be) at home.",
+   "answer": [
+    "are",
+    "'re"
+   ]
+  },
+  {
+   "id": "g-pa1-03",
+   "band": "Pre-A1",
+   "block": 1,
+   "type": "choice",
+   "topic": "possessive-adj",
+   "prompt": "This is Anna. ___ bag is red.",
+   "options": [
+    "She",
+    "Her",
+    "His",
+    "Hers"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-pa1-04",
+   "band": "Pre-A1",
+   "block": 1,
+   "type": "input",
+   "topic": "possessive-adj",
+   "prompt": "I have a brother. ___ name is Oleg. (его)",
+   "answer": [
+    "his"
+   ]
+  },
+  {
+   "id": "g-pa1-05",
+   "band": "Pre-A1",
+   "block": 1,
+   "type": "choice",
+   "topic": "articles-a-an",
+   "prompt": "She has ___ orange cat.",
+   "options": [
+    "a",
+    "an",
+    "the two",
+    "—"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-pa1-06",
+   "band": "Pre-A1",
+   "block": 2,
+   "type": "choice",
+   "topic": "articles-a-an",
+   "prompt": "My dad is ___ driver.",
+   "options": [
+    "an",
+    "a",
+    "—",
+    "two"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-pa1-07",
+   "band": "Pre-A1",
+   "block": 2,
+   "type": "choice",
+   "topic": "plural-nouns",
+   "prompt": "I have two ___.",
+   "options": [
+    "box",
+    "boxs",
+    "boxes",
+    "boxies"
+   ],
+   "answer": 2
+  },
+  {
+   "id": "g-pa1-08",
+   "band": "Pre-A1",
+   "block": 2,
+   "type": "input",
+   "topic": "plural-nouns",
+   "prompt": "One child, three ___.",
+   "answer": [
+    "children"
+   ]
+  },
+  {
+   "id": "g-pa1-09",
+   "band": "Pre-A1",
+   "block": 2,
+   "type": "choice",
+   "topic": "this-these",
+   "prompt": "___ are my keys, here on the table.",
+   "options": [
+    "This",
+    "That",
+    "These",
+    "It"
+   ],
+   "answer": 2
+  },
+  {
+   "id": "g-pa1-10",
+   "band": "Pre-A1",
+   "block": 2,
+   "type": "input",
+   "topic": "this-these",
+   "prompt": "Look at ___ bird over there! (тот)",
+   "answer": [
+    "that"
+   ]
+  },
+  {
+   "id": "g-a1-01",
+   "band": "A1",
+   "block": 1,
+   "type": "choice",
+   "topic": "present-simple",
+   "prompt": "My brother ___ in a bank.",
+   "options": [
+    "work",
+    "works",
+    "working",
+    "is work"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-a1-02",
+   "band": "A1",
+   "block": 1,
+   "type": "input",
+   "topic": "present-simple",
+   "prompt": "She ___ (watch) TV every evening.",
+   "answer": [
+    "watches"
+   ]
+  },
+  {
+   "id": "g-a1-03",
+   "band": "A1",
+   "block": 1,
+   "type": "choice",
+   "topic": "do-questions",
+   "prompt": "___ your parents live in Moscow?",
+   "options": [
+    "Are",
+    "Does",
+    "Do",
+    "Is"
+   ],
+   "answer": 2
+  },
+  {
+   "id": "g-a1-04",
+   "band": "A1",
+   "block": 1,
+   "type": "input",
+   "topic": "do-questions",
+   "prompt": "Tom ___ (not / like) coffee. He prefers tea.",
+   "answer": [
+    "doesn't like",
+    "does not like"
+   ]
+  },
+  {
+   "id": "g-a1-05",
+   "band": "A1",
+   "block": 1,
+   "type": "choice",
+   "topic": "can-ability",
+   "prompt": "I ___ swim, but I can ride a bike.",
+   "options": [
+    "don't",
+    "can't",
+    "not can",
+    "am not"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-a1-06",
+   "band": "A1",
+   "block": 2,
+   "type": "choice",
+   "topic": "can-ability",
+   "prompt": "___ you speak French?",
+   "options": [
+    "Do can",
+    "Are",
+    "Can",
+    "Does"
+   ],
+   "answer": 2
+  },
+  {
+   "id": "g-a1-07",
+   "band": "A1",
+   "block": 2,
+   "type": "choice",
+   "topic": "present-continuous",
+   "prompt": "Shh! The baby ___.",
+   "options": [
+    "sleeps",
+    "is sleeping",
+    "sleep",
+    "are sleeping"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-a1-08",
+   "band": "A1",
+   "block": 2,
+   "type": "input",
+   "topic": "present-continuous",
+   "prompt": "Where are you? — I ___ (wait) at the bus stop.",
+   "answer": [
+    "am waiting",
+    "'m waiting"
+   ]
+  },
+  {
+   "id": "g-a1-09",
+   "band": "A1",
+   "block": 2,
+   "type": "choice",
+   "topic": "past-simple",
+   "prompt": "We ___ to the cinema last Saturday.",
+   "options": [
+    "go",
+    "goes",
+    "went",
+    "gone"
+   ],
+   "answer": 2
+  },
+  {
+   "id": "g-a1-10",
+   "band": "A1",
+   "block": 2,
+   "type": "input",
+   "topic": "past-simple",
+   "prompt": "Yesterday I ___ (buy) a new phone.",
+   "answer": [
+    "bought"
+   ]
+  },
+  {
+   "id": "g-a2-01",
+   "band": "A2",
+   "block": 1,
+   "type": "choice",
+   "topic": "comparatives",
+   "prompt": "The train is ___ than the bus.",
+   "options": [
+    "fast",
+    "faster",
+    "fastest",
+    "more fast"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-a2-02",
+   "band": "A2",
+   "block": 1,
+   "type": "input",
+   "topic": "comparatives",
+   "prompt": "It was the ___ (good) day of my holiday.",
+   "answer": [
+    "best"
+   ]
+  },
+  {
+   "id": "g-a2-03",
+   "band": "A2",
+   "block": 1,
+   "type": "choice",
+   "topic": "going-to",
+   "prompt": "Look at the sky. It ___ rain.",
+   "options": [
+    "is going to",
+    "goes to",
+    "going to",
+    "is go to"
+   ],
+   "answer": 0
+  },
+  {
+   "id": "g-a2-04",
+   "band": "A2",
+   "block": 1,
+   "type": "input",
+   "topic": "going-to",
+   "prompt": "We have the tickets. We ___ (visit) Rome in May. (планы)",
+   "answer": [
+    "are going to visit",
+    "'re going to visit"
+   ]
+  },
+  {
+   "id": "g-a2-05",
+   "band": "A2",
+   "block": 1,
+   "type": "choice",
+   "topic": "present-perfect-experience",
+   "prompt": "Have you ever ___ sushi?",
+   "options": [
+    "eat",
+    "ate",
+    "eaten",
+    "eating"
+   ],
+   "answer": 2
+  },
+  {
+   "id": "g-a2-06",
+   "band": "A2",
+   "block": 2,
+   "type": "choice",
+   "topic": "present-perfect-experience",
+   "prompt": "I ___ to Japan. I'd love to go one day.",
+   "options": [
+    "have never been",
+    "never was",
+    "haven't went",
+    "am never"
+   ],
+   "answer": 0
+  },
+  {
+   "id": "g-a2-07",
+   "band": "A2",
+   "block": 2,
+   "type": "choice",
+   "topic": "past-continuous",
+   "prompt": "I ___ dinner when the phone rang.",
+   "options": [
+    "cooked",
+    "was cooking",
+    "am cooking",
+    "have cooked"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-a2-08",
+   "band": "A2",
+   "block": 2,
+   "type": "input",
+   "topic": "past-continuous",
+   "prompt": "At 8 pm yesterday they ___ (play) football.",
+   "answer": [
+    "were playing"
+   ]
+  },
+  {
+   "id": "g-a2-09",
+   "band": "A2",
+   "block": 2,
+   "type": "choice",
+   "topic": "quantifiers",
+   "prompt": "How ___ money do you need?",
+   "options": [
+    "many",
+    "much",
+    "a lot",
+    "few"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-a2-10",
+   "band": "A2",
+   "block": 2,
+   "type": "input",
+   "topic": "quantifiers",
+   "prompt": "There aren't ___ eggs in the fridge. Let's buy some.",
+   "answer": [
+    "any"
+   ]
+  },
+  {
+   "id": "g-a2p-01",
+   "band": "A2+",
+   "block": 1,
+   "type": "choice",
+   "topic": "present-perfect-yet",
+   "prompt": "Is Mark here? — No, he hasn't arrived ___.",
+   "options": [
+    "already",
+    "yet",
+    "just",
+    "still"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-a2p-02",
+   "band": "A2+",
+   "block": 1,
+   "type": "input",
+   "topic": "present-perfect-yet",
+   "prompt": "Where's Ann? — She ___ (just / go) out.",
+   "answer": [
+    "has just gone",
+    "'s just gone"
+   ]
+  },
+  {
+   "id": "g-a2p-03",
+   "band": "A2+",
+   "block": 1,
+   "type": "choice",
+   "topic": "will-predictions",
+   "prompt": "Don't worry, I ___ tell anyone your secret.",
+   "options": [
+    "won't",
+    "don't",
+    "am not going",
+    "not will"
+   ],
+   "answer": 0
+  },
+  {
+   "id": "g-a2p-04",
+   "band": "A2+",
+   "block": 1,
+   "type": "input",
+   "topic": "will-predictions",
+   "prompt": "I think robots ___ (do) most housework in the future.",
+   "answer": [
+    "will do",
+    "'ll do"
+   ]
+  },
+  {
+   "id": "g-a2p-05",
+   "band": "A2+",
+   "block": 1,
+   "type": "choice",
+   "topic": "should-advice",
+   "prompt": "You look tired. You ___ go to bed earlier.",
+   "options": [
+    "should",
+    "should to",
+    "would",
+    "must to"
+   ],
+   "answer": 0
+  },
+  {
+   "id": "g-a2p-06",
+   "band": "A2+",
+   "block": 2,
+   "type": "input",
+   "topic": "should-advice",
+   "prompt": "It's very cold. You ___ (not / go) out without a coat. (совет)",
+   "answer": [
+    "shouldn't go",
+    "should not go"
+   ]
+  },
+  {
+   "id": "g-a2p-07",
+   "band": "A2+",
+   "block": 2,
+   "type": "choice",
+   "topic": "relative-who-which",
+   "prompt": "That's the woman ___ helped me at the station.",
+   "options": [
+    "which",
+    "who",
+    "where",
+    "what"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-a2p-08",
+   "band": "A2+",
+   "block": 2,
+   "type": "choice",
+   "topic": "relative-who-which",
+   "prompt": "I lost the umbrella ___ you gave me.",
+   "options": [
+    "who",
+    "where",
+    "that",
+    "what"
+   ],
+   "answer": 2
+  },
+  {
+   "id": "g-a2p-09",
+   "band": "A2+",
+   "block": 2,
+   "type": "choice",
+   "topic": "first-conditional",
+   "prompt": "If it ___ tomorrow, we'll stay at home.",
+   "options": [
+    "will rain",
+    "rains",
+    "rained",
+    "is raining to"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-a2p-10",
+   "band": "A2+",
+   "block": 2,
+   "type": "input",
+   "topic": "first-conditional",
+   "prompt": "If you study every day, you ___ (pass) the exam.",
+   "answer": [
+    "will pass",
+    "'ll pass"
+   ]
+  },
+  {
+   "id": "g-b1-01",
+   "band": "B1",
+   "block": 1,
+   "type": "choice",
+   "topic": "present-perfect-for-since",
+   "prompt": "We've lived in this flat ___ 2019.",
+   "options": [
+    "for",
+    "since",
+    "from",
+    "during"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-b1-02",
+   "band": "B1",
+   "block": 1,
+   "type": "input",
+   "topic": "present-perfect-for-since",
+   "prompt": "I ___ (know) Lena for ten years. We met at school.",
+   "answer": [
+    "have known",
+    "'ve known"
+   ]
+  },
+  {
+   "id": "g-b1-03",
+   "band": "B1",
+   "block": 1,
+   "type": "choice",
+   "topic": "used-to",
+   "prompt": "When I was a child, I ___ hate vegetables.",
+   "options": [
+    "use to",
+    "used to",
+    "was used to",
+    "usually"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-b1-04",
+   "band": "B1",
+   "block": 1,
+   "type": "input",
+   "topic": "used-to",
+   "prompt": "___ you use to play any sport at school? (вспомогательный глагол)",
+   "answer": [
+    "did"
+   ]
+  },
+  {
+   "id": "g-b1-05",
+   "band": "B1",
+   "block": 1,
+   "type": "choice",
+   "topic": "second-conditional",
+   "prompt": "If I ___ more free time, I would learn the guitar.",
+   "options": [
+    "have",
+    "had",
+    "would have",
+    "will have"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-b1-06",
+   "band": "B1",
+   "block": 2,
+   "type": "input",
+   "topic": "second-conditional",
+   "prompt": "If you found a wallet in the street, what ___ you do?",
+   "answer": [
+    "would"
+   ]
+  },
+  {
+   "id": "g-b1-07",
+   "band": "B1",
+   "block": 2,
+   "type": "choice",
+   "topic": "passive-basic",
+   "prompt": "This bridge ___ in 1890.",
+   "options": [
+    "built",
+    "was built",
+    "is building",
+    "has build"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-b1-08",
+   "band": "B1",
+   "block": 2,
+   "type": "input",
+   "topic": "passive-basic",
+   "prompt": "English ___ (speak) in many countries.",
+   "answer": [
+    "is spoken"
+   ]
+  },
+  {
+   "id": "g-b1-09",
+   "band": "B1",
+   "block": 2,
+   "type": "choice",
+   "topic": "past-perfect",
+   "prompt": "When we got to the station, the train ___.",
+   "options": [
+    "already left",
+    "has already left",
+    "had already left",
+    "was already leave"
+   ],
+   "answer": 2
+  },
+  {
+   "id": "g-b1-10",
+   "band": "B1",
+   "block": 2,
+   "type": "choice",
+   "topic": "past-perfect",
+   "prompt": "She was nervous because she ___ on a plane before.",
+   "options": [
+    "never flew",
+    "had never flown",
+    "has never flown",
+    "never had fly"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-b1p-01",
+   "band": "B1+",
+   "block": 1,
+   "type": "choice",
+   "topic": "reported-speech",
+   "prompt": "\"I'm tired,\" she said. → She said that she ___ tired.",
+   "options": [
+    "is",
+    "was",
+    "has been",
+    "be"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-b1p-02",
+   "band": "B1+",
+   "block": 1,
+   "type": "input",
+   "topic": "reported-speech",
+   "prompt": "\"We will call you.\" → They promised they ___ call me.",
+   "answer": [
+    "would"
+   ]
+  },
+  {
+   "id": "g-b1p-03",
+   "band": "B1+",
+   "block": 1,
+   "type": "choice",
+   "topic": "indirect-questions",
+   "prompt": "Could you tell me where ___?",
+   "options": [
+    "is the museum",
+    "the museum is",
+    "does the museum",
+    "the museum does be"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-b1p-04",
+   "band": "B1+",
+   "block": 1,
+   "type": "choice",
+   "topic": "indirect-questions",
+   "prompt": "I wonder ___ he will come tonight.",
+   "options": [
+    "that",
+    "if",
+    "what",
+    "does"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-b1p-05",
+   "band": "B1+",
+   "block": 1,
+   "type": "input",
+   "topic": "gerund-infinitive",
+   "prompt": "I really enjoy ___ (walk) in the rain.",
+   "answer": [
+    "walking"
+   ]
+  },
+  {
+   "id": "g-b1p-06",
+   "band": "B1+",
+   "block": 2,
+   "type": "choice",
+   "topic": "gerund-infinitive",
+   "prompt": "They decided ___ a bigger flat.",
+   "options": [
+    "renting",
+    "to rent",
+    "rent",
+    "rented"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-b1p-07",
+   "band": "B1+",
+   "block": 2,
+   "type": "choice",
+   "topic": "modals-deduction-present",
+   "prompt": "The lights are off. They ___ be at home.",
+   "options": [
+    "can't",
+    "mustn't",
+    "shouldn't",
+    "don't have to"
+   ],
+   "answer": 0
+  },
+  {
+   "id": "g-b1p-08",
+   "band": "B1+",
+   "block": 2,
+   "type": "input",
+   "topic": "modals-deduction-present",
+   "prompt": "She's been working all day. She ___ be exhausted. (я уверен(а))",
+   "answer": [
+    "must"
+   ]
+  },
+  {
+   "id": "g-b1p-09",
+   "band": "B1+",
+   "block": 2,
+   "type": "choice",
+   "topic": "non-defining-relative",
+   "prompt": "My uncle, ___ lives in Sochi, is a fisherman.",
+   "options": [
+    "that",
+    "who",
+    "which",
+    "what"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-b1p-10",
+   "band": "B1+",
+   "block": 2,
+   "type": "input",
+   "topic": "non-defining-relative",
+   "prompt": "The museum, ___ opened last year, is already very popular.",
+   "answer": [
+    "which"
+   ]
+  },
+  {
+   "id": "g-b2-01",
+   "band": "B2",
+   "block": 1,
+   "type": "choice",
+   "topic": "subject-questions-tags",
+   "prompt": "Who ___ the window? It's freezing in here.",
+   "options": [
+    "did open",
+    "opened",
+    "did opened",
+    "has open"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-b2-02",
+   "band": "B2",
+   "block": 1,
+   "type": "input",
+   "topic": "subject-questions-tags",
+   "prompt": "You haven't seen my keys, ___ you?",
+   "answer": [
+    "have"
+   ]
+  },
+  {
+   "id": "g-b2-03",
+   "band": "B2",
+   "block": 1,
+   "type": "choice",
+   "topic": "have-something-done",
+   "prompt": "I can't drive today — I'm ___ my car repaired.",
+   "options": [
+    "having",
+    "doing",
+    "making",
+    "getting to"
+   ],
+   "answer": 0
+  },
+  {
+   "id": "g-b2-04",
+   "band": "B2",
+   "block": 1,
+   "type": "input",
+   "topic": "have-something-done",
+   "prompt": "My jacket was dirty, so I had it ___ (clean) at the dry cleaner's.",
+   "answer": [
+    "cleaned"
+   ]
+  },
+  {
+   "id": "g-b2-05",
+   "band": "B2",
+   "block": 1,
+   "type": "choice",
+   "topic": "past-perfect-continuous",
+   "prompt": "His eyes were red because he ___ for hours.",
+   "options": [
+    "cried",
+    "has been crying",
+    "had been crying",
+    "was cry"
+   ],
+   "answer": 2
+  },
+  {
+   "id": "g-b2-06",
+   "band": "B2",
+   "block": 2,
+   "type": "input",
+   "topic": "past-perfect-continuous",
+   "prompt": "We ___ (wait) for an hour when the bus finally came.",
+   "answer": [
+    "had been waiting"
+   ]
+  },
+  {
+   "id": "g-b2-07",
+   "band": "B2",
+   "block": 2,
+   "type": "choice",
+   "topic": "future-continuous-perfect",
+   "prompt": "By the end of June, I ___ all my exams.",
+   "options": [
+    "will finish",
+    "will have finished",
+    "am finishing",
+    "finish"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-b2-08",
+   "band": "B2",
+   "block": 2,
+   "type": "choice",
+   "topic": "future-continuous-perfect",
+   "prompt": "Don't call at nine — we ___ dinner then.",
+   "options": [
+    "will be having",
+    "will have had",
+    "have",
+    "had"
+   ],
+   "answer": 0
+  },
+  {
+   "id": "g-b2-09",
+   "band": "B2",
+   "block": 2,
+   "type": "choice",
+   "topic": "third-conditional",
+   "prompt": "If we had left earlier, we ___ the flight.",
+   "options": [
+    "wouldn't miss",
+    "hadn't missed",
+    "wouldn't have missed",
+    "didn't miss"
+   ],
+   "answer": 2
+  },
+  {
+   "id": "g-b2-10",
+   "band": "B2",
+   "block": 2,
+   "type": "input",
+   "topic": "third-conditional",
+   "prompt": "If she ___ (know) about the party, she would have come.",
+   "answer": [
+    "had known",
+    "'d known"
+   ]
+  },
+  {
+   "id": "g-b2p-01",
+   "band": "B2+",
+   "block": 1,
+   "type": "choice",
+   "topic": "wish-if-only",
+   "prompt": "I wish I ___ so rude to her yesterday.",
+   "options": [
+    "wasn't",
+    "hadn't been",
+    "wouldn't be",
+    "haven't been"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-b2p-02",
+   "band": "B2+",
+   "block": 1,
+   "type": "input",
+   "topic": "wish-if-only",
+   "prompt": "If only the neighbours ___ (stop) playing loud music every night!",
+   "answer": [
+    "would stop"
+   ]
+  },
+  {
+   "id": "g-b2p-03",
+   "band": "B2+",
+   "block": 1,
+   "type": "choice",
+   "topic": "mixed-conditionals",
+   "prompt": "If I had taken that job in Canada, I ___ in Toronto now.",
+   "options": [
+    "would live",
+    "would be living",
+    "would have lived",
+    "will live"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-b2p-04",
+   "band": "B2+",
+   "block": 1,
+   "type": "choice",
+   "topic": "mixed-conditionals",
+   "prompt": "If he weren't so stubborn, he ___ the argument last night.",
+   "options": [
+    "wouldn't start",
+    "wouldn't have started",
+    "didn't start",
+    "won't start"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-b2p-05",
+   "band": "B2+",
+   "block": 1,
+   "type": "input",
+   "topic": "used-to-be-get",
+   "prompt": "After a year in Norway, I've finally got used to ___ (drive) in snow.",
+   "answer": [
+    "driving"
+   ]
+  },
+  {
+   "id": "g-b2p-06",
+   "band": "B2+",
+   "block": 2,
+   "type": "choice",
+   "topic": "used-to-be-get",
+   "prompt": "She's a nurse, so she ___ working night shifts.",
+   "options": [
+    "used to",
+    "is used to",
+    "uses to",
+    "is use to"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-b2p-07",
+   "band": "B2+",
+   "block": 2,
+   "type": "choice",
+   "topic": "modals-deduction-past",
+   "prompt": "The ground is wet. It ___ during the night.",
+   "options": [
+    "must rain",
+    "must have rained",
+    "can't have rained",
+    "should rain"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-b2p-08",
+   "band": "B2+",
+   "block": 2,
+   "type": "input",
+   "topic": "modals-deduction-past",
+   "prompt": "He ___ (not / steal) the money — he was with me all evening. (невозможно)",
+   "answer": [
+    "can't have stolen",
+    "cannot have stolen",
+    "couldn't have stolen",
+    "could not have stolen"
+   ]
+  },
+  {
+   "id": "g-b2p-09",
+   "band": "B2+",
+   "block": 2,
+   "type": "choice",
+   "topic": "passive-reporting",
+   "prompt": "The castle ___ to be over 800 years old.",
+   "options": [
+    "says",
+    "is said",
+    "is saying",
+    "said"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "g-b2p-10",
+   "band": "B2+",
+   "block": 2,
+   "type": "input",
+   "topic": "passive-reporting",
+   "prompt": "It ___ (believe) that the painting was stolen in 1965.",
+   "answer": [
+    "is believed"
+   ]
+  }
+ ]
+}

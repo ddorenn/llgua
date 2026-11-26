@@ -13,6 +13,7 @@ import { cn, formatDate, pct, plural } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { EmptyState, SectionTitle, SKILL_LABEL, StatCard } from "@/components/shared/page";
 import { SampleBadge, SamplePreviewBanner } from "@/components/shared/sample";
+import { PlacementDashboardCard } from "@/components/placement/dashboard-card";
 
 function greeting(t: ReturnType<typeof useT>) {
   const h = new Date().getHours();
@@ -140,6 +141,8 @@ export function DashboardView() {
           {sample && <SampleBadge className="ml-2 align-middle" />}
         </p>
       </header>
+
+      <PlacementDashboardCard />
 
       {/* Continue + today */}
       <section className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:gap-12">

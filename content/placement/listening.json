@@ -1,0 +1,123 @@
+{
+  "section": "listening",
+  "version": 1,
+  "status": "draft",
+  "note": "Original LINGUA scripts. Pilot: voiced on the learner's device by the browser's speech synthesis (no external service, no recordings yet). Synthetic voices differ from natural speech — results are marked as pilot. Replace with LINGUA studio recordings before stage 1.",
+  "testlets": [
+    {
+      "id": "l-pa1", "band": "Pre-A1", "title": "At a café", "rate": 0.75, "maxPlays": 2,
+      "lines": [
+        { "speaker": "A", "text": "Hello. Can I help you?" },
+        { "speaker": "B", "text": "Yes, please. A coffee and a cheese sandwich." },
+        { "speaker": "A", "text": "Big or small coffee?" },
+        { "speaker": "B", "text": "Small, please." },
+        { "speaker": "A", "text": "That's four pounds." }
+      ],
+      "questions": [
+        { "id": "l-pa1-1", "kind": "detail", "prompt": "Что заказывает посетитель из напитков?", "options": ["tea", "coffee", "juice", "water"], "answer": 1 },
+        { "id": "l-pa1-2", "kind": "detail", "prompt": "Какой сэндвич?", "options": ["chicken", "egg", "cheese", "fish"], "answer": 2 },
+        { "id": "l-pa1-3", "kind": "detail", "prompt": "Какой размер кофе?", "options": ["big", "small", "medium", "two coffees"], "answer": 1 },
+        { "id": "l-pa1-4", "kind": "detail", "prompt": "Сколько стоит заказ?", "options": ["two pounds", "three pounds", "four pounds", "five pounds"], "answer": 2 }
+      ]
+    },
+    {
+      "id": "l-a1", "band": "A1", "title": "Phone message", "rate": 0.8, "maxPlays": 2,
+      "lines": [
+        { "speaker": "A", "text": "Hi Kate, it's Paul. I'm sorry, I can't come to the gym tonight. I have to work late. Can we go on Thursday instead? At six o'clock, after work? And can you bring my blue bag? I left it in your car on Sunday. Thanks! Bye." }
+      ],
+      "questions": [
+        { "id": "l-a1-1", "kind": "detail", "prompt": "Почему Пол не придёт сегодня?", "options": ["He is ill.", "He has to work late.", "He is on holiday.", "His car is broken."], "answer": 1 },
+        { "id": "l-a1-2", "kind": "detail", "prompt": "В какой день он предлагает встретиться?", "options": ["Tuesday", "Wednesday", "Thursday", "Sunday"], "answer": 2 },
+        { "id": "l-a1-3", "kind": "detail", "prompt": "Во сколько?", "options": ["at five", "at six", "at seven", "at eight"], "answer": 1 },
+        { "id": "l-a1-4", "kind": "detail", "prompt": "Где сумка Пола?", "options": ["at the gym", "at work", "in Kate's car", "at home"], "answer": 2 }
+      ]
+    },
+    {
+      "id": "l-a2", "band": "A2", "title": "Planning the weekend", "rate": 0.85, "maxPlays": 2,
+      "lines": [
+        { "speaker": "A", "text": "Are you doing anything on Saturday? I'm going to visit the new science museum." },
+        { "speaker": "B", "text": "Oh, I'd love to, but I'm helping my brother move house in the morning." },
+        { "speaker": "A", "text": "What about the afternoon? The museum is open until eight." },
+        { "speaker": "B", "text": "That could work. I'll probably be tired, though. Shall we meet at four?" },
+        { "speaker": "A", "text": "Four is fine. Let's meet outside the main entrance. And tickets are cheaper online, so I'll buy them tonight." }
+      ],
+      "questions": [
+        { "id": "l-a2-1", "kind": "detail", "prompt": "What is the second speaker doing on Saturday morning?", "options": ["working", "helping his brother move", "visiting a museum", "sleeping"], "answer": 1 },
+        { "id": "l-a2-2", "kind": "detail", "prompt": "When does the museum close?", "options": ["at four", "at six", "at eight", "at ten"], "answer": 2 },
+        { "id": "l-a2-3", "kind": "detail", "prompt": "Where will they meet?", "options": ["at a café", "at the main entrance", "at the station", "at his brother's house"], "answer": 1 },
+        { "id": "l-a2-4", "kind": "detail", "prompt": "Why will the first speaker buy the tickets online?", "options": ["They are cheaper.", "There are no tickets at the museum.", "It is faster.", "The museum is closed."], "answer": 0 }
+      ]
+    },
+    {
+      "id": "l-a2p", "band": "A2+", "title": "Radio announcement", "rate": 0.9, "maxPlays": 2,
+      "lines": [
+        { "speaker": "A", "text": "And now some local news. This weekend the city library is holding its first book festival. On Saturday there will be readings by local authors from ten until one, and in the afternoon children can join a free drawing workshop — but places are limited, so parents should book in advance on the library website. On Sunday the main event is a second-hand book sale. All the money will go towards new computers for the reading room. Please note that the car park will be closed both days because of building work, so visitors are advised to come by bus or bike." }
+      ],
+      "questions": [
+        { "id": "l-a2p-1", "kind": "detail", "prompt": "What happens on Saturday morning?", "options": ["a book sale", "readings by local authors", "a drawing workshop", "a computer class"], "answer": 1 },
+        { "id": "l-a2p-2", "kind": "detail", "prompt": "What should parents do for the workshop?", "options": ["pay at the door", "book in advance online", "bring their own paper", "arrive early on Sunday"], "answer": 1 },
+        { "id": "l-a2p-3", "kind": "detail", "prompt": "What will the money from the sale pay for?", "options": ["new books", "computers for the reading room", "a new car park", "the authors"], "answer": 1 },
+        { "id": "l-a2p-4", "kind": "inference", "prompt": "Why should visitors not come by car?", "options": ["The roads are closed for the festival.", "The car park is closed for building work.", "Parking is expensive.", "The library is in the city centre."], "answer": 1 }
+      ]
+    },
+    {
+      "id": "l-b1", "band": "B1", "title": "A complaint at the hotel", "rate": 0.95, "maxPlays": 2,
+      "lines": [
+        { "speaker": "A", "text": "Good evening. How can I help?" },
+        { "speaker": "B", "text": "Hi. I'm in room 214. I booked a quiet room at the back of the hotel, but my window faces the main road and the traffic is really loud." },
+        { "speaker": "A", "text": "I'm very sorry about that. Unfortunately, all the rooms at the back are taken tonight." },
+        { "speaker": "B", "text": "I see. I have an important meeting early tomorrow, so I really need to sleep." },
+        { "speaker": "A", "text": "I understand. Tonight I can give you earplugs and move you to a room on the top floor, which is much quieter. And tomorrow a room at the back will be free, so you can move there for the rest of your stay." },
+        { "speaker": "B", "text": "The top floor sounds fine for tonight. Thank you." }
+      ],
+      "questions": [
+        { "id": "l-b1-1", "kind": "main", "prompt": "What is the guest's problem?", "options": ["The room is dirty.", "The room is too noisy.", "The booking is lost.", "The room is too small."], "answer": 1 },
+        { "id": "l-b1-2", "kind": "detail", "prompt": "Why is sleep especially important for the guest?", "options": ["She is ill.", "She has an early meeting.", "She has just arrived from abroad.", "She has a long drive."], "answer": 1 },
+        { "id": "l-b1-3", "kind": "detail", "prompt": "What does the receptionist offer for tonight?", "options": ["a refund", "a free dinner", "a top-floor room and earplugs", "a room at the back"], "answer": 2 },
+        { "id": "l-b1-4", "kind": "inference", "prompt": "How does the guest finally react?", "options": ["She leaves the hotel.", "She accepts the offer.", "She asks for the manager.", "She refuses to move."], "answer": 1 }
+      ]
+    },
+    {
+      "id": "l-b1p", "band": "B1+", "title": "Podcast: changing careers", "rate": 1.0, "maxPlays": 2,
+      "lines": [
+        { "speaker": "A", "text": "Today's guest left a well-paid job in banking at forty to become a carpenter. Irina, what made you do it?" },
+        { "speaker": "B", "text": "Honestly, it wasn't one big moment. I'd been feeling for years that my work didn't produce anything I could touch. Then my grandfather died and left me his tools, and I started making small things at weekends — a shelf, a stool. I realised I was looking forward to Saturday all week." },
+        { "speaker": "A", "text": "Was it a difficult decision financially?" },
+        { "speaker": "B", "text": "Very. I earn about half of what I used to. We sold our second car and stopped eating out so often. But I wouldn't say I regret it. The hardest part, actually, wasn't the money — it was being a beginner again, having a twenty-year-old explain things to me." }
+      ],
+      "questions": [
+        { "id": "l-b1p-1", "kind": "detail", "prompt": "What did Irina do before?", "options": ["She was a teacher.", "She worked in banking.", "She sold cars.", "She was a carpenter."], "answer": 1 },
+        { "id": "l-b1p-2", "kind": "inference", "prompt": "Why did she start doing woodwork?", "options": ["Her bank closed.", "She inherited her grandfather's tools.", "A friend offered her a job.", "She needed furniture."], "answer": 1 },
+        { "id": "l-b1p-3", "kind": "detail", "prompt": "How has her income changed?", "options": ["It is the same.", "It has doubled.", "It is about half.", "She earns nothing."], "answer": 2 },
+        { "id": "l-b1p-4", "kind": "attitude", "prompt": "What did she find hardest?", "options": ["earning less money", "selling the car", "being a beginner again", "working at weekends"], "answer": 2 }
+      ]
+    },
+    {
+      "id": "l-b2", "band": "B2", "title": "Lecture extract: urban trees", "rate": 1.0, "maxPlays": 1,
+      "lines": [
+        { "speaker": "A", "text": "When cities plan new trees, the conversation usually focuses on appearance. But the more interesting argument is about temperature. On a summer afternoon, a street with a full canopy of trees can be several degrees cooler than a similar street without them, partly because of shade and partly because trees release water through their leaves. Now, there's a catch. Trees planted today will take ten to twenty years to provide that benefit, and many young trees die in their first few summers because nobody waters them. So some cities have started paying residents a small amount to look after the tree outside their home. Early results are encouraging, although it's too soon to say whether people will keep it up once the novelty wears off." }
+      ],
+      "questions": [
+        { "id": "l-b2-1", "kind": "main", "prompt": "What is the speaker's main point?", "options": ["Trees make streets more beautiful.", "Trees can significantly cool streets.", "Cities should stop planting trees.", "Water is too expensive for trees."], "answer": 1 },
+        { "id": "l-b2-2", "kind": "detail", "prompt": "What problem with young trees is mentioned?", "options": ["They are too expensive.", "Many die because they are not watered.", "They block the light.", "They damage roads."], "answer": 1 },
+        { "id": "l-b2-3", "kind": "detail", "prompt": "What have some cities started doing?", "options": ["planting older trees", "paying residents to care for trees", "banning cars from tree-lined streets", "installing automatic watering"], "answer": 1 },
+        { "id": "l-b2-4", "kind": "attitude", "prompt": "How does the speaker evaluate this scheme?", "options": ["as a complete success", "as a failure", "as promising but not yet proven", "as too expensive"], "answer": 2 }
+      ]
+    },
+    {
+      "id": "l-b2p", "band": "B2+", "title": "Discussion: the four-day week", "rate": 1.05, "maxPlays": 1,
+      "lines": [
+        { "speaker": "A", "text": "So the trial ran for six months across about forty companies. What surprised you most?" },
+        { "speaker": "B", "text": "Not the headline result — we expected people to report less stress, and they did. What surprised me was how unevenly the benefits were spread. Office teams that could cut pointless meetings found the switch fairly painless. But in customer-facing roles, someone still has to answer the phone on Friday, so managers ended up juggling rotas, and some staff actually felt more pressured." },
+        { "speaker": "A", "text": "So would you recommend it?" },
+        { "speaker": "B", "text": "I'd be wary of a blanket recommendation. It clearly works for some kinds of work. For others, the same hours squeezed into fewer days might simply move the stress around rather than reduce it. The honest answer is that it depends on whether the company is willing to rethink how work is done, not just when." }
+      ],
+      "questions": [
+        { "id": "l-b2p-1", "kind": "detail", "prompt": "What result did the researcher expect?", "options": ["higher profits", "lower stress", "more meetings", "fewer customers"], "answer": 1 },
+        { "id": "l-b2p-2", "kind": "inference", "prompt": "Why did some customer-facing staff feel more pressure?", "options": ["They lost their jobs.", "Covering Fridays required complicated rotas.", "They had to work longer weeks.", "Their managers left."], "answer": 1 },
+        { "id": "l-b2p-3", "kind": "attitude", "prompt": "What is the researcher's view on recommending the four-day week?", "options": ["enthusiastic for all companies", "against it completely", "cautious: it depends on the type of work", "undecided because data was lost"], "answer": 2 },
+        { "id": "l-b2p-4", "kind": "word", "prompt": "\"A blanket recommendation\" means a recommendation that …", "options": ["is kept secret", "applies to everyone without exception", "is only temporary", "is based on comfort"], "answer": 1 }
+      ]
+    }
+  ]
+}

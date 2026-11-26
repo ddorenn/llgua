@@ -1,0 +1,88 @@
+{
+  "section": "reading",
+  "version": 1,
+  "status": "draft",
+  "note": "Original LINGUA texts. Pilot bank: one testlet per band (docs/curriculum/16 §3 allows 1–2), texts shorter than the full spec at B1–B2.",
+  "testlets": [
+    {
+      "id": "r-pa1", "band": "Pre-A1", "title": "A note on the fridge",
+      "text": "Hi Sam!\nI am at the shop. Your lunch is in the fridge: a sandwich and an apple. The cat is in the garden. Please give her some water.\nBack at 3.\nMum",
+      "questions": [
+        { "id": "r-pa1-1", "kind": "detail", "prompt": "Где сейчас мама?", "options": ["at home", "at the shop", "in the garden", "at school"], "answer": 1 },
+        { "id": "r-pa1-2", "kind": "detail", "prompt": "Что лежит в холодильнике?", "options": ["a sandwich and an apple", "water", "a cake", "milk and eggs"], "answer": 0 },
+        { "id": "r-pa1-3", "kind": "detail", "prompt": "Что Сэм должен сделать?", "options": ["go to the shop", "make lunch", "give the cat water", "call Mum"], "answer": 2 },
+        { "id": "r-pa1-4", "kind": "detail", "prompt": "Когда мама вернётся?", "options": ["at 1", "at 3", "at 5", "tomorrow"], "answer": 1 }
+      ]
+    },
+    {
+      "id": "r-a1", "band": "A1", "title": "My new neighbour",
+      "text": "My new neighbour is called Ruth. She is from Ireland, but she lives in Saint Petersburg now. She is a nurse and works at a big hospital near the river. She works at night, so she sleeps in the day. Ruth has a small dog, Biscuit. Every morning she walks Biscuit in the park before she goes to bed. At the weekend she likes cooking and she often invites me for dinner.",
+      "questions": [
+        { "id": "r-a1-1", "kind": "detail", "prompt": "Откуда Рут?", "options": ["Russia", "Ireland", "England", "Scotland"], "answer": 1 },
+        { "id": "r-a1-2", "kind": "detail", "prompt": "Кем работает Рут?", "options": ["a doctor", "a cook", "a nurse", "a teacher"], "answer": 2 },
+        { "id": "r-a1-3", "kind": "detail", "prompt": "Когда Рут гуляет с собакой?", "options": ["in the evening", "in the morning", "at lunchtime", "at night"], "answer": 1 },
+        { "id": "r-a1-4", "kind": "main", "prompt": "Что автор думает о Рут?", "options": ["They are friends.", "They never talk.", "Ruth is noisy.", "Ruth doesn't like him."], "answer": 0 }
+      ]
+    },
+    {
+      "id": "r-a2", "band": "A2", "title": "A weekend that went wrong",
+      "text": "Last Saturday my friend Dima and I decided to go camping by a lake. The weather forecast said it would be sunny, so we didn't take warm clothes. We took the train in the morning and walked for two hours to find a good place. In the afternoon it was really hot and we swam in the lake. But in the evening it started to rain very hard. Our tent was old and the water came in. We couldn't sleep at all. At five in the morning we packed everything and walked back to the station. We were wet and tired, but now it is our favourite story to tell.",
+      "questions": [
+        { "id": "r-a2-1", "kind": "detail", "prompt": "Why didn't they take warm clothes?", "options": ["They forgot them.", "They expected good weather.", "They had no bags.", "Dima said it was not necessary."], "answer": 1 },
+        { "id": "r-a2-2", "kind": "detail", "prompt": "What did they do in the afternoon?", "options": ["They went fishing.", "They slept in the tent.", "They swam.", "They took the train."], "answer": 2 },
+        { "id": "r-a2-3", "kind": "detail", "prompt": "What was the problem with the tent?", "options": ["It was too small.", "It was old and let the rain in.", "They lost it.", "It was too heavy."], "answer": 1 },
+        { "id": "r-a2-4", "kind": "main", "prompt": "How does the writer feel about the trip now?", "options": ["He is still angry.", "He wants to forget it.", "He enjoys telling the story.", "He will never go camping again."], "answer": 2 }
+      ]
+    },
+    {
+      "id": "r-a2p", "band": "A2+", "title": "Swap shop",
+      "text": "Every first Sunday of the month, the community centre on Green Street turns into a \"swap shop\". The idea is simple: people bring things they don't need any more — clothes, books, toys, small kitchen items — and take things that other people have brought. Nobody pays any money. The organiser, Vera Petrova, started the project three years ago after she moved house and found boxes of things she had never used. \"I didn't want to throw them away,\" she says. \"Someone else could use them.\" At first only a few neighbours came, but now about two hundred people visit each month. There is one rule: everything must be clean and work properly. Broken things go straight back home with their owners.",
+      "questions": [
+        { "id": "r-a2p-1", "kind": "main", "prompt": "What is the text mainly about?", "options": ["a new second-hand shop", "a free exchange of used things", "a cleaning service", "a market that sells toys"], "answer": 1 },
+        { "id": "r-a2p-2", "kind": "detail", "prompt": "Why did Vera start the project?", "options": ["She needed money.", "She had many unused things after moving.", "Her neighbours asked her to.", "She works at the community centre."], "answer": 1 },
+        { "id": "r-a2p-3", "kind": "detail", "prompt": "What happens to broken things?", "options": ["Volunteers repair them.", "They are thrown away.", "Their owners take them home again.", "They are sold cheaply."], "answer": 2 },
+        { "id": "r-a2p-4", "kind": "word", "prompt": "In the text, \"properly\" means …", "options": ["correctly, as it should", "quickly", "for free", "carefully cleaned"], "answer": 0 }
+      ]
+    },
+    {
+      "id": "r-b1", "band": "B1", "title": "Learning to switch off",
+      "text": "When Anton Belov took a job at a software company, he was proud that he answered work messages within minutes, even late at night. After a year, however, he noticed that he was sleeping badly and getting irritated with his family over small things. \"I was never really at home,\" he remembers. \"My body was on the sofa, but my head was still at the office.\"\n\nAnton decided to run a small experiment. For one month he turned off work notifications after seven in the evening and left his laptop in another room. The first week was uncomfortable: he kept checking his phone out of habit and worried that his manager would be annoyed. To his surprise, nobody complained. In fact, his manager admitted that she sent messages in the evening only because it was convenient for her, not because she expected an answer.\n\nBy the end of the month Anton was sleeping better, and he says his work has actually improved. \"When I start in the morning, I have fresh ideas instead of yesterday's stress.\" He now encourages his team to agree on clear hours when they are not expected to reply.",
+      "questions": [
+        { "id": "r-b1-1", "kind": "main", "prompt": "What is the main idea of the text?", "options": ["Software jobs are badly paid.", "Setting limits on work time helped Anton.", "Anton's manager was very strict.", "Phones are bad for children."], "answer": 1 },
+        { "id": "r-b1-2", "kind": "detail", "prompt": "What did Anton do during the experiment?", "options": ["He worked only from home.", "He stopped work notifications in the evening.", "He took a month's holiday.", "He changed his job."], "answer": 1 },
+        { "id": "r-b1-3", "kind": "inference", "prompt": "Why did the manager send messages in the evening?", "options": ["She wanted immediate replies.", "She was testing the team.", "It suited her timetable.", "She worked in another time zone."], "answer": 2 },
+        { "id": "r-b1-4", "kind": "word", "prompt": "\"My head was still at the office\" means Anton …", "options": ["often worked late in the office", "kept thinking about work", "had a headache", "wanted a new office"], "answer": 1 }
+      ]
+    },
+    {
+      "id": "r-b1p", "band": "B1+", "title": "The town that banned cars (for a day)",
+      "text": "Three years ago the small town of Lindvik tried something its residents first thought was absurd: one Saturday a month, private cars were banned from the centre. Shop owners were the loudest critics. They were convinced that customers would simply drive to the shopping mall outside town and never come back.\n\nThe first car-free day did nothing to calm their fears. It rained, the free shuttle buses were late, and the streets looked empty. Several newspapers described the idea as \"a well-meant failure\". The town council, however, refused to give up. It added more buses, invited street musicians and allowed cafés to put tables in the road.\n\nBy the end of the first summer, the picture had changed. Families who had never walked through the old centre began to spend whole afternoons there, and many of the shop owners reported higher sales on car-free days than on normal Saturdays. Not everyone is convinced: some older residents still complain that they cannot reach the doctor's surgery easily, and the council has promised to provide a special transport service for them. Even so, a recent survey showed that two thirds of residents now want car-free days every weekend.",
+      "questions": [
+        { "id": "r-b1p-1", "kind": "detail", "prompt": "Why were shop owners against the idea at first?", "options": ["They had to close their shops.", "They expected to lose customers.", "They wanted to open on Sundays.", "They disliked street musicians."], "answer": 1 },
+        { "id": "r-b1p-2", "kind": "inference", "prompt": "What does the phrase \"a well-meant failure\" suggest about the newspapers' view?", "options": ["The idea was good but did not work.", "The idea was dangerous.", "The council lied about the results.", "The idea was expensive but popular."], "answer": 0 },
+        { "id": "r-b1p-3", "kind": "detail", "prompt": "Which problem has not been fully solved?", "options": ["late buses", "access to the doctor's surgery for older people", "empty cafés", "low sales"], "answer": 1 },
+        { "id": "r-b1p-4", "kind": "attitude", "prompt": "What is the writer's overall attitude to the project?", "options": ["completely negative", "balanced but mostly positive", "uninterested", "angry with the council"], "answer": 1 }
+      ]
+    },
+    {
+      "id": "r-b2", "band": "B2", "title": "In praise of boredom",
+      "text": "For most of us, boredom is something to be eliminated as quickly as possible. A queue, a delayed train or a dull meeting is enough to send a hand reaching for a phone. Yet a growing number of psychologists argue that this reflex may be costing us more than we realise.\n\nTheir reasoning is that boredom is not simply an empty state but a signal: it tells us that our current activity is not meeting our needs and pushes us to look for something more meaningful. When that signal is instantly silenced by a stream of short videos, we lose the motivation it was meant to provide. Several small studies have found that people who were first given a deliberately tedious task — copying numbers from a phone book, for example — later produced more original ideas in a creativity test than those who went straight to the test.\n\nThe researchers are careful not to overstate their case. The studies are small, and chronic boredom, especially at work, is linked to stress and poor health rather than to inspiration. What they suggest is not that we should seek out boredom, but that we might tolerate short periods of it instead of treating every quiet moment as a problem to be solved. Leaving the phone in a pocket during a ten-minute wait, they argue, is a modest experiment that costs nothing — and might occasionally be where a good idea begins.",
+      "questions": [
+        { "id": "r-b2-1", "kind": "main", "prompt": "What is the main argument of the text?", "options": ["Boredom should be avoided at all costs.", "Short periods of boredom may have benefits.", "Phones cause chronic stress.", "Creativity tests are unreliable."], "answer": 1 },
+        { "id": "r-b2-2", "kind": "detail", "prompt": "According to the psychologists, what is the function of boredom?", "options": ["It helps us rest.", "It signals that we need something more meaningful.", "It improves memory.", "It reduces stress."], "answer": 1 },
+        { "id": "r-b2-3", "kind": "attitude", "prompt": "How do the researchers present their findings?", "options": ["with great certainty", "cautiously, admitting limitations", "as proven by large studies", "as entertainment rather than science"], "answer": 1 },
+        { "id": "r-b2-4", "kind": "word", "prompt": "In the text, \"tedious\" is closest in meaning to …", "options": ["difficult", "very boring", "unusual", "frightening"], "answer": 1 }
+      ]
+    },
+    {
+      "id": "r-b2p", "band": "B2+", "title": "The myth of the lone genius",
+      "text": "Popular history loves a lone genius: the inventor who, after years of solitary struggle, emerges with a world-changing machine. It is a satisfying story, with a clear hero and a dramatic moment of discovery. It is also, in most cases, misleading.\n\nHistorians of technology have long pointed out that major inventions tend to appear in several places at roughly the same time. The telephone, the light bulb and the jet engine all had multiple claimants, many of whom were working independently and were genuinely unaware of one another. This pattern is hard to explain if invention depends mainly on rare individual brilliance. It makes far more sense if we see inventors as people who assemble ideas, materials and techniques that are already circulating, at a moment when the surrounding conditions — markets, tools, scientific knowledge — finally make the assembly possible.\n\nNone of this means that individual talent is irrelevant. Someone still has to notice the opportunity, persist through failure and persuade investors to take a risk. But the emphasis matters. A culture that credits a single person with every breakthrough may underfund the less glamorous work on which breakthroughs depend: the maintenance of laboratories, the training of technicians, the sharing of data. If we want more inventions, the historians suggest, we would do better to invest in the crowded workshop than to wait for the solitary genius.",
+      "questions": [
+        { "id": "r-b2p-1", "kind": "main", "prompt": "What does the writer mainly challenge?", "options": ["the value of technology", "the idea that inventions come from isolated individuals", "the need for investors", "the work of historians"], "answer": 1 },
+        { "id": "r-b2p-2", "kind": "inference", "prompt": "Why does the writer mention simultaneous inventions?", "options": ["to show that some inventors copied others", "as evidence that conditions, not just talent, drive invention", "to criticise patent law", "to praise competition"], "answer": 1 },
+        { "id": "r-b2p-3", "kind": "attitude", "prompt": "What is the writer's position on individual talent?", "options": ["It does not exist.", "It matters, but is overemphasised.", "It is the only real factor.", "It cannot be measured."], "answer": 1 },
+        { "id": "r-b2p-4", "kind": "inference", "prompt": "What practical conclusion does the text suggest?", "options": ["Fund the shared infrastructure of research.", "Give prizes to individual inventors.", "Reduce public spending on science.", "Teach the history of technology in schools."], "answer": 0 }
+      ]
+    }
+  ]
+}

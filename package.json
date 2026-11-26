@@ -9,7 +9,8 @@
     "lint": "eslint src",
     "typecheck": "tsc --noEmit",
     "content:check": "tsx scripts/check-content.ts",
-    "auth:hash": "node scripts/hash-password.mjs"
+    "auth:hash": "node scripts/hash-password.mjs",
+    "test": "tsx --test src/lib/placement/engine.test.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.14.0",

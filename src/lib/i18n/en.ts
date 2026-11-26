@@ -14,6 +14,7 @@ export const en = {
     listening: "Listening",
     speaking: "Speaking",
     writing: "Writing",
+    placement: "Placement",
     progress: "Progress",
     assessments: "Assessments",
     library: "Library",

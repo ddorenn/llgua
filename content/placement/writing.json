@@ -1,0 +1,32 @@
+{
+  "section": "writing",
+  "version": 1,
+  "status": "draft",
+  "note": "One original task per tier for the pilot (spec: 2 per band). Texts are saved for later rubric evaluation (CV Appendix 4); no score is produced in this stage.",
+  "tasks": [
+    {
+      "id": "w-a1", "tier": "A1", "bands": ["Pre-A1", "A1"],
+      "title": "О себе",
+      "instruction": "Напишите 3–4 предложения о себе по-английски: как вас зовут, где вы живёте, чем занимаетесь, что любите.",
+      "prompt": "Write about yourself: your name, where you live, your job or studies, and something you like."
+    },
+    {
+      "id": "w-a2", "tier": "A2", "bands": ["A2", "A2+"],
+      "title": "Письмо другу",
+      "instruction": "Напишите короткое письмо другу (50–80 слов): пригласите его в гости на выходные, предложите, чем заняться, и договоритесь о времени.",
+      "prompt": "Write a message to a friend. Invite them to visit you this weekend, suggest two things to do together and say when to meet."
+    },
+    {
+      "id": "w-b1", "tier": "B1", "bands": ["B1", "B1+"],
+      "title": "Опыт и мнение",
+      "instruction": "Напишите 100–140 слов: расскажите о навыке, которому вы научились сами (без курсов), как это было и посоветовали бы вы такой способ другим.",
+      "prompt": "Describe a skill you taught yourself. How did you learn it, what was difficult, and would you recommend learning this way to others? Why?"
+    },
+    {
+      "id": "w-b2", "tier": "B2", "bands": ["B2", "B2+"],
+      "title": "Короткое эссе",
+      "instruction": "Напишите эссе-мнение на 160–200 слов. Приведите аргументы «за» и «против» и сделайте вывод.",
+      "prompt": "\"Working from home should be a right, not a privilege.\" Do you agree? Give arguments for and against, and state your own conclusion."
+    }
+  ]
+}

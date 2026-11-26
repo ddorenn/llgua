@@ -1,0 +1,50 @@
+{
+  "version": "pilot-2026-11.1",
+  "note": "All numbers are hypotheses from docs/curriculum/14 §16 and 15 §10 — tune after the pilot without code changes.",
+  "bands": ["Pre-A1", "A1", "A2", "A2+", "B1", "B1+", "B2", "B2+"],
+  "ladder": {
+    "blockSize": 5,
+    "inputPerBlock": 2,
+    "passThresholdBlock": 4,
+    "retryThreshold": 3,
+    "maxBlocksPerBand": 2,
+    "fastJumpFirstBlocks": 2,
+    "maxItemsSection": 25,
+    "sectionTimeLimitMin": 10
+  },
+  "testlet": {
+    "pass": 3,
+    "fail": 1,
+    "max": 3
+  },
+  "fastAnswerSec": 1.5,
+  "fastAnswerSecWithText": 1.5,
+  "guessSuspicionsLowerConfidence": 2,
+  "a1SublevelThreshold": 0.8,
+  "gapMinErrors": 2,
+  "resumeWindowHours": 48,
+  "retestIntervalDays": 14,
+  "pilotAllowEarlyRetake": true,
+  "overallRule": "median_lower",
+  "speakingCap": 1,
+  "componentGapLowersConfidence": 2,
+  "writing": {
+    "timeMin": 10,
+    "pasteFlagChars": 40,
+    "wordsByTier": { "A1": [20, 40], "A2": [50, 80], "B1": [100, 140], "B2": [160, 200] }
+  },
+  "zeroMode": {
+    "itemsPerBand": 4,
+    "passToFull": 6
+  },
+  "pace": {
+    "allowed": [3, 4, 5, 6],
+    "default": 5,
+    "warnBelow": 4
+  },
+  "route": {
+    "lessonsPerModule": 12,
+    "maxSkipsWithoutCheckout": 3,
+    "priorityExtraTime": 0.2
+  }
+}

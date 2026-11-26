@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "note": "Module catalog from docs/curriculum/01–04. `ready` = full 12-lesson module exists in the product (none yet). `practice` = existing short practice module of the same level in content/curriculum/course.json.",
+  "levels": [
+    {
+      "level": "A1", "practice": "a1-foundations",
+      "modules": [
+        { "code": "A1-M0", "title": "Старт", "subtitle": "Pre-A1, по желанию, 6 занятий", "sublevel": "Pre-A1", "lessons": 6 },
+        { "code": "A1-M1", "title": "Hello!", "subtitle": "знакомство", "sublevel": "A1.1" },
+        { "code": "A1-M2", "title": "Things around me", "subtitle": "вещи и описания", "sublevel": "A1.1" },
+        { "code": "A1-M3", "title": "My day", "subtitle": "распорядок и работа", "sublevel": "A1.1" },
+        { "code": "A1-M4", "title": "Family and time", "subtitle": "семья и время", "sublevel": "A1.1" },
+        { "code": "A1-M5", "title": "Here and now", "subtitle": "умения и происходящее сейчас", "sublevel": "A1.1" },
+        { "code": "A1-M6", "title": "Likes and people", "subtitle": "вкусы и люди", "sublevel": "A1.2" },
+        { "code": "A1-M7", "title": "Last weekend", "subtitle": "прошлое", "sublevel": "A1.2" },
+        { "code": "A1-M8", "title": "Homes and places", "subtitle": "дом и место", "sublevel": "A1.2" },
+        { "code": "A1-M9", "title": "Food and drink", "subtitle": "еда", "sublevel": "A1.2" },
+        { "code": "A1-M10", "title": "Out and about", "subtitle": "город и транспорт", "sublevel": "A1.2" }
+      ]
+    },
+    {
+      "level": "A2", "practice": "a2-past-and-plans",
+      "modules": [
+        { "code": "A2-M1", "title": "Bigger, better, best", "subtitle": "сравнения", "sublevel": "A2" },
+        { "code": "A2-M2", "title": "Plans", "subtitle": "планы и прогнозы", "sublevel": "A2" },
+        { "code": "A2-M3", "title": "Have you ever…?", "subtitle": "опыт", "sublevel": "A2" },
+        { "code": "A2-M4", "title": "People", "subtitle": "описание людей", "sublevel": "A2" },
+        { "code": "A2-M5", "title": "Stories", "subtitle": "истории в прошлом", "sublevel": "A2" },
+        { "code": "A2-M6", "title": "Shopping and services", "subtitle": "покупки и сервис", "sublevel": "A2" },
+        { "code": "A2-M7", "title": "At home", "subtitle": "дом и обязанности", "sublevel": "A2+" },
+        { "code": "A2-M8", "title": "Promises and predictions", "subtitle": "будущее с will", "sublevel": "A2+" },
+        { "code": "A2-M9", "title": "Choices", "subtitle": "желания и предпочтения", "sublevel": "A2+" },
+        { "code": "A2-M10", "title": "Health and advice", "subtitle": "здоровье и советы", "sublevel": "A2+" },
+        { "code": "A2-M11", "title": "Explaining things", "subtitle": "определения и технологии", "sublevel": "A2+" },
+        { "code": "A2-M12", "title": "If…", "subtitle": "условия", "sublevel": "A2+" }
+      ]
+    },
+    {
+      "level": "B1", "practice": "b1-experience",
+      "modules": [
+        { "code": "B1-M1", "title": "Since when?", "subtitle": "опыт и длительность", "sublevel": "B1" },
+        { "code": "B1-M2", "title": "Then and now", "subtitle": "изменения", "sublevel": "B1" },
+        { "code": "B1-M3", "title": "Imagine", "subtitle": "воображаемые ситуации", "sublevel": "B1" },
+        { "code": "B1-M4", "title": "How things work", "subtitle": "изобретения и движение", "sublevel": "B1" },
+        { "code": "B1-M5", "title": "What had happened", "subtitle": "истории", "sublevel": "B1" },
+        { "code": "B1-M6", "title": "Questions and reports", "subtitle": "вопросы и пересказ", "sublevel": "B1" },
+        { "code": "B1-M7", "title": "Lifestyles", "subtitle": "образ жизни и планы", "sublevel": "B1+" },
+        { "code": "B1-M8", "title": "Money and change", "subtitle": "деньги и перемены", "sublevel": "B1+" },
+        { "code": "B1-M9", "title": "Getting around", "subtitle": "транспорт и общество", "sublevel": "B1+" },
+        { "code": "B1-M10", "title": "Rules and abilities", "subtitle": "правила, умения, жалобы", "sublevel": "B1+" },
+        { "code": "B1-M11", "title": "On screen", "subtitle": "кино и догадки", "sublevel": "B1+" },
+        { "code": "B1-M12", "title": "Work, luck and people", "subtitle": "работа, удача и люди", "sublevel": "B1+" }
+      ]
+    },
+    {
+      "level": "B2", "practice": "b2-argument",
+      "modules": [
+        { "code": "B2-M1", "title": "Asking the right questions", "subtitle": "вопросы", "sublevel": "B2" },
+        { "code": "B2-M2", "title": "Health and image", "subtitle": "здоровье и внешность", "sublevel": "B2" },
+        { "code": "B2-M3", "title": "Journeys", "subtitle": "истории путешествий", "sublevel": "B2" },
+        { "code": "B2-M4", "title": "Telling it well", "subtitle": "наречия и стиль повествования", "sublevel": "B2" },
+        { "code": "B2-M5", "title": "Future world", "subtitle": "будущее и окружающая среда", "sublevel": "B2" },
+        { "code": "B2-M6", "title": "Taking risks", "subtitle": "риск и условия", "sublevel": "B2" },
+        { "code": "B2-M7", "title": "If only", "subtitle": "нереальное и сожаление", "sublevel": "B2+" },
+        { "code": "B2-M8", "title": "Habits and adaptation", "subtitle": "привычки и адаптация", "sublevel": "B2+" },
+        { "code": "B2-M9", "title": "What must have happened", "subtitle": "предположения о прошлом", "sublevel": "B2+" },
+        { "code": "B2-M10", "title": "Crime and the media", "subtitle": "общество и СМИ", "sublevel": "B2+" },
+        { "code": "B2-M11", "title": "Business and cities", "subtitle": "бизнес и город", "sublevel": "B2+" },
+        { "code": "B2-M12", "title": "Science and society", "subtitle": "наука и общество", "sublevel": "B2+" }
+      ]
+    }
+  ]
+}

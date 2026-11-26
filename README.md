@@ -156,3 +156,16 @@ Files marked `"sample": true` show a **Sample content** badge wherever they appe
 Next.js 15 (App Router) · TypeScript · Tailwind CSS v4 · Motion · Bricolage Grotesque / Onest / Literata · shadcn/ui-style primitives (cva + tailwind-merge, in `src/components/ui`) · Recharts · Zod · Supabase (`@supabase/ssr`) · Anthropic SDK · lucide-react. Deploys to Vercel as a standard Next.js app (set the env vars in project settings).
 
 Architecture details: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+
+## Входная диагностика (Phase 5)
+
+Маршрут `/placement` — адаптивная входная диагностика по спецификации `docs/curriculum/14`:
+анкета (цель, опыт, самооценка, темп, согласие на запись голоса) → словарь и грамматика (блочная лестница) →
+чтение и аудирование (тестлеты) → письмо (текст сохраняется, оценка позже) → устная речь (пока «не оценено») →
+отчёт: ориентировочный уровень с уверенностью, профиль навыков, пробелы, рекомендации и стартовый маршрут.
+
+- Банк заданий и пороги: `content/placement/*.json` (все пороги — в `config.json`, меняются без правки кода).
+- Движок и расчёт результата: `src/lib/placement/` (`engine.ts`, `result.ts`), проверка ответов — только на сервере.
+- Хранение: таблицы `placements`, `placement_responses`, `learner_consents` (миграция `supabase/migrations/20261126000000_placement.sql`, RLS — только свои строки); в локальном/демо-режиме — файл в `.data/`.
+- Тесты движка: `npm test`. Проверка банка: `npm run content:check`.
+- Архитектура и сопоставление с моделью данных: `docs/PHASE5-ARCHITECTURE.md`.

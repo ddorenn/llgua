@@ -1,6 +1,6 @@
 import {
   BarChart3, BookA, BookOpen, CalendarCheck, ClipboardList, Headphones, LayoutDashboard, Library,
-  Mic, NotebookPen, PenLine, Route, Settings, Sparkles, type LucideIcon,
+  Compass, Mic, NotebookPen, PenLine, Route, Settings, Sparkles, type LucideIcon,
 } from "lucide-react";
 import type { Dictionary } from "@/lib/i18n";
 
@@ -41,6 +41,7 @@ export const NAVIGATION: NavSection[] = [
   {
     key: "section_track",
     items: [
+      { href: "/placement", key: "placement", icon: Compass },
       { href: "/progress", key: "progress", icon: BarChart3 },
       { href: "/assessments", key: "assessments", icon: ClipboardList },
       { href: "/library", key: "library", icon: Library },
