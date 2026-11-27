@@ -1,0 +1,11 @@
+{
+  "note": "Estimated USD per 1M tokens for cost accounting. VERIFY against the provider's current price list before relying on the numbers; unknown models are counted with `default`.",
+  "default": { "input": 1.0, "output": 4.0 },
+  "models": {
+    "openai/gpt-oss-20b": { "input": 0.1, "output": 0.5 },
+    "openai/gpt-oss-120b": { "input": 0.15, "output": 0.75 },
+    "llama-3.1-8b-instant": { "input": 0.05, "output": 0.08 },
+    "claude-haiku-5-5": { "input": 1.0, "output": 5.0 },
+    "claude-sonnet-5-5": { "input": 3.0, "output": 15.0 }
+  }
+}

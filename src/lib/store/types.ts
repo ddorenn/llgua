@@ -106,6 +106,71 @@ export interface ActivityEvent {
   at: string;
 }
 
+/** One graded answer inside a lesson (13: Attempt, stored with the learner state). */
+export interface LessonAttempt {
+  ok: boolean;
+  /** First attempt was correct (used for "≥ 80% с первой попытки" style criteria). */
+  firstOk: boolean;
+  tries: number;
+  answer: string;
+  at: string;
+  ms?: number;
+}
+
+export interface LessonSession {
+  lessonId: string;
+  version: number;
+  status: "in_progress" | "completed";
+  startedAt: string;
+  updatedAt: string;
+  completedAt?: string;
+  /** Position: stage index and block index within the stage's (possibly extended) block list. */
+  stage: number;
+  block: number;
+  attempts: Record<string, LessonAttempt>;
+  /** Branches applied (stage ids) — 11 §5 adaptive additions. */
+  branches: string[];
+  writing: Record<string, { text: string; words: number; submittedAt: string; evaluation?: unknown }>;
+  /** Active time per stage, ms (11 §3: real duration vs plan). */
+  stageMs: Record<string, number>;
+  selfAssessment?: Record<string, "yes" | "almost" | "no">;
+  /** Feedback stage: mistakes the learner corrected themselves. */
+  corrections: Record<string, boolean>;
+  savedWords: string[];
+  /** Warm-up items fixed when the review block was first shown (so a reload shows the same set). */
+  reviewPlan?: Record<string, ReviewPlanItem[]>;
+}
+
+export interface ReviewPlanItem {
+  key: string;
+  srsId: string | null;
+  prompt: string;
+  answers: string[];
+  explanation: string;
+  label: string;
+}
+
+/** Spaced-repetition item (13: ReviewItem + ReviewSchedule). */
+export interface SrsItem {
+  id: string;
+  kind: "word" | "error";
+  front: string;
+  back: string;
+  example?: string;
+  note?: string;
+  source: { type: "lesson" | "content" | "manual"; ref?: string; label?: string };
+  createdAt: string;
+  updatedAt: string;
+  /** Next review date (YYYY-MM-DD, learner's local day). */
+  due: string;
+  /** Index in the interval ladder; −1 = not yet reviewed. */
+  step: number;
+  reps: number;
+  lapses: number;
+  history: { at: string; ok: boolean }[];
+  suspended?: boolean;
+}
+
 export interface LinguaState {
   schemaVersion: 1;
   /** One-time migrations already applied to this learner's data. */
@@ -122,4 +187,6 @@ export interface LinguaState {
   assessments: AssessmentResult[];
   tutor: Record<string, TutorMessage[]>;
   activity: ActivityEvent[];
+  lessonSessions?: Record<string, LessonSession>;
+  srs?: Record<string, SrsItem>;
 }

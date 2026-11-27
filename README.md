@@ -169,3 +169,12 @@ Architecture details: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 - Хранение: таблицы `placements`, `placement_responses`, `learner_consents` (миграция `supabase/migrations/20261126000000_placement.sql`, RLS — только свои строки); в локальном/демо-режиме — файл в `.data/`.
 - Тесты движка: `npm test`. Проверка банка: `npm run content:check`.
 - Архитектура и сопоставление с моделью данных: `docs/PHASE5-ARCHITECTURE.md`.
+
+## Занятия, наставник, словарь (Phase 6)
+
+- `/lessons` — занятия по стандарту из шести этапов. Урок — JSON-файл в `content/lessons/` (схема `src/lib/lessons/schema.ts`); новые уроки появляются без изменений кода.
+- AI-наставник: одна точка входа `src/lib/ai/tutor.ts`, роли в `content/ai/`, лимиты `content/ai/limits.json`, цены `content/ai/pricing.json`; `AI_DISABLED=1` выключает AI.
+- Словарь: интервальное повторение `src/lib/srs`, слова из занятий, личные ошибки, ежедневная очередь.
+- Голос: интерфейсы и политика в `src/lib/voice` (аудио не хранится, оценка произношения не имитируется).
+- Подробности: `docs/PHASE6-LEARNING-ENGINE.md`.
+- Сервер подписывает записи диагностики: нужна переменная `LINGUA_SIGNING_SECRET` (то же значение — в `private.app_secrets`); проверка — `/api/health/signing`.

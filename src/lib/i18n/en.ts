@@ -5,6 +5,7 @@ export const en = {
     section_practice: "Practice",
     section_track: "Track",
     dashboard: "Dashboard",
+    lessons: "Lessons",
     learning: "My Learning",
     dailyPlan: "Daily Plan",
     tutor: "AI Tutor",

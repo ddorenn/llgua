@@ -3,13 +3,14 @@
 import * as React from "react";
 import { APP, DEFAULT_SETTINGS } from "@/config/app";
 import { applyReview, applyStatus } from "@/lib/vocab";
+import { review as srsApply } from "@/lib/srs";
 import { LocalStorageAdapter, type StateAdapter, type SyncStatus } from "@/lib/db/adapter";
 import { RemoteStateAdapter } from "@/lib/db/remote-adapter";
 import { getDictionary } from "@/lib/i18n";
 import { todayKey, uid } from "@/lib/utils";
 import { createInitialState, hydrate } from "./initial";
 import type {
-  ActivityEvent, AssessmentResult, LinguaState, PracticeResult, Settings, TutorMessage, UserVocab,
+  ActivityEvent, AssessmentResult, LessonSession, LinguaState, PracticeResult, Settings, SrsItem, TutorMessage, UserVocab,
 } from "./types";
 
 type Updater = (s: LinguaState) => LinguaState;
@@ -68,6 +69,47 @@ function makeActions(update: (fn: Updater) => void) {
         const lessons = { ...s.lessons };
         delete lessons[lessonId];
         return { ...s, lessons };
+      });
+    },
+    /** Lesson engine: create the session if missing and apply a change to it. */
+    lessonUpdate(lessonId: string, create: () => LessonSession, fn: (x: LessonSession) => LessonSession) {
+      update((s) => {
+        const cur = s.lessonSessions?.[lessonId] ?? create();
+        const next = { ...fn(cur), updatedAt: new Date().toISOString() };
+        let out: LinguaState = { ...s, lessonSessions: { ...(s.lessonSessions ?? {}), [lessonId]: next } };
+        if (cur.status !== "completed" && next.status === "completed") out = logActivity(out, "lesson", `Завершено занятие «${lessonId}»`);
+        return out;
+      });
+    },
+    lessonRestart(lessonId: string, create: () => LessonSession) {
+      update((s) => ({ ...s, lessonSessions: { ...(s.lessonSessions ?? {}), [lessonId]: create() } }));
+    },
+    /** Spaced repetition: add items that are not in the bank yet (existing items keep their schedule). */
+    srsAdd(items: SrsItem[]) {
+      update((s) => {
+        const srs = { ...(s.srs ?? {}) };
+        let added = 0;
+        for (const it of items) {
+          if (srs[it.id]) continue;
+          srs[it.id] = it;
+          added++;
+        }
+        return added ? { ...s, srs } : s;
+      });
+    },
+    srsReview(id: string, ok: boolean) {
+      update((s) => {
+        const it = s.srs?.[id];
+        if (!it) return s;
+        return { ...s, srs: { ...s.srs, [id]: srsApply(it, ok) } };
+      });
+    },
+    srsRemove(id: string) {
+      update((s) => {
+        if (!s.srs?.[id]) return s;
+        const srs = { ...s.srs };
+        delete srs[id];
+        return { ...s, srs };
       });
     },
     /** Record a vocabulary review answer (rules live in lib/vocab). */

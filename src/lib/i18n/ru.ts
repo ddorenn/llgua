@@ -7,6 +7,7 @@ export const ru: Dictionary = {
     section_practice: "Практика",
     section_track: "Результаты",
     dashboard: "Главная",
+    lessons: "Занятия",
     learning: "Моё обучение",
     dailyPlan: "План на день",
     tutor: "AI-репетитор",

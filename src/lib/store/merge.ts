@@ -59,5 +59,7 @@ export function mergeStates(serverRaw: Partial<LinguaState>, localRaw: Partial<L
     assessments: unionById(server.assessments, local.assessments, (a) => a.completedAt),
     activity: unionById(server.activity, local.activity, (a) => a.at).slice(0, 200),
     tutor,
+    lessonSessions: mergeRec(server.lessonSessions ?? {}, local.lessonSessions ?? {}, (x) => x.updatedAt),
+    srs: mergeRec(server.srs ?? {}, local.srs ?? {}, (x) => x.updatedAt),
   };
 }

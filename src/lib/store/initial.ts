@@ -16,6 +16,8 @@ export function createInitialState(): LinguaState {
     assessments: [],
     tutor: {},
     activity: [],
+    lessonSessions: {},
+    srs: {},
   };
 }
 
@@ -39,6 +41,8 @@ export function hydrate(persisted: Partial<LinguaState> | null): LinguaState {
     ...base,
     ...persisted,
     migrations,
+    lessonSessions: persisted.lessonSessions ?? {},
+    srs: persisted.srs ?? {},
     settings: {
       ...settings,
       notifications: { ...base.settings.notifications, ...(persisted.settings?.notifications ?? {}) },

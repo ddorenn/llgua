@@ -1,0 +1,9 @@
+{
+  "note": "Abuse and cost limits per learner. Hypotheses until measured in stage 0 (docs/curriculum/16 §5). Exceeding a limit degrades gracefully: the lesson continues without AI features.",
+  "perMinuteRequests": 6,
+  "perDayRequests": 80,
+  "perDayCostUsd": 0.25,
+  "maxInputChars": 4000,
+  "maxChatTurns": 12,
+  "maxDialogueTurns": 10
+}

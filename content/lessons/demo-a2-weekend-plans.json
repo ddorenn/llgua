@@ -1,0 +1,233 @@
+{
+  "id": "demo-a2-weekend-plans",
+  "version": 1,
+  "status": "demo",
+  "title": "Plans for the weekend",
+  "level": "A2",
+  "module": "A2-M2",
+  "type": "A",
+  "objective": "Могу рассказать о своих планах на выходные и договориться о встрече с другом.",
+  "languageGoals": ["be going to + глагол: планы и намерения", "лексика: планы и досуг (invite, book, stay in, go out)"],
+  "minutes": 60,
+  "feedbackLanguage": "ru",
+  "note": "Демонстрационный урок для проверки движка: оригинальные тексты LINGUA, не часть утверждённого модуля.",
+  "stages": [
+    {
+      "id": "warmup",
+      "kind": "warmup",
+      "title": "Разминка",
+      "goal": "Вспомнить слова и формы из прошлых занятий без подсказок.",
+      "minutes": 7,
+      "role": "vocabulary-coach",
+      "blocks": [
+        {
+          "type": "review",
+          "id": "warmup-review",
+          "title": "Что вы помните?",
+          "count": 6,
+          "fallback": [
+            { "id": "r1", "prompt": "I usually ___ (get) up at seven.", "answers": ["get"], "explanation": "Привычка → present simple: I get up." },
+            { "id": "r2", "prompt": "Last Sunday we ___ (visit) my grandparents.", "answers": ["visited"], "explanation": "Last Sunday — законченное прошлое → past simple: visited." },
+            { "id": "r3", "prompt": "Look! It ___ (snow) outside.", "answers": ["is snowing", "'s snowing"], "explanation": "Происходит прямо сейчас → present continuous: is snowing." },
+            { "id": "r4", "prompt": "She ___ (not / like) horror films.", "answers": ["doesn't like", "does not like"], "explanation": "Отрицание в present simple для she: doesn't + глагол." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "input",
+      "kind": "input",
+      "title": "Новый материал",
+      "goal": "Понять, как говорить о планах с be going to.",
+      "minutes": 13,
+      "role": "teacher",
+      "blocks": [
+        {
+          "type": "vocab",
+          "id": "input-words",
+          "title": "Слова урока",
+          "words": [
+            { "word": "invite", "translation": "приглашать", "example": "I'm going to invite Lena to my birthday party.", "pos": "verb", "ipa": "/ɪnˈvaɪt/" },
+            { "word": "book a table", "translation": "забронировать столик", "example": "Let's book a table for Saturday evening.", "pos": "phrase" },
+            { "word": "stay in", "translation": "остаться дома", "example": "It's raining, so we're going to stay in and watch a film.", "pos": "phrasal verb" },
+            { "word": "go out", "translation": "выйти куда-нибудь, сходить развлечься", "example": "Do you want to go out on Friday?", "pos": "phrasal verb" },
+            { "word": "look forward to", "translation": "с нетерпением ждать", "example": "I'm really looking forward to the concert.", "pos": "phrase" },
+            { "word": "free", "translation": "свободный (о времени)", "example": "Are you free on Sunday afternoon?", "pos": "adjective" }
+          ]
+        },
+        {
+          "type": "listening",
+          "id": "input-listen",
+          "title": "Two friends make plans",
+          "rate": 0.85,
+          "maxPlays": 3,
+          "lines": [
+            { "speaker": "A", "text": "Hi Max! Are you free this weekend?" },
+            { "speaker": "B", "text": "On Saturday I'm going to help my sister. She's going to paint her new flat." },
+            { "speaker": "A", "text": "And on Sunday?" },
+            { "speaker": "B", "text": "Nothing yet. Why?" },
+            { "speaker": "A", "text": "I'm going to try the new Georgian restaurant near the park. Do you want to come?" },
+            { "speaker": "B", "text": "Sounds great! Are you going to book a table?" },
+            { "speaker": "A", "text": "Yes, I'm going to call them tonight. Let's meet at one." }
+          ],
+          "questions": [
+            { "id": "q1", "prompt": "Что Макс будет делать в субботу?", "options": ["помогать сестре", "работать", "ходить в ресторан"], "answer": 0, "explanation": "«On Saturday I'm going to help my sister»." },
+            { "id": "q2", "prompt": "Куда друзья пойдут в воскресенье?", "options": ["в парк", "в грузинский ресторан", "в кино"], "answer": 1, "explanation": "«the new Georgian restaurant near the park» — парк только ориентир." }
+          ]
+        },
+        {
+          "type": "explain",
+          "id": "input-explain",
+          "title": "be going to — планы и намерения",
+          "body": "Когда мы **уже решили**, что будем делать, используем **am / is / are + going to + глагол**.\n\n- I'm going to help my sister.\n- She's going to paint her flat.\n- Are you going to book a table?\n- We aren't going to stay in.\n\nПо-русски это чаще всего просто будущее время: «я помогу», «мы собираемся». Главное — решение уже принято.",
+          "examples": [
+            { "en": "I'm going to learn to drive this year.", "ru": "В этом году я собираюсь научиться водить." },
+            { "en": "They aren't going to sell the car.", "ru": "Они не собираются продавать машину." },
+            { "en": "What are you going to do tonight?", "ru": "Что ты будешь делать вечером?" }
+          ]
+        },
+        {
+          "type": "choice",
+          "id": "input-cc1",
+          "check": "concept",
+          "prompt": "«I'm going to call them tonight». Решение позвонить уже принято?",
+          "options": ["Да, это план", "Нет, решение принимается прямо сейчас", "Это привычка"],
+          "answer": 0,
+          "explanation": "be going to = намерение, решение принято заранее."
+        },
+        {
+          "type": "choice",
+          "id": "input-cc2",
+          "check": "concept",
+          "prompt": "Какая форма правильная: «She ___ paint her flat.»",
+          "options": ["is going to", "going to", "is go to"],
+          "answer": 0,
+          "explanation": "Нужен be: she is going to + глагол."
+        }
+      ],
+      "branch": {
+        "errorsAtLeast": 2,
+        "note": "Объясним ещё раз, по-другому",
+        "add": [
+          {
+            "type": "explain",
+            "id": "input-reteach",
+            "title": "Ещё раз, по шагам",
+            "body": "Соберите фразу из трёх частей:\n\n1. **кто**: I / you / she / we…\n2. **am / is / are** (по лицу: I am, she is, we are)\n3. **going to + глагол** (help, call, visit…)\n\nI + am + going to call → **I'm going to call**.\nShe + is + going to paint → **She's going to paint**.\nВопрос: переставьте am/is/are вперёд — **Are you going to come?**"
+          },
+          {
+            "type": "choice",
+            "id": "input-cc3",
+            "check": "concept",
+            "prompt": "Выберите вопрос: «Вы собираетесь прийти?»",
+            "options": ["Are you going to come?", "You going to come?", "Do you going to come?"],
+            "answer": 0,
+            "explanation": "В вопросе am/is/are идёт перед подлежащим: Are you going to…?"
+          }
+        ]
+      }
+    },
+    {
+      "id": "practice",
+      "kind": "practice",
+      "title": "Практика",
+      "goal": "Уверенно строить утверждения, отрицания и вопросы с going to.",
+      "minutes": 13,
+      "role": "teacher",
+      "blocks": [
+        {
+          "type": "reading",
+          "id": "practice-read",
+          "title": "Mia's message",
+          "text": "Hi Dana! Big news: I'm going to start a pottery class on Saturday mornings! My brother isn't going to come with me — he says it's boring — so I'm going to go alone. After the class I'm going to meet Olga for coffee. Are you going to be in town? Join us! Mia",
+          "questions": [
+            { "id": "q1", "prompt": "Что Мия собирается начать?", "options": ["курсы гончарного дела", "работу в кафе", "уроки вождения"], "answer": 0, "explanation": "«start a pottery class» — занятия гончарным делом." },
+            { "id": "q2", "prompt": "Почему брат не пойдёт с ней?", "options": ["он занят", "ему скучно", "он болеет"], "answer": 1, "explanation": "«he says it's boring»." }
+          ]
+        },
+        { "type": "choice", "id": "practice-c1", "prompt": "We ___ visit my parents next weekend.", "options": ["are going to", "is going to", "going to"], "answer": 0, "explanation": "We → are: we are going to visit." },
+        { "type": "choice", "id": "practice-c2", "prompt": "Tom ___ come to the party. He's ill.", "options": ["isn't going to", "aren't going to", "not going to"], "answer": 0, "explanation": "Tom = he → isn't going to." },
+        { "type": "gap", "id": "practice-g1", "prompt": "I ___ (book) a table for four.", "answers": ["am going to book", "'m going to book"], "explanation": "I am going to book — план, решение принято.", "hint": "I + am + going to + глагол" },
+        { "type": "gap", "id": "practice-g2", "prompt": "___ you going to watch the match tonight?", "answers": ["are"], "explanation": "Вопрос начинается с Are: Are you going to…?" },
+        { "type": "gap", "id": "practice-g3", "prompt": "My parents ___ (not / sell) their old house.", "answers": ["aren't going to sell", "are not going to sell"], "explanation": "They → aren't going to sell." },
+        { "type": "order", "id": "practice-o1", "prompt": "Составьте вопрос", "answers": ["What are you going to do on Sunday?"], "explanation": "Вопросительное слово + are + you + going to + глагол." },
+        { "type": "order", "id": "practice-o2", "prompt": "Составьте предложение", "answers": ["She is going to invite her friends."], "explanation": "She + is + going to + invite." },
+        {
+          "type": "match",
+          "id": "practice-match",
+          "prompt": "Сопоставьте слова и значения",
+          "pairs": [["stay in", "остаться дома"], ["go out", "сходить куда-нибудь"], ["book a table", "забронировать столик"], ["invite", "пригласить"], ["free", "свободный"]],
+          "explanation": "Эти слова понадобятся в диалоге."
+        }
+      ],
+      "branch": {
+        "errorsAtLeast": 2,
+        "note": "Добавим ещё несколько заданий того же типа",
+        "add": [
+          { "type": "gap", "id": "practice-x1", "prompt": "It's late. I ___ (go) to bed.", "answers": ["am going to go", "'m going to go"], "explanation": "I'm going to go — решение уже принято." },
+          { "type": "choice", "id": "practice-x2", "prompt": "___ Anna going to cook dinner?", "options": ["Is", "Are", "Does"], "answer": 0, "explanation": "Anna = she → Is Anna going to…?" },
+          { "type": "gap", "id": "practice-x3", "prompt": "We ___ (not / stay) in tonight.", "answers": ["aren't going to stay", "are not going to stay"], "explanation": "We aren't going to stay in." }
+        ]
+      }
+    },
+    {
+      "id": "use",
+      "kind": "use",
+      "title": "Применение",
+      "goal": "Договориться о встрече и написать другу о своих планах.",
+      "minutes": 18,
+      "role": "speaking-partner",
+      "blocks": [
+        {
+          "type": "dialogue",
+          "id": "use-dialogue",
+          "title": "Договоритесь о встрече",
+          "scenario": "Подруга Кейт пишет вам в пятницу вечером. Узнайте её планы и договоритесь встретиться в выходные.",
+          "partner": "Kate",
+          "goal": "Договориться о дне, месте и времени встречи.",
+          "steps": [
+            { "id": "s1", "partner": "Hey! What are you going to do this weekend?", "keywords": ["going to"], "model": "I'm going to clean my flat on Saturday, but I'm free on Sunday.", "feedback": "Расскажите о плане через I'm going to + глагол." },
+            { "id": "s2", "partner": "Nice! I'm going to go to the new market on Sunday. Do you want to come?", "options": ["Yes, I'd love to!", "Yes, I going to.", "No, I go."], "correct": [0], "model": "Yes, I'd love to!", "feedback": "«Yes, I'd love to!» — естественный ответ на приглашение." },
+            { "id": "s3", "partner": "Great. What time is good for you?", "keywords": ["\\d|o'clock|morning|afternoon|noon|one|two|three|four|five|six|eleven|twelve|ten"], "model": "Let's meet at eleven.", "feedback": "Назовите время: Let's meet at eleven." },
+            { "id": "s4", "partner": "Perfect. Are you going to bring your brother?", "keywords": ["(yes|no|not|isn't|aren't|am|is|'m)"], "model": "No, he isn't going to come — he's busy.", "feedback": "Ответьте коротко: Yes, I am. / No, he isn't going to come." }
+          ]
+        },
+        {
+          "type": "writing",
+          "id": "use-writing",
+          "title": "Сообщение другу",
+          "instruction": "Напишите другу сообщение (40–70 слов): что вы собираетесь делать в выходные и пригласите его присоединиться. Используйте going to минимум два раза.",
+          "prompt": "Write a message to a friend about your plans for the weekend and invite them to join you.",
+          "words": [40, 70],
+          "targets": [{ "label": "going to", "pattern": "\\bgoing to\\b" }],
+          "checklist": ["Есть минимум два плана с going to", "Есть приглашение (Do you want to…? / Would you like to…?)", "Есть день или время"]
+        }
+      ]
+    },
+    {
+      "id": "feedback",
+      "kind": "feedback",
+      "title": "Обратная связь",
+      "goal": "Увидеть, что получилось, и исправить до трёх ключевых ошибок.",
+      "minutes": 6,
+      "role": "teacher",
+      "blocks": [{ "type": "feedback", "id": "feedback-main", "title": "Разбор занятия" }]
+    },
+    {
+      "id": "wrapup",
+      "kind": "wrapup",
+      "title": "Итог",
+      "goal": "Отметить, что получается, и увидеть, что пойдёт в повторение.",
+      "minutes": 3,
+      "role": "planner",
+      "blocks": [
+        {
+          "type": "summary",
+          "id": "wrapup-summary",
+          "cando": ["Могу рассказать о своих планах с be going to", "Могу задать вопрос о планах другого человека", "Могу договориться о дне и времени встречи"],
+          "next": "Дальше: будущее с will — обещания и спонтанные решения."
+        }
+      ]
+    }
+  ]
+}
