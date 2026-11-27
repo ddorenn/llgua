@@ -36,6 +36,7 @@ export function ResultView({
   retestAfter,
   onRestart,
   onFullMode,
+  onDispute,
 }: {
   result: PlacementResult;
   completedAt?: string | null;
@@ -44,6 +45,7 @@ export function ResultView({
   retestAfter: string | null;
   onRestart: () => void;
   onFullMode: () => void;
+  onDispute: (direction: "higher" | "lower" | "other", comment: string) => Promise<string | null>;
 }) {
   const r = result;
   return (
@@ -55,6 +57,10 @@ export function ResultView({
           <h1 className="mt-4 font-[family-name:var(--font-display)] text-[64px] font-semibold leading-[0.92] tracking-[-0.05em] text-fg sm:text-[96px]">
             {r.overall == null ? "—" : r.aboveRange || r.overallLabel.startsWith("не ниже") ? "B2+" : r.overallLabel}
           </h1>
+          <p className="mt-3 inline-flex items-center gap-2 rounded-full border border-line px-3 py-1 text-[12.5px] text-muted">
+            <span className="size-1.5 rounded-full bg-warning" aria-hidden />
+            Предварительно · не подтверждённый уровень CEFR
+          </p>
           {(r.aboveRange || r.overallLabel.startsWith("не ниже") || r.mode === "zero") && <p className="mt-3 text-[18px] text-fg">{r.overallLabel}</p>}
           <p className="mt-5 max-w-[46ch] text-[17px] leading-relaxed text-muted">{r.meaning}</p>
         </Reveal>
@@ -77,6 +83,21 @@ export function ResultView({
           </div>
         </Reveal>
       </section>
+
+      {r.recheck && (
+        <Reveal delay={0.12}>
+          <div className="rounded-2xl border border-line bg-card p-5 text-[14.5px] leading-relaxed text-muted">
+            <p className="font-medium text-fg">
+              Перепроверка {r.recheck.direction === "higher" ? "более высокого" : "более низкого"} уровня ({r.recheck.target}):{" "}
+              {r.recheck.supported ? "подтвердила ваше мнение" : "не подтвердила изменение"}
+            </p>
+            <p className="mt-1">
+              Грамматика — {r.recheck.grammar}, чтение — {r.recheck.reading}.{" "}
+              {r.recheck.changed ? `Уровень изменён: было ${r.recheck.previous}, стало ${r.overallLabel}. Маршрут пересчитан.` : "Уровень и маршрут сохранены."}
+            </p>
+          </div>
+        </Reveal>
+      )}
 
       {r.offerFullMode && (
         <Reveal delay={0.15}>
@@ -159,6 +180,7 @@ export function ResultView({
             ))}
           </ul>
         </div>
+        {!r.recheck && <DisputeBox result={r} onDispute={onDispute} />}
         <div className="mt-8 flex flex-wrap items-center gap-3">
           <Link href="/learning" className={buttonVariants({ size: "lg" })}>
             Перейти к обучению <ArrowRight />
@@ -361,6 +383,84 @@ function RouteBlock({ result }: { result: PlacementResult }) {
           </ul>
         </details>
       </aside>
+    </div>
+  );
+}
+
+function DisputeBox({ result, onDispute }: { result: PlacementResult; onDispute: (d: "higher" | "lower" | "other", c: string) => Promise<string | null> }) {
+  const [open, setOpen] = React.useState(false);
+  const [dir, setDir] = React.useState<"higher" | "lower" | "other">("higher");
+  const [comment, setComment] = React.useState("");
+  const [busy, setBusy] = React.useState(false);
+  const [msg, setMsg] = React.useState<string | null>(null);
+  if (result.dispute && result.dispute.direction === "other" && !msg) {
+    return <p className="mt-6 text-[13.5px] text-subtle">Ваш отзыв об уровне сохранён. Спасибо — он поможет откалибровать диагностику.</p>;
+  }
+  return (
+    <div className="mt-6 rounded-2xl border border-line bg-card p-5">
+      {!open ? (
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p className="text-[15px] font-medium text-fg">Не согласны с уровнем?</p>
+            <p className="text-[13.5px] text-subtle">Короткая перепроверка на соседнем уровне — около 7 минут.</p>
+          </div>
+          <Button variant="secondary" onClick={() => setOpen(true)}>
+            Сообщить о несогласии
+          </Button>
+        </div>
+      ) : (
+        <form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            setBusy(true);
+            setMsg(await onDispute(dir, comment));
+            setBusy(false);
+          }}
+        >
+          <p className="text-[15px] font-medium text-fg">Каким вам кажется ваш уровень?</p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {(
+              [
+                ["higher", "Выше"],
+                ["lower", "Ниже"],
+                ["other", "Другое"],
+              ] as const
+            ).map(([k, label]) => (
+              <button
+                key={k}
+                type="button"
+                aria-pressed={dir === k}
+                onClick={() => setDir(k)}
+                className={cn("h-10 rounded-full border px-4 text-[14px] transition-colors", dir === k ? "border-accent bg-accent-muted text-fg" : "border-line text-muted hover:text-fg")}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          <textarea
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            maxLength={1000}
+            rows={3}
+            placeholder="Почему? Например: «читаю книги в оригинале, но тест показал A2»"
+            className="mt-3 w-full rounded-xl border border-line bg-surface p-3 text-[14.5px] text-fg outline-none placeholder:text-subtle focus:border-accent"
+          />
+          <p className="mt-2 text-[12.5px] text-subtle">
+            {dir === "other"
+              ? "Отзыв сохранится и поможет откалибровать диагностику."
+              : "Сразу начнётся короткая перепроверка: 5 заданий по грамматике и один текст на соседнем уровне. Уровень изменится только если результаты это подтвердят."}
+          </p>
+          {msg && <p className="mt-2 text-[13.5px] text-fg">{msg}</p>}
+          <div className="mt-4 flex gap-2">
+            <Button type="submit" disabled={busy}>
+              {dir === "other" ? "Отправить" : "Начать перепроверку"}
+            </Button>
+            <Button variant="ghost" onClick={() => setOpen(false)} disabled={busy}>
+              Отмена
+            </Button>
+          </div>
+        </form>
+      )}
     </div>
   );
 }

@@ -117,7 +117,7 @@ export function PlacementView() {
   if (inProgress && current) {
     return (
       <div className="py-2 sm:py-4">
-        <Runner view={current} order={current.mode === "zero" ? ["zero"] : FULL_ORDER} busy={busy} error={error} onAnswer={answer} onRestart={() => void restart()} />
+        <Runner view={current} order={current.mode === "zero" ? ["zero"] : current.mode === "recheck" ? ["grammar", "reading"] : FULL_ORDER} busy={busy} error={error} onAnswer={answer} onRestart={() => void restart()} />
       </div>
     );
   }
@@ -132,6 +132,16 @@ export function PlacementView() {
           pilotEarlyRetake={overview.pilotEarlyRetake}
           retestAfter={overview.retestAfter}
           onRestart={() => void restart()}
+          onDispute={async (direction, comment) => {
+            try {
+              const o = await placementApi.dispute(current.id, direction, comment);
+              setOverview(o);
+              window.scrollTo({ top: 0 });
+              return o.dispute?.message ?? null;
+            } catch (e) {
+              return ERROR_TEXT[(e as PlacementError).code] ?? "Не удалось отправить. Попробуйте ещё раз.";
+            }
+          }}
           onFullMode={() => void restart({ ...current.intake, experience: "some", selfLevel: "A1" })}
         />
       </div>

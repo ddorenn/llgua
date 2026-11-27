@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth/server";
-import { abandonPlacement, getOverview, IntakeSchema, startPlacement } from "@/lib/placement/service";
+import { abandonPlacement, disputePlacement, getOverview, IntakeSchema, startPlacement } from "@/lib/placement/service";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -22,6 +22,7 @@ export async function GET() {
 /**
  * POST { action: "start", intake } → start a new diagnostic (an unfinished one is closed).
  * POST { action: "abandon", placementId } → stop the current attempt.
+ * POST { action: "dispute", placementId, direction, comment } → disagreement + optional short re-check.
  */
 export async function POST(request: Request) {
   const user = await getCurrentUser();
@@ -34,6 +35,15 @@ export async function POST(request: Request) {
       const r = await startPlacement(user, intake.data);
       if (!r.ok) return NextResponse.json({ error: r.error }, { status: 409 });
       return NextResponse.json(r.overview, { headers: noStore });
+    }
+    if (body?.action === "dispute" && typeof body.placementId === "string") {
+      const b = body as { direction?: unknown; comment?: unknown };
+      const direction = b.direction === "higher" || b.direction === "lower" || b.direction === "other" ? b.direction : null;
+      if (!direction) return NextResponse.json({ error: "bad_request" }, { status: 400 });
+      const comment = typeof b.comment === "string" ? b.comment.slice(0, 1000) : "";
+      const r = await disputePlacement(user, body.placementId, direction, comment);
+      if (!r.ok) return NextResponse.json({ error: r.error }, { status: 409 });
+      return NextResponse.json({ ...r.overview, dispute: { recheck: r.recheck, message: r.message } }, { headers: noStore });
     }
     if (body?.action === "abandon" && typeof body.placementId === "string") {
       return NextResponse.json(await abandonPlacement(user, body.placementId), { headers: noStore });

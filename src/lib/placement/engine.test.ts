@@ -260,3 +260,28 @@ test("learner with grammar holes gets review items", () => {
   if (visitedA1) assert.ok(result.gaps.some((g) => g.kind === "grammar"));
   assert.equal(result.route.level, "B1");
 });
+
+test("re-check: higher claim supported only when both parts pass at the band above", async () => {
+  const { createRecheckState } = await import("./engine");
+  const { applyRecheck } = await import("./result");
+  const base = run(3, intake()); // A2+
+  for (const [trueBand, expectSupported] of [[4, true], [3, false]] as const) {
+    const st = createRecheckState({ parentId: "p", direction: "higher", target: 4, grammarBlock: 2 });
+    const intk = intake();
+    for (let i = 0; i < 20; i++) {
+      const step = currentStep(st, intk, SEED, 0);
+      if (step.kind === "done") break;
+      const r = applyAnswer(st, intk, answerFor(step, st.seq, (id) => itemBand(id) <= trueBand), SEED, 0);
+      assert.ok(r.ok);
+    }
+    assert.equal(st.grammar!.itemsUsed, 5, "one block");
+    assert.equal(st.reading!.runs.length, 1, "one testlet");
+    const out = applyRecheck(base.result, st, intk, new Date());
+    assert.equal(out.recheck!.supported, expectSupported);
+    if (expectSupported) {
+      assert.equal(out.overallLabel, "B1");
+      assert.equal(out.route.startModule, "B1-M1");
+      assert.equal(out.confidence, base.result.confidence, "confidence never raised");
+    } else assert.equal(out.overallLabel, base.result.overallLabel);
+  }
+});

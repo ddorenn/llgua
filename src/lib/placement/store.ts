@@ -3,6 +3,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import type { PlacementState, ResponseRecord } from "./engine";
 import type { Intake, PlacementResult } from "./types";
+import { serverWrite as signedWrite } from "@/lib/db/signed";
 
 /**
  * Placement persistence.
@@ -16,7 +17,8 @@ export interface PlacementRecord {
   id: string;
   userId: string;
   status: "in_progress" | "completed" | "abandoned";
-  mode: "full" | "zero";
+  mode: "full" | "zero" | "recheck";
+  parentId?: string | null;
   configVersion: string;
   bankVersion: string;
   intake: Intake;
@@ -47,6 +49,9 @@ export interface PlacementStore {
   responses(placementId: string): Promise<StoredResponse[]>;
   setStatus(id: string, status: PlacementRecord["status"]): Promise<void>;
   setConsent(kind: "voice_recording" | "text_storage", granted: boolean): Promise<void>;
+  /** Replace the result of a completed placement (re-check outcome). */
+  setResult(id: string, result: PlacementResult): Promise<void>;
+  addFeedback(placementId: string, direction: "higher" | "lower" | "other", comment: string): Promise<void>;
 }
 
 /* ------------------------------------------------------------- supabase */
@@ -56,6 +61,7 @@ type Row = {
   user_id: string;
   status: PlacementRecord["status"];
   mode: PlacementRecord["mode"];
+  parent_id: string | null;
   config_version: string;
   bank_version: string;
   intake: Intake;
@@ -71,6 +77,7 @@ const fromRow = (r: Row): PlacementRecord => ({
   userId: r.user_id,
   status: r.status,
   mode: r.mode,
+  parentId: r.parent_id,
   configVersion: r.config_version,
   bankVersion: r.bank_version,
   intake: r.intake,
@@ -85,7 +92,7 @@ const fromRow = (r: Row): PlacementRecord => ({
 async function supabaseStore(userId: string): Promise<PlacementStore> {
   const { createSupabaseServerClient } = await import("@/lib/db/supabase/server");
   const db = await createSupabaseServerClient();
-  const cols = "id,user_id,status,mode,config_version,bank_version,intake,state,result,seq,started_at,updated_at,completed_at";
+  const cols = "id,user_id,status,mode,parent_id,config_version,bank_version,intake,state,result,seq,started_at,updated_at,completed_at";
   const fail = (what: string, e: { message?: string } | null) => {
     if (e) throw new Error(`placement ${what}: ${e.message ?? "db error"}`);
   };
@@ -101,6 +108,7 @@ async function supabaseStore(userId: string): Promise<PlacementStore> {
         .select(cols)
         .eq("user_id", userId)
         .eq("status", "completed")
+        .neq("mode", "recheck")
         .order("completed_at", { ascending: false })
         .limit(1)
         .maybeSingle();
@@ -108,49 +116,46 @@ async function supabaseStore(userId: string): Promise<PlacementStore> {
       return data ? fromRow(data as Row) : null;
     },
     async create(rec) {
-      const { data, error } = await db
-        .from("placements")
-        .insert({ user_id: userId, mode: rec.mode, config_version: rec.configVersion, bank_version: rec.bankVersion, intake: rec.intake, state: rec.state })
-        .select(cols)
-        .single();
+      const id = crypto.randomUUID();
+      await signedWrite(db, userId, "placement.create", {
+        id,
+        mode: rec.mode,
+        configVersion: rec.configVersion,
+        bankVersion: rec.bankVersion,
+        intake: rec.intake,
+        state: rec.state,
+        parentId: rec.parentId ?? "",
+      });
+      const { data, error } = await db.from("placements").select(cols).eq("id", id).eq("user_id", userId).single();
       fail("create", error);
       return fromRow(data as Row);
     },
     async save(rec, expectedSeq) {
-      const { data, error } = await db
-        .from("placements")
-        .update({
-          state: rec.state,
-          result: rec.result,
-          seq: rec.seq,
-          status: rec.status,
-          completed_at: rec.completedAt,
-          updated_at: new Date().toISOString(),
-        })
-        .eq("id", rec.id)
-        .eq("user_id", userId)
-        .eq("seq", expectedSeq)
-        .select("id");
-      fail("save", error);
-      return data && data.length ? "ok" : "conflict";
+      const n = await signedWrite(db, userId, "placement.save", {
+        id: rec.id,
+        expectedSeq,
+        state: rec.state,
+        result: rec.result,
+        seq: rec.seq,
+        status: rec.status,
+        completedAt: rec.completedAt ?? "",
+      });
+      return n ? "ok" : "conflict";
     },
     async addResponse(placementId, r) {
-      const { error } = await db.from("placement_responses").insert({
-        placement_id: placementId,
-        user_id: userId,
-        item_id: r.itemId,
-        item_version: r.itemVersion,
+      const n = await signedWrite(db, userId, "placement.response", {
+        placementId,
+        itemId: r.itemId,
+        itemVersion: r.itemVersion,
         seq: r.seq,
         section: r.section,
-        band: r.band,
+        band: r.band ?? "",
         response: r.answer,
         correct: r.correct,
         ms: Math.round(r.ms),
-        suspect_guess: r.suspectGuess,
+        suspectGuess: r.suspectGuess,
       });
-      if (error?.code === "23505") return "conflict";
-      fail("addResponse", error);
-      return "ok";
+      return n ? "ok" : "conflict";
     },
     async responses(placementId) {
       const { data, error } = await db
@@ -174,12 +179,16 @@ async function supabaseStore(userId: string): Promise<PlacementStore> {
       }));
     },
     async setStatus(id, status) {
-      const { error } = await db.from("placements").update({ status, updated_at: new Date().toISOString() }).eq("id", id).eq("user_id", userId);
-      fail("setStatus", error);
+      await signedWrite(db, userId, "placement.status", { id, status });
     },
     async setConsent(kind, granted) {
-      const { error } = await db.from("learner_consents").upsert({ user_id: userId, kind, granted, decided_at: new Date().toISOString() });
-      fail("setConsent", error);
+      await signedWrite(db, userId, "consent.set", { kind, granted });
+    },
+    async setResult(id, result) {
+      await signedWrite(db, userId, "placement.result", { id, result });
+    },
+    async addFeedback(placementId, direction, comment) {
+      await signedWrite(db, userId, "placement.feedback", { placementId, direction, comment: comment.slice(0, 1000) });
     },
   };
 }
@@ -190,6 +199,7 @@ interface FileData {
   placements: PlacementRecord[];
   responses: Record<string, StoredResponse[]>;
   consents: Record<string, { granted: boolean; decidedAt: string }>;
+  feedback?: { placementId: string; direction: string; comment: string; at: string }[];
 }
 
 const locks = new Map<string, Promise<unknown>>();
@@ -231,7 +241,7 @@ function fileStore(userId: string): PlacementStore {
   const sorted = (d: FileData) => [...d.placements].sort((a, b) => b.startedAt.localeCompare(a.startedAt));
   return {
     latest: () => tx((d) => sorted(d)[0] ?? null, false),
-    latestCompleted: () => tx((d) => sorted(d).find((p) => p.status === "completed") ?? null, false),
+    latestCompleted: () => tx((d) => sorted(d).find((p) => p.status === "completed" && p.mode !== "recheck") ?? null, false),
     create: (rec) =>
       tx((d) => {
         const now = new Date().toISOString();
@@ -266,6 +276,18 @@ function fileStore(userId: string): PlacementStore {
     setConsent: (kind, granted) =>
       tx((d) => {
         d.consents[kind] = { granted, decidedAt: new Date().toISOString() };
+      }),
+    setResult: (id, result) =>
+      tx((d) => {
+        const p = d.placements.find((x) => x.id === id && x.status === "completed");
+        if (p) {
+          p.result = result;
+          p.updatedAt = new Date().toISOString();
+        }
+      }),
+    addFeedback: (placementId, direction, comment) =>
+      tx((d) => {
+        (d.feedback ??= []).push({ placementId, direction, comment: comment.slice(0, 1000), at: new Date().toISOString() });
       }),
   };
 }

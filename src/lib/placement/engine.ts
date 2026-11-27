@@ -51,6 +51,9 @@ export interface LadderState {
   elapsed?: number;
   fast: number;
   outcome: Outcome | null;
+  /** Re-check mode: one fixed block at one band, no ladder. */
+  single?: boolean;
+  fixedBlock?: 1 | 2;
 }
 
 export interface TestletState {
@@ -63,6 +66,7 @@ export interface TestletState {
   startedAt: number;
   fast: number;
   outcome: Outcome | null;
+  single?: boolean;
 }
 
 export interface ZeroState {
@@ -72,9 +76,18 @@ export interface ZeroState {
   outcome: { preA1Passed: boolean; total: number; correct: number } | null;
 }
 
+export interface RecheckMeta {
+  parentId: string;
+  direction: "higher" | "lower";
+  /** Band being checked (one above or below the reported level). */
+  target: number;
+  grammarBlock: 1 | 2;
+}
+
 export interface PlacementState {
   v: 1;
-  mode: "full" | "zero";
+  mode: "full" | "zero" | "recheck";
+  recheck?: RecheckMeta;
   order: SectionId[];
   idx: number;
   seq: number;
@@ -118,6 +131,11 @@ export function createState(intake: Intake, cfg: Config = defaultConfig): Placem
   return st;
 }
 
+/** Short re-check (14 §15): one grammar block and one reading testlet at a neighbouring band. */
+export function createRecheckState(meta: RecheckMeta): PlacementState {
+  return { v: 1, mode: "recheck", recheck: meta, order: ["grammar", "reading"], idx: 0, seq: 0, pending: null };
+}
+
 /** Start band of Vocabulary from the self-assessment (14 §5.1): one band below the self-rated level, A2 when unknown. */
 export function vocabStartBand(intake: Intake): number {
   const self = SELF_BAND[intake.selfLevel];
@@ -142,12 +160,21 @@ function initSection(st: PlacementState, section: SectionId, intake: Intake, now
       st.vocabulary = newLadder("vocabulary", vocabStartBand(intake), now);
       break;
     case "grammar": {
+      if (st.recheck) {
+        st.grammar = { ...newLadder("grammar", st.recheck.target, now), single: true, fixedBlock: st.recheck.grammarBlock };
+        break;
+      }
       const v = st.vocabulary?.outcome;
       st.grammar = newLadder("grammar", v ? clamp(v.band, 0, TOP) : 2, now);
       break;
     }
     case "reading":
     case "listening": {
+      if (st.recheck) {
+        const b = st.recheck.target;
+        st[section] = { kind: "testlet", section, startBand: b, band: b, runs: [], current: null, startedAt: now, fast: 0, outcome: null, single: true };
+        break;
+      }
       const p0 = Math.min(st.vocabulary?.outcome?.band ?? 2, st.grammar?.outcome?.band ?? 2);
       st[section] = { kind: "testlet", section, startBand: clamp(p0 - 1, 0, TOP), band: clamp(p0 - 1, 0, TOP), runs: [], current: null, startedAt: now, fast: 0, outcome: null };
       break;
@@ -247,6 +274,12 @@ export function closeBlock(l: LadderState, cfg: Config = defaultConfig) {
   l.blocksDone++;
   l.block = null;
 
+  if (l.single) {
+    r.passed = score >= C.passThresholdBlock;
+    l.outcome = { band: r.passed ? b : b - 1, ceiling: false, reason: "boundary", confidence: 1, borderline: false, assessed: true };
+    return;
+  }
+
   let next: number;
   if (score >= C.passThresholdBlock) {
     r.passed = true;
@@ -292,7 +325,7 @@ function startBlock(l: LadderState, now: number, cfg: Config): boolean {
     return false;
   }
   const used = rec(l, l.band).blocks.length;
-  const blockNo = used + 1;
+  const blockNo = l.fixedBlock ?? used + 1;
   const items = ladderItems(l.section).filter((i) => i.band === BANDS[l.band] && i.block === blockNo).map((i) => i.id);
   if (items.length < C.blockSize) {
     finishLadder(l, "limit", cfg);
@@ -326,6 +359,11 @@ export function closeTestlet(t: TestletState, cfg: Config = defaultConfig) {
   t.runs.push({ band: cur.band, id: cur.id, score: cur.correct });
   t.current = null;
   const b = cur.band;
+  if (t.single) {
+    const passed = cur.correct >= cfg.testlet.pass;
+    t.outcome = { band: passed ? b : b - 1, ceiling: false, reason: "boundary", confidence: 1, borderline: false, assessed: true };
+    return;
+  }
   const byBand: Record<number, { passed: boolean | null }> = {};
   for (const r of t.runs) byBand[r.band] = { passed: r.score >= cfg.testlet.pass ? true : r.score <= cfg.testlet.fail ? false : null };
 

@@ -128,6 +128,10 @@ export interface PlacementResult {
   recommendations: string[];
   disclaimers: string[];
   offerFullMode?: boolean;
+  /** Learner reported disagreement with the level (14 §15). */
+  dispute?: { direction: "higher" | "lower" | "other"; at: string };
+  /** Outcome of the short re-check that followed the disagreement. */
+  recheck?: { direction: "higher" | "lower"; target: string; supported: boolean; at: string; grammar: string; reading: string; changed: boolean; previous: string };
   route: Route;
   configVersion: string;
   bankVersion: string;
@@ -138,7 +142,7 @@ export interface PlacementResult {
 export interface PlacementView {
   id: string;
   status: "in_progress" | "completed" | "abandoned";
-  mode: "full" | "zero";
+  mode: "full" | "zero" | "recheck";
   startedAt: string;
   completedAt?: string | null;
   seq: number;

@@ -35,6 +35,8 @@ export const placementApi = {
   get: () => call("/api/placement"),
   start: (intake: Intake) => call("/api/placement", { method: "POST", body: JSON.stringify({ action: "start", intake }) }),
   abandon: (placementId: string) => call("/api/placement", { method: "POST", body: JSON.stringify({ action: "abandon", placementId }) }),
+  dispute: (placementId: string, direction: "higher" | "lower" | "other", comment: string) =>
+    call("/api/placement", { method: "POST", body: JSON.stringify({ action: "dispute", placementId, direction, comment }) }) as Promise<Overview & { dispute?: { recheck: boolean; message: string } }>,
   answer: (placementId: string, answer: Answer) => call("/api/placement/answer", { method: "POST", body: JSON.stringify({ placementId, answer }) }),
 };
 
@@ -50,4 +52,5 @@ export const ERROR_TEXT: Record<string, string> = {
   retest_too_soon: "Повторная диагностика пока недоступна.",
   db_error: "Не удалось сохранить. Попробуйте ещё раз через минуту.",
   unauthorized: "Сессия истекла — войдите снова.",
+  recheck_done: "Перепроверка по этой диагностике уже проводилась.",
 };

@@ -2,8 +2,8 @@ import "server-only";
 import { z } from "zod";
 import type { CurrentUser } from "@/lib/auth/server";
 import { BANK_VERSION, config, grammar, listening, reading, vocabulary, writing } from "./bank";
-import { applyAnswer, createState, currentStep, type ApplyError } from "./engine";
-import { computeResult } from "./result";
+import { applyAnswer, createRecheckState, createState, currentStep, type ApplyError } from "./engine";
+import { applyRecheck, computeResult, sublevelToBand } from "./result";
 import { placementStore, type PlacementRecord, type PlacementStore } from "./store";
 import type { Answer, Intake, PlacementView } from "./types";
 
@@ -138,13 +138,23 @@ export async function answerPlacement(user: CurrentUser, placementId: string, an
   rec.seq = rec.state.seq;
   const step = currentStep(rec.state, rec.intake, rec.id, Date.now());
   if (step.kind === "done") {
-    const responses = await store.responses(rec.id);
-    rec.result = computeResult(rec.state, responses, rec.intake, new Date());
     rec.status = "completed";
     rec.completedAt = new Date().toISOString();
+    if (rec.mode === "recheck") {
+      rec.result = null;
+    } else {
+      const responses = await store.responses(rec.id);
+      rec.result = computeResult(rec.state, responses, rec.intake, new Date());
+    }
   }
   const saved = await store.save(rec, expectedSeq);
   if (saved === "conflict") return { ok: false, error: "conflict", overview: await overview(store) };
+  if (rec.status === "completed" && rec.mode === "recheck" && rec.state.recheck) {
+    const parent = await store.latestCompleted();
+    if (parent?.id === rec.state.recheck.parentId && parent.result) {
+      await store.setResult(parent.id, applyRecheck(parent.result, rec.state, parent.intake, new Date()));
+    }
+  }
   return { ok: true, overview: await overview(store) };
 }
 
@@ -153,4 +163,51 @@ export async function abandonPlacement(user: CurrentUser, placementId: string) {
   const rec = await store.latest();
   if (rec && rec.id === placementId && rec.status === "in_progress") await store.setStatus(rec.id, "abandoned");
   return overview(store);
+}
+
+export type DisputeOutcome =
+  | { ok: true; overview: Overview; recheck: boolean; message: string }
+  | { ok: false; error: "not_found" | "recheck_done" };
+
+/**
+ * "Не согласен с уровнем" (14 §15): store the disagreement and, for "higher" / "lower",
+ * start a short re-check at the neighbouring band. The level never changes without new evidence.
+ */
+export async function disputePlacement(user: CurrentUser, placementId: string, direction: "higher" | "lower" | "other", comment: string): Promise<DisputeOutcome> {
+  const store = await placementStore(user);
+  const parent = await store.latestCompleted();
+  if (!parent || parent.id !== placementId || !parent.result) return { ok: false, error: "not_found" };
+  if (parent.result.recheck) return { ok: false, error: "recheck_done" };
+  await store.addFeedback(parent.id, direction, comment);
+  const at = new Date().toISOString();
+  await store.setResult(parent.id, { ...parent.result, dispute: { direction, at } });
+
+  const res = parent.result;
+  const band = res.overall == null ? -1 : sublevelToBand(res.overall);
+  let target: number | null = null;
+  if (direction === "higher" && !res.aboveRange && !res.overallLabel.startsWith("не ниже") && band < 7) target = band + 1;
+  if (direction === "lower" && band > 0) target = band - 1;
+  if (direction === "other" || target == null) {
+    const message =
+      direction === "other"
+        ? "Спасибо — отзыв сохранён и будет учтён при калибровке диагностики."
+        : direction === "higher"
+          ? "Ваш результат уже на верхней границе диапазона диагностики — перепроверка выше невозможна. Отзыв сохранён."
+          : "Ниже начального уровня перепроверить нельзя — программа и так начинается с основ. Отзыв сохранён.";
+    return { ok: true, overview: await overview(store), recheck: false, message };
+  }
+
+  const latest = await store.latest();
+  if (latest?.status === "in_progress") await store.setStatus(latest.id, "abandoned");
+  // Use the grammar block the learner has not seen at that band, when possible.
+  const seen = (await store.responses(parent.id)).filter((r) => r.section === "grammar" && r.band === target).length;
+  await store.create({
+    mode: "recheck",
+    parentId: parent.id,
+    configVersion: config.version,
+    bankVersion: BANK_VERSION,
+    intake: parent.intake,
+    state: createRecheckState({ parentId: parent.id, direction, target, grammarBlock: seen > 0 && seen <= 5 ? 2 : 1 }),
+  });
+  return { ok: true, overview: await overview(store), recheck: true, message: "Короткая перепроверка: 5 заданий по грамматике и один текст." };
 }

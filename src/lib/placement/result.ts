@@ -81,6 +81,58 @@ const GOAL_SKILLS: Record<Goal, SkillKey[]> = {
   self: [],
 };
 
+/**
+ * Apply a finished re-check to the parent result. Conservative: the level moves by at most one step
+ * and only when the re-check supports the learner's claim; confidence stays as it was (never raised).
+ */
+export function applyRecheck(parent: PlacementResult, st: PlacementState, intake: Intake, now: Date, cfg: Config = defaultConfig): PlacementResult {
+  const meta = st.recheck!;
+  const g = st.grammar?.outcome;
+  const r = st.reading?.outcome;
+  const gPassed = g?.band === meta.target;
+  const rPassed = r?.band === meta.target;
+  // Higher: both parts at the band above must pass. Lower: failing the band below supports the claim.
+  const supported = meta.direction === "higher" ? gPassed && rPassed : !gPassed && !rPassed;
+  const previous = parent.overallLabel;
+  let overall = parent.overall;
+  let changed = false;
+  if (supported && overall != null) {
+    const next = meta.direction === "higher" ? bandToSublevel(meta.target, null, cfg) : Math.max(-1, bandToSublevel(meta.target, null, cfg));
+    if (next !== overall) {
+      overall = next;
+      changed = true;
+    }
+  }
+  const out: PlacementResult = {
+    ...parent,
+    overall,
+    overallLabel: overall == null ? parent.overallLabel : sublevelLabel(overall),
+    meaning: overall != null ? MEANING[overall] : parent.meaning,
+    recheck: {
+      direction: meta.direction,
+      target: BANDS[meta.target],
+      supported,
+      at: now.toISOString(),
+      grammar: gPassed ? "пройдено" : "не пройдено",
+      reading: rPassed ? "пройдено" : "не пройдено",
+      changed,
+      previous,
+    },
+    confidenceReasons: changed
+      ? [...parent.confidenceReasons.filter((x) => !x.startsWith("уровень изменён")), `уровень изменён по короткой перепроверке (было ${previous})`]
+      : parent.confidenceReasons,
+    computedAt: now.toISOString(),
+  };
+  if (changed) {
+    out.route = buildRoute({ overall, aboveRange: false, gaps: parent.gaps, skills: parent.skills, components: parent.components, intake, mode: "full", cfg });
+    out.recommendations = [
+      meta.direction === "higher" ? `Перепроверка подтвердила более высокий уровень: старт смещён на ${out.route.startModule}.` : `Перепроверка показала, что лучше начать раньше: старт смещён на ${out.route.startModule}.`,
+      ...parent.recommendations.filter((x) => !x.startsWith("Начните с модуля")),
+    ].slice(0, 5);
+  }
+  return out;
+}
+
 export function computeResult(st: PlacementState, responses: ResponseRecord[], intake: Intake, now: Date, cfg: Config = defaultConfig): PlacementResult {
   return st.mode === "zero" ? zeroResult(st, intake, now, cfg) : fullResult(st, responses, intake, now, cfg);
 }
