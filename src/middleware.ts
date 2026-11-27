@@ -9,6 +9,8 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   // Public operational checks (they reveal no data).
   if (pathname.startsWith("/api/health/")) return NextResponse.next();
+  // Open to everyone, signed in or not: the privacy notice and the early-access form endpoint.
+  if (pathname === "/privacy" || pathname === "/api/leads") return NextResponse.next();
   const isLanding = pathname === "/";
   const isPublic = isLanding || PUBLIC_PATHS.some((p) => pathname === p || pathname.startsWith(`${p}/`));
   const isApi = pathname.startsWith("/api/");

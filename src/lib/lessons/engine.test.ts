@@ -88,3 +88,22 @@ test("navigation walks every stage to the end", () => {
   assert.equal(steps, total - 1);
   assert.equal(s.stage, lesson.stages.length - 1);
 });
+
+test("server grading by key ignores the client's verdict", async () => {
+  const { gradeByKey, sessionFromAttempts } = await import("./engine");
+  assert.deepEqual(gradeByKey(lesson, "practice-c1", { choice: 0 }), { ok: true, skill: "grammar", answer: "are going to" });
+  assert.equal(gradeByKey(lesson, "practice-c1", { choice: 1 })?.ok, false);
+  assert.equal(gradeByKey(lesson, "practice-g1", { text: "I'm going to book" })?.ok, true);
+  assert.equal(gradeByKey(lesson, "input-listen/q2", { choice: 1 })?.skill, "listening");
+  assert.equal(gradeByKey(lesson, "use-dialogue/s2", { choice: 0 })?.ok, true);
+  assert.equal(gradeByKey(lesson, "practice-match", { wrong: 2 })?.ok, false);
+  assert.equal(gradeByKey(lesson, "warmup-review/w:abc", { text: "x" }), null, "learner-owned review items are not server-gradable");
+  assert.equal(gradeByKey(lesson, "nope", { choice: 0 }), null);
+  const s = sessionFromAttempts(lesson, [
+    { item_key: "practice-g1", try_no: 1, ok: false, answer: "book", created_at: "2026-01-01" },
+    { item_key: "practice-g1", try_no: 2, ok: true, answer: "am going to book", created_at: "2026-01-02" },
+    { item_key: "practice-x1", try_no: 1, ok: true, answer: "x", created_at: "2026-01-02" },
+  ], {});
+  assert.deepEqual(s.attempts["practice-g1"], { ok: true, firstOk: false, tries: 2, answer: "book", at: "2026-01-02" });
+  assert.ok(s.branches.includes("practice"), "branch inferred from branch-only attempts");
+});

@@ -18,6 +18,7 @@ export const ru: Dictionary = {
     speaking: "Разговорная практика",
     writing: "Письмо",
     placement: "Диагностика",
+    report: "Отчёт",
     progress: "Прогресс",
     assessments: "Тестирование",
     library: "Библиотека",

@@ -16,8 +16,8 @@ import { TutorExplain } from "./tutor";
 export interface Ctx {
   lessonId: string;
   session: LessonSession;
-  /** Record a graded answer. Returns the stored attempt. */
-  record: (key: string, ok: boolean, answer: string) => void;
+  /** Record a graded answer (raw answer goes to the server, which grades it again). */
+  record: (key: string, ok: boolean, answer: string, raw: { choice?: number; text?: string; wrong?: number }) => void;
   attempt: (key: string) => LessonAttempt | undefined;
   ai: boolean;
 }
@@ -161,7 +161,7 @@ export function ChoiceQuestion({
   const submit = (i: number) => {
     if (done) return;
     setPicked(i);
-    ctx.record(akey, i === answer, options[i]);
+    ctx.record(akey, i === answer, options[i], { choice: i });
   };
   return (
     <div>
@@ -224,7 +224,7 @@ export function GapQuestion({ ctx, akey, prompt, answers, explanation, hint, onA
             if (!text.trim() || ru) return;
             const ok = checkGap(text, answers, prompt);
             const first = !att;
-            ctx.record(akey, ok, text.trim());
+            ctx.record(akey, ok, text.trim(), { text: text.trim() });
             onAnswered?.(ok, first);
             if (!ok) setText("");
           }}
@@ -308,7 +308,7 @@ export function OrderBlock({ ctx, block }: { ctx: Ctx; block: BlockOf<"order"> }
             disabled={picked.length !== tokens.length}
             onClick={() => {
               const ok = checkOrder(sentence, block.answers);
-              ctx.record(block.id, ok, sentence);
+              ctx.record(block.id, ok, sentence, { text: sentence });
               if (!ok) setPicked([]);
             }}
           >
@@ -359,7 +359,7 @@ export function MatchBlock({ ctx, block }: { ctx: Ctx; block: BlockOf<"match"> }
       const m = [...matched, left];
       setMatched(m);
       setLeft(null);
-      if (m.length === block.pairs.length) ctx.record(block.id, wrong === 0, wrong === 0 ? "все пары верно" : `ошибок: ${wrong}`);
+      if (m.length === block.pairs.length) ctx.record(block.id, wrong === 0, wrong === 0 ? "все пары верно" : `ошибок: ${wrong}`, { wrong });
     } else {
       setWrong((w) => w + 1);
       setFlash(ri);
@@ -650,7 +650,7 @@ function DialogueStep({ ctx, blockId, partner, step }: { ctx: Ctx; blockId: stri
         step.options ? (
           <div className="flex flex-col items-end gap-2">
             {step.options.map((o, i) => (
-              <button key={i} type="button" onClick={() => ctx.record(key, checkDialogue(step, { choice: i }), o)} className="lang max-w-[90%] rounded-2xl rounded-tr-md border border-line bg-card px-4 py-2.5 text-right text-[16px] text-fg hover:border-accent">
+              <button key={i} type="button" onClick={() => ctx.record(key, checkDialogue(step, { choice: i }), o, { choice: i })} className="lang max-w-[90%] rounded-2xl rounded-tr-md border border-line bg-card px-4 py-2.5 text-right text-[16px] text-fg hover:border-accent">
                 {o}
               </button>
             ))}
@@ -660,7 +660,7 @@ function DialogueStep({ ctx, blockId, partner, step }: { ctx: Ctx; blockId: stri
             className="flex gap-2 pl-11"
             onSubmit={(e) => {
               e.preventDefault();
-              if (text.trim()) ctx.record(key, checkDialogue(step, { text }), text.trim());
+              if (text.trim()) ctx.record(key, checkDialogue(step, { text }), text.trim(), { text: text.trim() });
             }}
           >
             <input

@@ -13,6 +13,7 @@ import { checkInput } from "@/lib/placement/scoring";
 import { dailyQueue, newItem, wordId } from "@/lib/srs";
 import type { LessonAttempt, LessonSession } from "@/lib/store/types";
 import { cn, plural } from "@/lib/utils";
+import { completeLessonOnServer, sendRecord } from "@/lib/records/client";
 import {
   BlockTitle, ChoiceBlock, DialogueBlock, ExplainBlock, GapBlock, ListeningBlock, MatchBlock, OrderBlock, ReadingBlock, ReviewBlock, reviewPlanFor, VocabBlock, WritingBlock, type Ctx,
 } from "./blocks";
@@ -66,15 +67,17 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
   }, [stageId, session.status, update]);
 
   const record = React.useCallback(
-    (key: string, ok: boolean, answer: string) =>
+    (key: string, ok: boolean, answer: string, raw: { choice?: number; text?: string; wrong?: number }) => {
+      sendRecord("/api/lessons/attempt", { lessonId: lesson.id, key, answer: raw });
       update((s) => {
         const prev = s.attempts[key];
         const a: LessonAttempt = prev
           ? { ...prev, ok, tries: prev.tries + 1, at: new Date().toISOString() }
           : { ok, firstOk: ok, tries: 1, answer, at: new Date().toISOString() };
         return { ...s, attempts: { ...s.attempts, [key]: a } };
-      }),
-    [update],
+      });
+    },
+    [update, lesson.id],
   );
   const ctx: Ctx = { lessonId: lesson.id, session, record, attempt: (k) => session.attempts[k], ai };
 
@@ -131,6 +134,7 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
       ),
     );
     update((s) => ({ ...s, status: "completed", completedAt: new Date().toISOString() }));
+    void completeLessonOnServer({ lessonId: lesson.id, startedAt: session.startedAt, stageMs: session.stageMs, selfAssessment: session.selfAssessment ?? {} });
   };
 
   const saveWords = (words: { word: string; translation: string; example: string }[]) => {

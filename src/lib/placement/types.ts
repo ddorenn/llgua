@@ -74,6 +74,31 @@ export interface SkillResult {
   /** Why not assessed / what limits the estimate. */
   note?: string;
   ceiling?: boolean;
+  /** A preliminary estimate that does NOT count in the level (e.g. AI writing score before an expert confirms it). */
+  preliminary?: { label: string; sublevel: number; confidence: Confidence; source: "ai" };
+  /** Who confirmed this skill when not auto-scored. */
+  confirmedBy?: "expert";
+}
+
+export type CefrBand = "below A1" | "A1" | "A2" | "B1" | "B2" | "above B2";
+
+export interface WritingAiEvaluation {
+  criteria: { name: "task" | "range" | "coherence" | "accuracy"; level: CefrBand; comment: string }[];
+  estimated_level: CefrBand;
+  confidence: Confidence;
+  strengths: string[];
+  corrections: { original: string; corrected: string; why: string }[];
+  next_step: string;
+  model: string;
+  at: string;
+  pasteFlagged: boolean;
+  words: number;
+}
+
+export interface WritingExpertEvaluation {
+  level: CefrBand;
+  comment?: string;
+  at?: string;
 }
 
 export interface Gap {
@@ -131,6 +156,8 @@ export interface PlacementResult {
   /** Learner reported disagreement with the level (14 §15). */
   dispute?: { direction: "higher" | "lower" | "other"; at: string };
   /** Outcome of the short re-check that followed the disagreement. */
+  writingAi?: WritingAiEvaluation;
+  writingExpert?: WritingExpertEvaluation;
   recheck?: { direction: "higher" | "lower"; target: string; supported: boolean; at: string; grammar: string; reading: string; changed: boolean; previous: string };
   route: Route;
   configVersion: string;

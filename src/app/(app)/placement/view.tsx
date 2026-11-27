@@ -142,6 +142,15 @@ export function PlacementView() {
               return ERROR_TEXT[(e as PlacementError).code] ?? "Не удалось отправить. Попробуйте ещё раз.";
             }
           }}
+          onEvaluateWriting={async () => {
+            try {
+              setOverview(await placementApi.evaluateWriting(current.id));
+              return null;
+            } catch (e) {
+              const err = e as PlacementError;
+              return err.code === "not_configured" ? "AI-оценка письма сейчас недоступна — текст сохранён и будет проверен специалистом." : err.code === "budget" || err.code === "rate_limited" ? "Лимит AI на сегодня исчерпан — оценка появится позже." : "Не удалось оценить письмо. Обновите страницу позже.";
+            }
+          }}
           onFullMode={() => void restart({ ...current.intake, experience: "some", selfLevel: "A1" })}
         />
       </div>

@@ -37,6 +37,7 @@ export const placementApi = {
   abandon: (placementId: string) => call("/api/placement", { method: "POST", body: JSON.stringify({ action: "abandon", placementId }) }),
   dispute: (placementId: string, direction: "higher" | "lower" | "other", comment: string) =>
     call("/api/placement", { method: "POST", body: JSON.stringify({ action: "dispute", placementId, direction, comment }) }) as Promise<Overview & { dispute?: { recheck: boolean; message: string } }>,
+  evaluateWriting: (placementId: string) => call("/api/placement", { method: "POST", body: JSON.stringify({ action: "evaluate_writing", placementId }) }),
   answer: (placementId: string, answer: Answer) => call("/api/placement/answer", { method: "POST", body: JSON.stringify({ placementId, answer }) }),
 };
 

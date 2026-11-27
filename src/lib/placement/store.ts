@@ -41,6 +41,8 @@ export type SaveOutcome = "ok" | "conflict";
 export interface PlacementStore {
   latest(): Promise<PlacementRecord | null>;
   latestCompleted(): Promise<PlacementRecord | null>;
+  /** All completed (non re-check) placements, newest first. */
+  history(): Promise<PlacementRecord[]>;
   create(rec: Omit<PlacementRecord, "id" | "userId" | "startedAt" | "updatedAt" | "completedAt" | "result" | "seq" | "status">): Promise<PlacementRecord>;
   /** Persist new state/result if the stored seq still equals `expectedSeq`. */
   save(rec: PlacementRecord, expectedSeq: number): Promise<SaveOutcome>;
@@ -114,6 +116,11 @@ async function supabaseStore(userId: string): Promise<PlacementStore> {
         .maybeSingle();
       fail("latestCompleted", error);
       return data ? fromRow(data as Row) : null;
+    },
+    async history() {
+      const { data, error } = await db.from("placements").select(cols).eq("user_id", userId).eq("status", "completed").neq("mode", "recheck").order("completed_at", { ascending: false }).limit(50);
+      fail("history", error);
+      return (data ?? []).map((r) => fromRow(r as Row));
     },
     async create(rec) {
       const id = crypto.randomUUID();
@@ -242,6 +249,7 @@ function fileStore(userId: string): PlacementStore {
   return {
     latest: () => tx((d) => sorted(d)[0] ?? null, false),
     latestCompleted: () => tx((d) => sorted(d).find((p) => p.status === "completed" && p.mode !== "recheck") ?? null, false),
+    history: () => tx((d) => sorted(d).filter((p) => p.status === "completed" && p.mode !== "recheck"), false),
     create: (rec) =>
       tx((d) => {
         const now = new Date().toISOString();

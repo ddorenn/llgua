@@ -1,9 +1,9 @@
 import "server-only";
 import { z } from "zod";
 import type { CurrentUser } from "@/lib/auth/server";
-import { BANK_VERSION, config, grammar, listening, reading, vocabulary, writing } from "./bank";
+import { BANK_VERSION, catalog, config, grammar, listening, reading, vocabulary, writing } from "./bank";
 import { applyAnswer, createRecheckState, createState, currentStep, type ApplyError } from "./engine";
-import { applyRecheck, computeResult, sublevelToBand } from "./result";
+import { applyRecheck, applyWritingEvaluations, computeResult, sublevelToBand } from "./result";
 import { placementStore, type PlacementRecord, type PlacementStore } from "./store";
 import type { Answer, Intake, PlacementView } from "./types";
 
@@ -73,6 +73,18 @@ export interface Overview {
   configVersion: string;
 }
 
+/** Route content readiness is live: a module is ready once its published lessons exist (content added as files). */
+async function withLiveReadiness(view: PlacementView | null): Promise<PlacementView | null> {
+  const route = view?.result?.route;
+  if (!route) return view;
+  const { loadLessons } = await import("@/lib/lessons/registry");
+  const mod = catalog.levels.flatMap((l) => l.modules).find((m) => m.code === route.startModule);
+  const published = (await loadLessons()).filter((l) => l.module === route.startModule && (l.status === "published" || l.status === "reviewed"));
+  const need = mod?.lessons ?? config.route.lessonsPerModule;
+  if (published.length < need) return view;
+  return { ...view!, result: { ...view!.result!, route: { ...route, content: { ready: true, message: `Модуль ${route.startModule} «${route.startTitle}» готов — можно начинать занятия.` } } } };
+}
+
 async function overview(store: PlacementStore): Promise<Overview> {
   let latest = await store.latest();
   if (latest?.status === "in_progress" && resumeExpired(latest)) {
@@ -89,8 +101,15 @@ async function overview(store: PlacementStore): Promise<Overview> {
     // Section initialisation (start bands, first block) is persisted so a reload sees the same item.
     if (JSON.stringify(latest.state) !== before) await store.save(latest, latest.seq);
   } else if (lastCompleted) {
+    // An expert review saved by the admin function is folded into the result once (level recombined).
+    const r = lastCompleted.result;
+    if (r?.writingExpert && r.skills.writing.confirmedBy !== "expert") {
+      lastCompleted.result = applyWritingEvaluations(r, lastCompleted.intake);
+      await store.setResult(lastCompleted.id, lastCompleted.result).catch(() => undefined);
+    }
     current = toView(lastCompleted, { lastCompleted });
   }
+  current = await withLiveReadiness(current);
   return {
     current,
     canStart: !ra || config.pilotAllowEarlyRetake,
@@ -210,4 +229,30 @@ export async function disputePlacement(user: CurrentUser, placementId: string, d
     state: createRecheckState({ parentId: parent.id, direction, target, grammarBlock: seen > 0 && seen <= 5 ? 2 : 1 }),
   });
   return { ok: true, overview: await overview(store), recheck: true, message: "Короткая перепроверка: 5 заданий по грамматике и один текст." };
+}
+
+/** Preliminary AI evaluation of the placement writing text (once per placement). */
+export async function evaluateWriting(user: CurrentUser, placementId: string): Promise<{ ok: true; overview: Overview } | { ok: false; error: string; message?: string }> {
+  const store = await placementStore(user);
+  const rec = await store.latestCompleted();
+  if (!rec || rec.id !== placementId || !rec.result || rec.mode !== "full") return { ok: false, error: "not_found" };
+  if (rec.result.writingAi) return { ok: true, overview: await overview(store) };
+  const w = (await store.responses(rec.id)).find((r) => r.section === "writing" && typeof r.answer.text === "string" && r.answer.text.trim());
+  if (!w) return { ok: false, error: "no_text" };
+  const task = writing.tasks.find((t) => t.id === w.itemId);
+  if (!task) return { ok: false, error: "not_found" };
+  const { evaluatePlacementWriting } = await import("@/lib/ai/tutor");
+  const words = config.writing.wordsByTier[task.tier] ?? [20, 200];
+  const r = await evaluatePlacementWriting(user, { title: task.title, instruction: task.instruction, prompt: task.prompt, tier: task.tier, words }, w.answer.text!);
+  if (!r.ok) return { ok: false, error: r.code, message: r.error };
+  const pasted = Number(w.answer.pastedChars ?? 0) >= config.writing.pasteFlagChars;
+  const next = applyWritingEvaluations(
+    {
+      ...rec.result,
+      writingAi: { ...r.data, model: r.model, at: new Date().toISOString(), pasteFlagged: pasted, words: w.answer.text!.trim().split(/\s+/).length },
+    },
+    rec.intake,
+  );
+  await store.setResult(rec.id, next);
+  return { ok: true, overview: await overview(store) };
 }

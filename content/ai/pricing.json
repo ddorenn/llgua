@@ -1,21 +1,17 @@
 {
-  "note": "Estimated USD per 1M tokens for cost accounting. Anthropic rates: first-party list prices (Haiku 5.5 up to 100K-token prompts). Groq rates: VERIFY against the current price list. Unknown models are counted with `default`.",
+  "note": "USD per 1M tokens for cost accounting. Sources and dates in `verified`. Unknown models are counted with `default`.",
   "default": {
     "input": 1.0,
     "output": 4.0
   },
   "models": {
     "openai/gpt-oss-20b": {
-      "input": 0.1,
-      "output": 0.5
+      "input": 0.075,
+      "output": 0.3
     },
     "openai/gpt-oss-120b": {
       "input": 0.15,
-      "output": 0.75
-    },
-    "llama-3.1-8b-instant": {
-      "input": 0.05,
-      "output": 0.08
+      "output": 0.6
     },
     "claude-haiku-5-5": {
       "input": 0.1,
@@ -29,5 +25,9 @@
       "input": 4.0,
       "output": 20.0
     }
+  },
+  "verified": {
+    "groq": "console.groq.com/docs/models, checked 2026-11-27",
+    "anthropic": "Anthropic list prices, checked 2026-11-27"
   }
 }

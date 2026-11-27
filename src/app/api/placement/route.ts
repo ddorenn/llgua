@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth/server";
-import { abandonPlacement, disputePlacement, getOverview, IntakeSchema, startPlacement } from "@/lib/placement/service";
+import { abandonPlacement, disputePlacement, evaluateWriting, getOverview, IntakeSchema, startPlacement } from "@/lib/placement/service";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -44,6 +44,11 @@ export async function POST(request: Request) {
       const r = await disputePlacement(user, body.placementId, direction, comment);
       if (!r.ok) return NextResponse.json({ error: r.error }, { status: 409 });
       return NextResponse.json({ ...r.overview, dispute: { recheck: r.recheck, message: r.message } }, { headers: noStore });
+    }
+    if (body?.action === "evaluate_writing" && typeof body.placementId === "string") {
+      const r = await evaluateWriting(user, body.placementId);
+      if (!r.ok) return NextResponse.json({ error: r.error, message: r.message }, { status: r.error === "not_found" || r.error === "no_text" ? 404 : r.error === "budget" || r.error === "rate_limited" ? 429 : 503 });
+      return NextResponse.json(r.overview, { headers: noStore });
     }
     if (body?.action === "abandon" && typeof body.placementId === "string") {
       return NextResponse.json(await abandonPlacement(user, body.placementId), { headers: noStore });

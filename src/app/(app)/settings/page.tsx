@@ -1,12 +1,13 @@
 "use client";
 
 import * as React from "react";
-import { Bell, Check, Database, Download, Globe2, KeyRound, Palette, Target, Trash2, User } from "lucide-react";
+import { Bell, Check, Database, Globe2, KeyRound, Palette, Target, User } from "lucide-react";
 import { ThemePicker } from "@/components/shared/theme-toggle";
 import { CEFR, SKILLS, type Cefr, type Skill } from "@/lib/content";
 import { useStore } from "@/lib/store/store";
 import type { Settings, TargetExam, TeachingLanguage } from "@/lib/store/types";
 import { cn } from "@/lib/utils";
+import { DataControls } from "@/components/account/data-controls";
 import { PageHeader, Notice, SKILL_LABEL } from "@/components/shared/page";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/section";
@@ -52,7 +53,6 @@ export default function SettingsPage() {
   const [profile, setProfile] = React.useState({ displayName: s.displayName, email: s.email });
   const [errors, setErrors] = React.useState<{ displayName?: string; email?: string }>({});
   const [savedAt, setSavedAt] = React.useState<string | null>(null);
-  const [confirmReset, setConfirmReset] = React.useState(false);
 
   const set = (patch: Partial<Settings>) => {
     actions.updateSettings(patch);
@@ -74,16 +74,6 @@ export default function SettingsPage() {
     const has = s.focusSkills.includes(sk);
     if (has && s.focusSkills.length === 1) return;
     set({ focusSkills: has ? s.focusSkills.filter((x) => x !== sk) : [...s.focusSkills, sk] });
-  }
-
-  function exportData() {
-    const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `lingua-export-${new Date().toISOString().slice(0, 10)}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
   }
 
   return (
@@ -228,20 +218,7 @@ export default function SettingsPage() {
         <Row label="Демо-данные" hint="Показывать демонстрационную аналитику с пометкой">
           <Switch checked={s.samplePreview} onChange={(v) => set({ samplePreview: v })} label="Демо-данные" />
         </Row>
-        <Row label="Экспорт данных" hint="Скачать всё в JSON">
-          <Button variant="secondary" size="sm" onClick={exportData}><Download /> Скачать</Button>
-        </Row>
-        <Row label="Сбросить прогресс" hint="Удаляет все учебные данные">
-          {confirmReset ? (
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="text-[12.5px] text-danger">Это нельзя отменить.</span>
-              <Button variant="danger" size="sm" onClick={() => { actions.resetAll(); setConfirmReset(false); }}>Да, сбросить всё</Button>
-              <Button variant="ghost" size="sm" onClick={() => setConfirmReset(false)}>Отмена</Button>
-            </div>
-          ) : (
-            <Button variant="danger" size="sm" onClick={() => setConfirmReset(true)}><Trash2 /> Сбросить</Button>
-          )}
-        </Row>
+        <DataControls />
       </Section>
     </div>
   );

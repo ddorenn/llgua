@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 import { useActionState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { AlertCircle, Eye, EyeOff, FlaskConical, Loader2, Lock } from "lucide-react";
@@ -209,6 +210,7 @@ export function LoginForm({
             </p>
             <ol className="mt-8 space-y-5">
               {[
+                ["Оставь заявку на ранний доступ", "Форма на главной странице — достаточно e-mail или Telegram."],
                 ["Получи приглашение", "Администратор создаст для тебя аккаунт и передаст логин и пароль."],
                 ["Войди в платформу", "На вкладке «Вход» введи полученные данные."],
                 ["Пройди входной тест", "Он покажет стартовую точку, и можно начинать занятия."],
@@ -228,7 +230,10 @@ export function LoginForm({
                 </motion.li>
               ))}
             </ol>
-            <Button size="lg" className="mt-10 h-13 w-full rounded-full text-[15.5px]" onClick={() => setTab("signin")}>
+            <Link href="/#early-access" className="mt-10 flex h-13 w-full items-center justify-center rounded-full bg-primary text-[15.5px] font-medium text-on-primary transition-colors hover:bg-primary-hover">
+              Оставить заявку на ранний доступ
+            </Link>
+            <Button variant="ghost" size="lg" className="mt-3 w-full rounded-full text-[15px]" onClick={() => setTab("signin")}>
               У меня уже есть данные — войти
             </Button>
           </motion.div>

@@ -4,6 +4,7 @@ import * as React from "react";
 import { APP, DEFAULT_SETTINGS } from "@/config/app";
 import { applyReview, applyStatus } from "@/lib/vocab";
 import { review as srsApply } from "@/lib/srs";
+import { sendRecord } from "@/lib/records/client";
 import { LocalStorageAdapter, type StateAdapter, type SyncStatus } from "@/lib/db/adapter";
 import { RemoteStateAdapter } from "@/lib/db/remote-adapter";
 import { getDictionary } from "@/lib/i18n";
@@ -101,7 +102,20 @@ function makeActions(update: (fn: Updater) => void) {
       update((s) => {
         const it = s.srs?.[id];
         if (!it) return s;
+        sendRecord("/api/srs/event", { itemId: id, kind: it.kind, ok });
         return { ...s, srs: { ...s.srs, [id]: srsApply(it, ok) } };
+      });
+    },
+    /** Data deletion (texts): remove writing texts from lesson sessions; keep scores. */
+    redactTexts() {
+      update((s) => {
+        const ls = { ...(s.lessonSessions ?? {}) };
+        for (const [k, v] of Object.entries(ls)) {
+          const writing = Object.fromEntries(Object.entries(v.writing).map(([id, w]) => [id, { ...w, text: "" }]));
+          ls[k] = { ...v, writing, updatedAt: new Date().toISOString() };
+        }
+        const writingOld = Object.fromEntries(Object.entries(s.writing).map(([id, w]) => [id, { ...w, draft: "", submittedText: w.submittedText ? "" : undefined, updatedAt: new Date().toISOString() }]));
+        return { ...s, lessonSessions: ls, writing: writingOld };
       });
     },
     srsRemove(id: string) {

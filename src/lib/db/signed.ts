@@ -115,3 +115,18 @@ async function directWrite(db: SupabaseClient, uid: string, op: string, d: Recor
 export async function serverWrite(db: SupabaseClient, uid: string, op: string, d: Record<string, unknown>): Promise<number> {
   return signingEnabled() ? signedWrite(db, uid, op, d) : directWrite(db, uid, op, d);
 }
+
+/** Phase 7 operations (lesson records, SRS events, data deletion) — function lingua_write2. */
+export async function signedWrite2(db: SupabaseClient, uid: string, op: string, d: Record<string, unknown>): Promise<{ n: number; log: Record<string, number> }> {
+  const payload = JSON.stringify({ op, uid, exp: Math.floor(Date.now() / 1000) + 120, d });
+  const { data, error } = await db.rpc("lingua_write2", { p_payload: payload, p_sig: signPayload(payload) });
+  if (error) throw new SignedWriteError(`${op}: ${error.message}`, error.code);
+  const r = (data ?? {}) as { n?: number; log?: Record<string, number> };
+  return { n: Number(r.n ?? 0), log: r.log ?? {} };
+}
+
+/** Anonymous signed payload (early-access form): the DB accepts it only with the server's signature. */
+export function signAnonymous(op: string, d: Record<string, unknown>) {
+  const payload = JSON.stringify({ op, uid: null, exp: Math.floor(Date.now() / 1000) + 120, d });
+  return { payload, sig: signPayload(payload) };
+}

@@ -37,6 +37,7 @@ export function ResultView({
   onRestart,
   onFullMode,
   onDispute,
+  onEvaluateWriting,
 }: {
   result: PlacementResult;
   completedAt?: string | null;
@@ -46,6 +47,7 @@ export function ResultView({
   onRestart: () => void;
   onFullMode: () => void;
   onDispute: (direction: "higher" | "lower" | "other", comment: string) => Promise<string | null>;
+  onEvaluateWriting?: () => Promise<string | null>;
 }) {
   const r = result;
   return (
@@ -129,6 +131,8 @@ export function ResultView({
           </div>
         </Reveal>
       )}
+
+      {r.mode === "full" && <WritingSection result={r} onEvaluate={onEvaluateWriting} />}
 
       {/* Strengths & gaps */}
       <Reveal delay={0.2} className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -272,7 +276,8 @@ function SkillRow({ name, s }: { name: string; s: SkillResult }) {
       )}
       <div className="hidden text-right md:block">
         <span className="text-[15px] text-fg">{s.label}</span>
-        {s.confidence && <span className="block text-[12px] text-subtle">уверенность: {CONF_TEXT[s.confidence]}</span>}
+        {s.confidence && <span className="block text-[12px] text-subtle">{s.confirmedBy === "expert" ? "подтверждено специалистом" : `уверенность: ${CONF_TEXT[s.confidence]}`}</span>}
+        {!s.assessed && s.preliminary && <span className="block text-[12px] text-accent-soft">AI · предв. {s.preliminary.label}</span>}
       </div>
     </div>
   );
@@ -462,5 +467,68 @@ function DisputeBox({ result, onDispute }: { result: PlacementResult; onDispute:
         </form>
       )}
     </div>
+  );
+}
+
+const CRIT_RU: Record<string, string> = { task: "Выполнение задачи", range: "Словарь и структуры", coherence: "Связность", accuracy: "Точность" };
+
+function WritingSection({ result, onEvaluate }: { result: PlacementResult; onEvaluate?: () => Promise<string | null> }) {
+  const ai = result.writingAi;
+  const ex = result.writingExpert;
+  const submitted = result.skills.writing.note?.includes("текст сохранён") || !!ai || !!ex;
+  const [state, setState] = React.useState<{ busy: boolean; error: string | null }>({ busy: false, error: null });
+  const started = React.useRef(false);
+  React.useEffect(() => {
+    if (!submitted || ai || ex || !onEvaluate || started.current) return;
+    started.current = true;
+    setState({ busy: true, error: null });
+    onEvaluate().then((err) => setState({ busy: false, error: err }));
+  }, [submitted, ai, ex, onEvaluate]);
+  if (!submitted) return null;
+  return (
+    <Reveal delay={0.18}>
+      <SectionHead title="Письмо" note="Оценка по рубрике CV: выполнение задачи, словарь, связность, точность" />
+      <div className="rounded-2xl border border-line bg-card p-5">
+        <div className="flex flex-wrap items-center gap-2">
+          {ex ? (
+            <span className="rounded-full bg-success/10 px-2.5 py-0.5 text-[12px] text-success">Подтверждено специалистом: {ex.level}</span>
+          ) : (
+            <span className="rounded-full border border-line px-2.5 py-0.5 text-[12px] text-subtle">Ожидает проверки специалистом</span>
+          )}
+          {ai && <span className="rounded-full bg-accent-muted px-2.5 py-0.5 text-[12px] text-accent-soft">AI · предварительно: {ai.estimated_level}</span>}
+        </div>
+        {state.busy && <p className="mt-3 text-[14px] text-muted">Оцениваем письмо по рубрике…</p>}
+        {state.error && !ai && <p className="mt-3 text-[13.5px] text-subtle">{state.error}</p>}
+        {ai && (
+          <>
+            <ul className="mt-4 divide-y divide-line/60">
+              {ai.criteria.map((c) => (
+                <li key={c.name} className="flex flex-col gap-0.5 py-2 sm:flex-row sm:gap-4">
+                  <span className="w-[190px] shrink-0 text-[13.5px] text-muted">{CRIT_RU[c.name]}</span>
+                  <span className="text-[13.5px] text-fg">
+                    <span className="font-medium">{c.level}</span> — {c.comment}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            {ai.corrections.length > 0 && (
+              <ul className="mt-3 space-y-2">
+                {ai.corrections.map((c, i) => (
+                  <li key={i} className="rounded-xl bg-surface px-3 py-2 text-[14px]">
+                    <span className="lang text-subtle line-through">{c.original}</span> → <span className="lang text-fg">{c.corrected}</span>
+                    <span className="block text-[13px] text-muted">{c.why}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <p className="mt-3 text-[13px] leading-relaxed text-subtle">
+              AI-оценка предварительная (уверенность: {CONF_TEXT[ai.confidence]}{ai.pasteFlagged ? "; текст вставлен из буфера — ненадёжно" : ""}). Она не входит в уровень, пока
+              письмо не подтвердит специалист.
+            </p>
+          </>
+        )}
+        {ex?.comment && <p className="mt-3 text-[14px] text-fg">Комментарий специалиста: {ex.comment}</p>}
+      </div>
+    </Reveal>
   );
 }

@@ -7,6 +7,7 @@ import { DirectionsSection } from "@/components/landing/directions";
 import { InsideSection } from "@/components/landing/inside";
 import { WhySection } from "@/components/landing/why";
 import { FinalCta } from "@/components/landing/cta";
+import { EarlyAccess } from "@/components/landing/early-access";
 
 export const dynamic = "force-dynamic";
 
@@ -26,6 +27,7 @@ export default async function LandingPage() {
         <DirectionsSection />
         <InsideSection />
         <WhySection />
+        {!signedIn && <EarlyAccess />}
       </main>
       <FinalCta signedIn={signedIn} />
     </div>

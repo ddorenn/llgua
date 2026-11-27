@@ -30,7 +30,10 @@ export function PlacementDashboardCard() {
               <h2 className="mt-1 text-[20px] font-semibold tracking-[-0.02em] text-fg">
                 Ориентировочно {c.result!.overallLabel} · старт с {c.result!.route.startModule} «{c.result!.route.startTitle}»
               </h2>
-              <p className="mt-1 text-[13px] text-subtle">Предварительная внутренняя оценка LINGUA, не подтверждённый уровень CEFR.</p>
+              <p className="mt-1 text-[13px] text-subtle">
+                Предварительная внутренняя оценка LINGUA, не подтверждённый уровень CEFR.{" "}
+                {o.retestAfter ? `Повторная диагностика — с ${new Date(o.retestAfter).toLocaleDateString("ru-RU", { day: "numeric", month: "long" })}.` : "Можно пройти повторную диагностику и сравнить навыки."}
+              </p>
             </>
           ) : inProgress ? (
             <>

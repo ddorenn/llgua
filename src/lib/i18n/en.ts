@@ -16,6 +16,7 @@ export const en = {
     speaking: "Speaking",
     writing: "Writing",
     placement: "Placement",
+    report: "Report",
     progress: "Progress",
     assessments: "Assessments",
     library: "Library",

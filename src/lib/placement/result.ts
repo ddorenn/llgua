@@ -133,6 +133,63 @@ export function applyRecheck(parent: PlacementResult, st: PlacementState, intake
   return out;
 }
 
+const BAND_TO_SUB: Record<string, number> = { "below A1": 0, A1: 1, A2: 3, B1: 5, B2: 7, "above B2": 8 };
+
+/**
+ * Writing evaluations (14 §4.5, 07 §5.2): the AI rubric score is shown as preliminary and never enters the
+ * level; an expert's confirmed score makes writing an assessed skill and the level is recombined (lower median,
+ * confidence rules, route). Pure; idempotent.
+ */
+export function applyWritingEvaluations(r: PlacementResult, intake: Intake, cfg: Config = defaultConfig): PlacementResult {
+  if (r.mode !== "full") return r;
+  const out: PlacementResult = { ...r, skills: { ...r.skills } };
+  const ai = r.writingAi;
+  const ex = r.writingExpert;
+  if (ex) {
+    const sub = BAND_TO_SUB[ex.level] ?? null;
+    out.skills.writing = {
+      sublevel: sub,
+      label: sub == null ? "не оценено" : sublevelLabel(sub),
+      confidence: "high",
+      assessed: sub != null,
+      confirmedBy: "expert",
+      note: "подтверждено специалистом" + (ex.comment ? `: ${ex.comment}` : ""),
+      preliminary: ai ? { label: ai.estimated_level, sublevel: BAND_TO_SUB[ai.estimated_level] ?? 0, confidence: ai.confidence, source: "ai" } : undefined,
+    };
+    // Recombine the level with writing now assessed.
+    const keys = (Object.keys(out.skills) as SkillKey[]).filter((k) => out.skills[k].assessed);
+    const subs = keys.map((k) => out.skills[k].sublevel!);
+    let overall = lowerMedian(subs);
+    if (overall != null && out.skills.speaking.assessed) overall = Math.min(overall, out.skills.speaking.sublevel! + cfg.speakingCap);
+    const notAssessed = (Object.keys(out.skills) as SkillKey[]).filter((k) => !out.skills[k].assessed);
+    const weak = (Object.keys(out.skills) as SkillKey[]).filter((k) => !out.skills[k].assessed || out.skills[k].confidence === "low");
+    const spread = subs.length ? Math.max(...subs) - Math.min(...subs) : 0;
+    out.confidence = weak.length >= 2 ? "low" : weak.length === 1 || spread >= 3 ? "medium" : "high";
+    out.confidenceReasons = [
+      ...(notAssessed.length ? [`не оценены: ${notAssessed.map((k) => SKILL_RU[k]).join(", ")}`] : []),
+      "письмо подтверждено специалистом",
+      ...r.confidenceReasons.filter((x) => !x.startsWith("не оценены") && !x.startsWith("письмо")),
+    ];
+    if (overall != null && overall !== r.overall && !r.aboveRange) {
+      out.overall = overall;
+      out.overallLabel = sublevelLabel(overall);
+      out.meaning = MEANING[overall];
+      out.route = buildRoute({ overall, aboveRange: false, gaps: r.gaps, skills: out.skills, components: r.components, intake, mode: "full", cfg });
+    }
+    out.completeness = notAssessed.length ? "partial" : "full";
+    out.disclaimers = r.disclaimers.map((d) => (d.startsWith("Не оценивались") ? (notAssessed.length ? `Не оценивались: ${notAssessed.map((k) => SKILL_RU[k]).join(", ")}.` : "") : d)).filter(Boolean);
+  } else if (ai) {
+    out.skills.writing = {
+      ...r.skills.writing,
+      assessed: false,
+      sublevel: null,
+      preliminary: { label: ai.estimated_level, sublevel: BAND_TO_SUB[ai.estimated_level] ?? 0, confidence: ai.pasteFlagged ? "low" : ai.confidence, source: "ai" },
+      note: `предварительная AI-оценка: ${ai.estimated_level}${ai.pasteFlagged ? " (текст вставлен из буфера — ненадёжно)" : ""}. В уровень не входит до проверки специалиста`,
+    };
+  }
+  return out;
+}
+
 export function computeResult(st: PlacementState, responses: ResponseRecord[], intake: Intake, now: Date, cfg: Config = defaultConfig): PlacementResult {
   return st.mode === "zero" ? zeroResult(st, intake, now, cfg) : fullResult(st, responses, intake, now, cfg);
 }

@@ -275,3 +275,77 @@ export function nextPosition(lesson: Lesson, session: LessonSession): { stage: n
   if (session.stage + 1 < lesson.stages.length) return { stage: session.stage + 1, block: 0 };
   return null;
 }
+
+/* ------------------------------------------------------ server grading */
+
+export type LessonSkill = "grammar" | "vocabulary" | "reading" | "listening" | "interaction" | "writing";
+
+/**
+ * Grade one answer on the server from the lesson content (the client's own verdict is never trusted).
+ * Returns null for keys the server cannot grade (unknown key, review items from the learner's own bank).
+ */
+export function gradeByKey(lesson: Lesson, key: string, answer: { choice?: number; text?: string; wrong?: number }): { ok: boolean; skill: LessonSkill; answer: string } | null {
+  const [blockId, sub] = key.split("/");
+  for (const st of lesson.stages) {
+    for (const b of [...st.blocks, ...(st.branch?.add ?? [])]) {
+      if (b.id !== blockId) continue;
+      switch (b.type) {
+        case "choice":
+          if (answer.choice == null || answer.choice < 0 || answer.choice >= b.options.length) return null;
+          return { ok: answer.choice === b.answer, skill: "grammar", answer: b.options[answer.choice] };
+        case "gap":
+          if (!answer.text) return null;
+          return { ok: checkGap(answer.text, b.answers, b.prompt), skill: "grammar", answer: answer.text };
+        case "order":
+          if (!answer.text) return null;
+          return { ok: checkOrder(answer.text, b.answers), skill: "grammar", answer: answer.text };
+        case "match":
+          if (answer.wrong == null || answer.wrong < 0) return null;
+          return { ok: answer.wrong === 0, skill: "vocabulary", answer: answer.wrong === 0 ? "все пары верно" : `ошибок: ${answer.wrong}` };
+        case "reading":
+        case "listening": {
+          const q = b.questions.find((x) => x.id === sub);
+          if (!q || answer.choice == null || answer.choice < 0 || answer.choice >= q.options.length) return null;
+          return { ok: answer.choice === q.answer, skill: b.type, answer: q.options[answer.choice] };
+        }
+        case "dialogue": {
+          const s = b.steps.find((x) => x.id === sub);
+          if (!s) return null;
+          const reply = s.options ? { choice: answer.choice } : { text: answer.text };
+          const text = s.options && answer.choice != null ? s.options[answer.choice] ?? "" : answer.text ?? "";
+          return { ok: checkDialogue(s, reply), skill: "interaction", answer: text };
+        }
+        case "review": {
+          const f = b.fallback.find((x) => x.id === sub);
+          if (!f || !answer.text) return null;
+          return { ok: checkGap(answer.text, f.answers, f.prompt), skill: "vocabulary", answer: answer.text };
+        }
+        default:
+          return null;
+      }
+    }
+  }
+  return null;
+}
+
+/** Rebuild a session-shaped view from stored attempts (server side), so the report is computed from trusted data. */
+export function sessionFromAttempts(
+  lesson: Lesson,
+  attempts: { item_key: string; try_no: number; ok: boolean; answer: string; created_at: string }[],
+  extra: { stageMs?: Record<string, number>; selfAssessment?: LessonSession["selfAssessment"]; startedAt?: string },
+): LessonSession {
+  const s = newSession(lesson);
+  const byKey = new Map<string, typeof attempts>();
+  for (const a of attempts) byKey.set(a.item_key, [...(byKey.get(a.item_key) ?? []), a]);
+  for (const [key, list] of byKey) {
+    list.sort((x, y) => x.try_no - y.try_no);
+    const first = list[0];
+    const last = list[list.length - 1];
+    s.attempts[key] = { ok: last.ok, firstOk: first.ok, tries: list.length, answer: first.answer, at: last.created_at };
+  }
+  for (const st of lesson.stages) if (st.branch?.add.some((b) => [...byKey.keys()].some((k) => k.split("/")[0] === b.id))) s.branches.push(st.id);
+  s.stageMs = extra.stageMs ?? {};
+  s.selfAssessment = extra.selfAssessment;
+  if (extra.startedAt) s.startedAt = extra.startedAt;
+  return s;
+}
