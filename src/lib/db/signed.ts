@@ -17,8 +17,13 @@ export class SignedWriteError extends Error {
   }
 }
 
+/** The configured secret, tolerant of stray whitespace or quotes from copy-paste. */
+function rawSecret(): string {
+  return (process.env.LINGUA_SIGNING_SECRET ?? "").trim().replace(/^["']|["']$/g, "").trim();
+}
+
 export function signingSecret(): string {
-  const s = process.env.LINGUA_SIGNING_SECRET;
+  const s = rawSecret();
   if (!s || s.length < 32) throw new SignedWriteError("LINGUA_SIGNING_SECRET is not configured", "not_configured");
   return s;
 }
@@ -35,7 +40,7 @@ export async function signedWrite(db: SupabaseClient, uid: string, op: string, d
   return Number((data as { n?: number } | null)?.n ?? 0);
 }
 
-export const signingEnabled = () => Boolean(process.env.LINGUA_SIGNING_SECRET && process.env.LINGUA_SIGNING_SECRET.length >= 32);
+export const signingEnabled = () => rawSecret().length >= 32;
 
 /**
  * Transitional fallback while LINGUA_SIGNING_SECRET is not configured on the server:
